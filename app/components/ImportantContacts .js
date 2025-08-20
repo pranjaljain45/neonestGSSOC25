@@ -1,22 +1,24 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card" 
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import Input from "./ui/Input"
-import { Button } from "./ui/Button" 
-import Badge from "./ui/Badge" 
-import { Plus, Phone, Globe, Edit, Trash2, Save, XCircle } from "lucide-react" 
+import { Button } from "./ui/Button"
+import Badge from "./ui/Badge"
+import { Plus, Phone, Globe, Edit, Trash2, Save, XCircle } from "lucide-react"
+import { useTranslation } from 'react-i18next'
 
 export default function ImportantContacts() {
+  const { t } = useTranslation("common")
   const [contacts, setContacts] = useState([])
   const [isAddingContact, setIsAddingContact] = useState(false)
   const [editingContact, setEditingContact] = useState(null)
   const [newContact, setNewContact] = useState({
     name: "",
-    type: "phone", 
+    type: "phone",
     value: "",
     description: "",
-    category: "", 
+    category: "",
   })
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function ImportantContacts() {
   const handleAddContact = () => {
     if (newContact.name && newContact.value) {
       setContacts([...contacts, { id: Date.now(), ...newContact }])
-      setNewContact({ name: "", type: "phone", value: "", description: "", category: "" }) 
+      setNewContact({ name: "", type: "phone", value: "", description: "", category: "" })
       setIsAddingContact(false)
     }
   }
@@ -56,22 +58,22 @@ export default function ImportantContacts() {
   const handleCancelEditOrAdd = () => {
     setIsAddingContact(false)
     setEditingContact(null)
-    setNewContact({ name: "", type: "phone", value: "", description: "", category: "" }) 
+    setNewContact({ name: "", type: "phone", value: "", description: "", category: "" })
   }
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex flex-wrap items-center justify-between **mb-4**"> 
+      <div className="flex flex-wrap items-center justify-between **mb-4**">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">Important Medical Contacts</h2>
-          <p className="text-gray-600 text-sm">Store essential doctor numbers, hospital contacts, and useful medical links.</p> 
+          <h2 className="text-2xl font-bold text-gray-800">{t("contact.importantContactsTitle")}</h2>
+          <p className="text-gray-600 text-sm">{t("contact.importantContactsDescription")}</p>
         </div>
         <Button
           onClick={() => setIsAddingContact(true)}
           className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
         >
           <Plus className="w-4 h-4 mr-2" />
-          Add Contact
+          {t("addContact")}
         </Button>
       </div>
 
@@ -85,14 +87,14 @@ export default function ImportantContacts() {
               ) : (
                 <Plus className="w-5 h-5 text-purple-600" />
               )}
-              {editingContact ? "Edit Contact" : "Add New Contact"}
+              {editingContact ? t("contact.editContact") : t("contact.addNewContact")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Contact Name</label>
+              <label className="block text-sm font-medium mb-2">{t("contact.contactName")}</label>
               <Input
-                placeholder="e.g., Dr. Smith"
+                placeholder={t("contact.contactNamePlaceholder")}
                 value={editingContact ? editingContact.name : newContact.name}
                 onChange={(e) =>
                   editingContact
@@ -103,9 +105,9 @@ export default function ImportantContacts() {
             </div>
             {/* New Category Input */}
             <div>
-              <label className="block text-sm font-medium mb-2">Category (e.g., Pediatrician, Gynecologist)</label>
+              <label className="block text-sm font-medium mb-2">{t("category")} </label>
               <Input
-                placeholder="e.g., Pediatrician"
+                placeholder={t("contact.categoryPlaceholder")}
                 value={editingContact ? editingContact.category : newContact.category}
                 onChange={(e) =>
                   editingContact
@@ -115,7 +117,7 @@ export default function ImportantContacts() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Type</label>
+              <label className="block text-sm font-medium mb-2">{t("contact.type")}</label>
               <select
                 className="w-full p-2 border border-gray-300 rounded-md"
                 value={editingContact ? editingContact.type : newContact.type}
@@ -125,15 +127,15 @@ export default function ImportantContacts() {
                     : setNewContact({ ...newContact, type: e.target.value })
                 }
               >
-                <option value="phone">Phone Number</option>
-                <option value="website">Website Link</option>
+                <option value="phone">{t("contact.phoneNumber")}</option>
+                <option value="website">{t("contact.websiteLink")}</option>
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">
                 {editingContact?.type === "website" || newContact.type === "website"
-                  ? "Website URL"
-                  : "Phone Number"}
+                  ? t("contact.websiteURL")
+                  : t("contact.phoneNumber")}
               </label>
               <Input
                 type={
@@ -155,10 +157,10 @@ export default function ImportantContacts() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Description (Optional)</label>
+              <label className="block text-sm font-medium mb-2">{t("contact.descriptionOptional")}</label>
               <textarea
                 className="w-full p-2 border border-gray-300 rounded-md h-20"
-                placeholder="Brief description or notes..."
+                placeholder={t("contact.briefDescription")}
                 value={editingContact ? editingContact.description : newContact.description}
                 onChange={(e) =>
                   editingContact
@@ -174,11 +176,11 @@ export default function ImportantContacts() {
                 className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {editingContact ? "Update" : "Add"} Contact
+                {editingContact ? t("contact.updateContact") : t("contact.addContact")}
               </Button>
               <Button variant="outline" onClick={handleCancelEditOrAdd}>
                 <XCircle className="w-4 h-4 mr-2" />
-                Cancel
+                {t("contact.cancel")}
               </Button>
             </div>
           </CardContent>
@@ -190,19 +192,19 @@ export default function ImportantContacts() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Phone className="w-5 h-5 text-purple-600" />
-            Your Important Contacts
+            {t("contact.yourImportantContacts")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           {contacts.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Phone className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No important contacts added yet.</p>
+              <p>{t("contact.noContacts")}</p>
               <Button
                 className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white mt-4"
                 onClick={() => setIsAddingContact(true)}
               >
-                Add Your First Contact
+                {t("contact.addYourFirstContact")}
               </Button>
             </div>
           ) : (

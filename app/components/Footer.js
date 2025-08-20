@@ -2,52 +2,49 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Heart,
-  Github,
-  ExternalLink,
-  BookOpen,
-  MessageCircle,
-} from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Heart, Github, ExternalLink, BookOpen, MessageCircle } from "lucide-react";
 
 export default function NeoNestFooter() {
+  const { t } = useTranslation("common");
+
   const features = [
-    { name: "Growth Tracker", href: "/Growth" },
-    { name: "Feed Scheduler", href: "/Feeding" },
-    { name: "Sleep Tracker", href: "/Sleep" },
-    { name: "Vaccine Tracker", href: "/Medical" },
-    { name: "Inventory Tracker", href: "/Essentials" },
+    { name: t("footer.featuresList.growth"), href: "/Growth" },
+    { name: t("footer.featuresList.feeding"), href: "/Feeding" },
+    { name: t("footer.featuresList.sleep"), href: "/Sleep" },
+    { name: t("footer.featuresList.medical"), href: "/Medical" },
+    { name: t("footer.featuresList.essentials"), href: "/Essentials" }
   ];
 
   const support = [
-    { name: "About NeoNest", href: "/" },
-    { name: "FAQs", href: "/Faqs" },
-    { name: "Resources", href: "/Resources" },
-    { name: "NeoNest AI", href: "/NeonestAi" },
-    { name: "Memories, Community & Blogs", href: "/Memories" },
+    { name: t("footer.supportList.about"), href: "/" },
+    { name: t("footer.supportList.faq"), href: "/Faqs" },
+    { name: t("footer.supportList.resources"), href: "/Resources" },
+    { name: t("footer.supportList.ai"), href: "/NeonestAi" },
+    { name: t("footer.supportList.memories"), href: "/Memories" }
   ];
 
   const projectLinks = [
     {
-      name: "GitHub Repository",
+      name: t("footer.projectList.repo"),
       icon: Github,
-      href: "https://github.com/AditiGupta-tech/neonest",
+      href: "https://github.com/AditiGupta-tech/neonest"
     },
     {
-      name: "Live Website",
+      name: t("footer.projectList.live"),
       icon: ExternalLink,
-      href: "https://neonest-babycare.vercel.app/",
+      href: "https://neonest-babycare.vercel.app/"
     },
     {
-      name: "Contributing Guide",
+      name: t("footer.projectList.guide"),
       icon: BookOpen,
-      href: "https://github.com/AditiGupta-tech/neonest/blob/main/Contributing.md",
+      href: "https://github.com/AditiGupta-tech/neonest/blob/main/Contributing.md"
     },
     {
-      name: "GitHub Discussions",
+      name: t("footer.projectList.discussions"),
       icon: MessageCircle,
-      href: "https://github.com/AditiGupta-tech/neonest/discussions",
-    },
+      href: "https://github.com/AditiGupta-tech/neonest/discussions"
+    }
   ];
 
   return (
@@ -73,10 +70,10 @@ export default function NeoNestFooter() {
                 </span>
               </div>
               <p className="text-gray-300 text-base leading-relaxed max-w-md">
-                Supporting parents through their baby's first year with expert guidance, AI tools, and a loving community.
+                {t("footer.tagline")}
               </p>
               <div className="flex items-center space-x-2 text-pink-400 font-medium text-sm">
-                <span>Happy baby, Happy you!</span>
+                <span>{t("footer.happyBaby")}</span>
                 <Heart className="w-4 h-4 fill-current animate-pulse" />
               </div>
             </div>
@@ -85,7 +82,7 @@ export default function NeoNestFooter() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
                 <div className="w-2 h-5 bg-gradient-to-b from-pink-400 to-purple-400 rounded-full mr-2"></div>
-                Features
+                {t("footer.features")}
               </h3>
               <ul className="space-y-2">
                 {features.map((feature, index) => (
@@ -106,7 +103,7 @@ export default function NeoNestFooter() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
                 <div className="w-2 h-5 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full mr-2"></div>
-                Support
+                {t("footer.support")}
               </h3>
               <ul className="space-y-2">
                 {support.map((item, index) => (
@@ -128,7 +125,7 @@ export default function NeoNestFooter() {
           <div className="border-t border-white/10 pt-6 mb-6">
             <h3 className="text-base font-semibold text-white mb-4 flex items-center">
               <div className="w-2 h-4 bg-gradient-to-b from-green-400 to-blue-400 rounded-full mr-2"></div>
-              Project Links
+              {t("footer.projectLinks")}
             </h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {projectLinks.map((link, index) => (
@@ -151,7 +148,7 @@ export default function NeoNestFooter() {
           {/* Bottom */}
           <div className="border-t border-white/10 pt-4 text-center space-y-2">
             <div className="text-sm text-gray-300 flex items-center justify-center gap-1 flex-wrap">
-              <span>© 2025 NeoNest by</span>
+              <span>{t("footer.copyright")}</span>
               <span className="font-semibold text-pink-300">Aditi Gupta</span>
               <span>• Released under the</span>
               <a
@@ -160,13 +157,13 @@ export default function NeoNestFooter() {
                 rel="noopener noreferrer"
                 className="text-blue-300 font-semibold"
               >
-                MIT License
+                {t("footer.license")}
               </a>
             </div>
             <div className="text-sm text-gray-300 flex items-center justify-center gap-2">
-              <span>Made with</span>
+              <span>{t("footer.madeWith")}</span>
               <Heart className="w-4 h-4 text-red-400 fill-current animate-pulse" />
-              <span>for parents and babies</span>
+              <span>{t("footer.forParents")}</span>
             </div>
           </div>
         </div>

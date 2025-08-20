@@ -14,27 +14,32 @@ import TextToSpeech from "../components/TextToSpeech";
 import { fetchChatHistory, saveChatHistory } from "@/lib/chatService";
 import { useAuth } from "../context/AuthContext";
 import { useChatStore } from "@/lib/store/chatStore";
+import { useTranslation } from "react-i18next";
+
 
 const quickQuestions = [
-  { icon: Baby, text: "When should my baby start crawling?", color: "pink" },
-  { icon: Utensils, text: "How do I introduce solid foods?", color: "purple" },
-  { icon: Clock, text: "What's a good sleep schedule for 6 months?", color: "blue" },
-  { icon: Heart, text: "Is my baby's crying normal?", color: "green" },
+  { icon: Baby, textKey: "when_should_baby_crawl", color: "pink" },
+  { icon: Utensils, textKey: "how_to_introduce_solid_foods", color: "purple" },
+  { icon: Clock, textKey: "good_sleep_schedule_6_months", color: "blue" },
+  { icon: Heart, textKey: "is_babys_crying_normal", color: "green" },
 ];
 
 const roles = [
-  { label: "Pediatrician", value: "pediatrician" },
-  { label: "Baby", value: "baby" },
-  { label: "Motherly", value: "mother" },
+  { labelKey: "pediatrician", value: "pediatrician" },
+  { labelKey: "baby", value: "baby" },
+  { labelKey: "mother", value: "mother" },
 ];
 
 export default function NeonestAi() {
+  const { t, ready } = useTranslation("common");
+
+
   const [role, setRole] = useState("pediatrician");
   const {
     chatHistory = {},
-    setChatHistory = () => {},
+    setChatHistory = () => { },
     historyLoaded = {},
-    resetChatHistoryForRole = () => {},
+    resetChatHistoryForRole = () => { },
   } = useChatStore((state) => state || {});
   const messages = useMemo(() => chatHistory[role] || [], [chatHistory, role]);
   const [input, setInput] = useState("");
@@ -50,11 +55,11 @@ export default function NeonestAi() {
     averageResponseTime: 1.2,
     satisfactionRate: 94.5,
     topQuestions: [
-      { question: "When should my baby start crawling?", count: 156 },
-      { question: "How do I introduce solid foods?", count: 134 },
-      { question: "What's a good sleep schedule?", count: 98 },
-      { question: "Is my baby's crying normal?", count: 87 },
-      { question: "When do babies start teething?", count: 76 },
+      { questionKey: "when_should_baby_crawl", count: 156 },
+      { questionKey: "how_to_introduce_solid_foods", count: 134 },
+      { questionKey: "good_sleep_schedule_6_months", count: 98 },
+      { questionKey: "is_babys_crying_normal", count: 87 },
+      { questionKey: "when_do_babies_teeth", count: 76 },
     ],
   });
 
@@ -77,6 +82,11 @@ export default function NeonestAi() {
     }
     return true;
   };
+
+  // useEffect(() => {
+  //   console.log("Active language:", i18n.language);
+  //   console.log("Translation output:", t("neochatbot.switched_to_role", { role: "मातृत्व" }));
+  // });
 
   useEffect(() => {
     if (historyLoaded[role]) return;
@@ -121,7 +131,8 @@ export default function NeonestAi() {
     setRole(newRole);
     setInput("");
     setIsSending(false);
-    setTransitionMessage(`Switched to ${roles.find(r => r.value === newRole)?.label} mode`);
+    // setTransitionMessage(`Switched to ${roles.find(r => r.value === newRole)?.label} mode`);
+    setTransitionMessage(t("neochatbot.switched_to_role", { role: t(`neochatbot.${newRole}`) }));
     setTimeout(() => setTransitionMessage(null), 1500);
     scrollToBottom();
   };
@@ -152,7 +163,7 @@ export default function NeonestAi() {
       const errorMsg = {
         id: Date.now() + 1,
         role: "system",
-        content: "Oops! Something went wrong. Please try again.",
+        content: t("neochatbot.oops_something_wrong"),
         createdAt: new Date().toISOString(),
       };
       setChatHistory(role, [...updatedMessages, errorMsg]);
@@ -178,11 +189,12 @@ export default function NeonestAi() {
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert("Copied to clipboard!");
-    } catch (err) {
-      alert("Failed to copy!");
+      alert(t("neochatbot.copied_to_clipboard"));
+    } catch {
+      alert(t("neochatbot.failed_to_copy"));
     }
   };
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 space-y-10">
@@ -190,7 +202,7 @@ export default function NeonestAi() {
         <CardHeader className="flex justify-between items-center bg-pink-100 rounded-t-lg px-6 py-4">
           <div className="flex items-center gap-3">
             <Bot className="w-6 h-6 text-pink-500" />
-            <CardTitle>NeoNest AI Chatbot</CardTitle>
+            <CardTitle>{t("neochatbot.neonest_ai_chatbot")}</CardTitle>
           </div>
           <TooltipProvider>
             <Tooltip>
@@ -202,13 +214,13 @@ export default function NeonestAi() {
                 >
                   {roles.map((r) => (
                     <option key={r.value} value={r.value}>
-                      {r.label}
+                      {t(`neochatbot.${r.labelKey}`)}
                     </option>
                   ))}
                 </select>
               </TooltipTrigger>
               <TooltipContent side="bottom" sideOffset={6}>
-                Choose the role you&apos;d like to chat with
+                {t("neochatbot.choose_role")}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -226,13 +238,13 @@ export default function NeonestAi() {
           {messages.length === 0 && (
             <div className="text-center space-y-4">
               <p className="text-sm text-gray-500 mt-2">
-                AI advice is not a substitute for professional medical consultation.
+                {t("neochatbot.ai_advice_disclaimer")}.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {quickQuestions.map((q, idx) => (
                   <Button key={idx} onClick={() => handleQuickQuestion(q.text)} variant="outline" className="text-left justify-start text-sm">
                     <q.icon className={`w-4 h-4 mr-2 text-${q.color}-500`} />
-                    {q.text}
+                    {t(`neochatbot.${q.textKey}`)}
                   </Button>
                 ))}
               </div>
@@ -267,7 +279,7 @@ export default function NeonestAi() {
                               <Copy className="w-4 h-4 text-gray-600" />
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent>Copy to clipboard</TooltipContent>
+                          <TooltipContent>{t("neochatbot.copy_to_clipboard")}</TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                       {m.role === "assistant" && (
@@ -278,7 +290,7 @@ export default function NeonestAi() {
                                 <TextToSpeech text={m.content} />
                               </div>
                             </TooltipTrigger>
-                            <TooltipContent>Listen to response</TooltipContent>
+                            <TooltipContent>{t("neochatbot.listen_to_response")}</TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
                       )}
@@ -315,7 +327,7 @@ export default function NeonestAi() {
                 <div className="flex justify-start mt-3">
                   <div className="rounded-xl px-4 py-2 max-w-[80%] bg-gray-200 text-gray-800 flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-sm">NeoNest AI is thinking...</span>
+                    <span className="text-sm">{t("neochatbot.ai_is_thinking")}</span>
                   </div>
                 </div>
               )}
@@ -332,7 +344,7 @@ export default function NeonestAi() {
                 }}
                 className="text-sm text-white bg-pink-600 px-4 py-1 rounded-full shadow-md hover:bg-pink-700 transition"
               >
-                ⬇ New Message
+                ⬇ {t("neochatbot.new_message")}
               </button>
             </div>
           )}
@@ -358,7 +370,7 @@ export default function NeonestAi() {
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="top">
-                  Click to start voice input (requires internet connection)
+                  {t("neochatbot.voice_input_tooltip")}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -374,44 +386,44 @@ export default function NeonestAi() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BarChart3 className="h-5 w-5" />
-              Chat Analytics
+              {t("neochatbot.chat_analytics")}
             </CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <MessageSquare className="mx-auto text-pink-500" />
               <p className="font-bold">{analytics.totalChats}</p>
-              <p className="text-xs text-gray-500">Total Conversations</p>
+              <p className="text-xs text-gray-500">{t("neochatbot.total_conversations")}</p>
             </div>
             <div>
               <Users className="mx-auto text-purple-500" />
               <p className="font-bold">{analytics.totalMessages}</p>
-              <p className="text-xs text-gray-500">Messages Sent</p>
+              <p className="text-xs text-gray-500">{t("neochatbot.total_messages")}</p>
             </div>
             <div>
               <Clock className="mx-auto text-blue-500" />
               <p className="font-bold">{analytics.averageResponseTime}s</p>
-              <p className="text-xs text-gray-500">Avg. Response Time</p>
+              <p className="text-xs text-gray-500">{t("neochatbot.average_response_time")}</p>
             </div>
             <div>
               <ThumbsUp className="mx-auto text-green-500" />
               <p className="font-bold">{analytics.satisfactionRate}%</p>
-              <p className="text-xs text-gray-500">Satisfaction</p>
+              <p className="text-xs text-gray-500">{t("neochatbot.satisfaction_rate")}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Top Questions</CardTitle>
+            <CardTitle>{t("neochatbot.top_questions")}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {analytics.topQuestions?.map((q, i) => (
               <button
                 key={i}
-                onClick={() => handleQuickQuestion(q.question)}
+                onClick={() => handleQuickQuestion(q.questionKey)}
                 className="flex justify-between text-sm border-b pb-1 w-full text-left hover:bg-gray-100 px-2 py-1 rounded transition"
               >
-                <span>{q.question}</span>
+                <span>{t(`neochatbot.${q.questionKey}`)}</span>
                 <Badge variant="secondary">{q.count}</Badge>
               </button>
             ))}

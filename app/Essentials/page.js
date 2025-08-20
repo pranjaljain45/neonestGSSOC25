@@ -1,31 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import Badge from "../components/ui/Badge";
-import Babyessentials from "../components/Babyessentials"; 
-import { Plus, Package, AlertTriangle, Edit, Trash2, Bell, Save, ShoppingCart, ChevronDown, ChevronUp } from "lucide-react"; 
+import Babyessentials from "../components/Babyessentials";
+import { Plus, Package, AlertTriangle, Edit, Trash2, Bell, Save, ShoppingCart, ChevronDown, ChevronUp } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import LoginPrompt from "../components/LoginPrompt"; 
+import LoginPrompt from "../components/LoginPrompt";
 
 const itemCategories = [
-  { id: "diapering", name: "Diapers & Wipes", icon: "🍼" }, 
+  { id: "diapering", name: "Diapers & Wipes", icon: "🍼" },
   { id: "feeding", name: "Feeding Supplies", icon: "🍼" },
   { id: "clothing", name: "Clothing", icon: "👕" },
   { id: "health", name: "Health & Safety", icon: "🏥" },
-  { id: "playtime", name: "Toys & Books", icon: "🧸" }, 
+  { id: "playtime", name: "Toys & Books", icon: "🧸" },
   { id: "bathing", name: "Bathing", icon: "🛁" },
   { id: "sleeping", name: "Sleeping", icon: "😴" },
   { id: "travel", name: "Travel", icon: "✈️" },
   { id: "traditional", name: "Traditional Items", icon: "🪔" },
   { id: "cleaning", name: "Cleaning Supplies", icon: "🧼" },
-  { id: "others", name: "Others", icon: "📦" }, 
+  { id: "others", name: "Others", icon: "📦" },
 ];
 
 export default function Page() {
+  const { t } = useTranslation("common");
   const { isAuth, isLoading } = useAuth();
+
   const [inventory, setInventory] = useState([]);
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -47,20 +51,22 @@ export default function Page() {
   };
 
   // Fetch inventory from API
+
+
   const fetchInventory = async () => {
     try {
       setIsInventoryLoading(true);
       const token = getAuthToken();
       if (!token) throw new Error('No authentication token found');
-      
+
       const response = await fetch('/api/essentials', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      
+
       if (!response.ok) throw new Error('Failed to fetch inventory');
-      
+
       const data = await response.json();
       setInventory(data);
       setError(null);
@@ -73,10 +79,8 @@ export default function Page() {
   };
 
   useEffect(() => {
-    document.title = "Essentials | NeoNest";
-    if (isAuth) {
-    fetchInventory();
-    }
+    document.title = t("essentials.pageTitle");
+    if (isAuth) fetchInventory();
   }, [isAuth]);
 
   // Add new item
@@ -84,33 +88,33 @@ export default function Page() {
     if (newItem.name && newItem.currentStock && newItem.minThreshold) {
       try {
         const token = getAuthToken();
-        if (!token) throw new Error('No authentication token found');
-        
-        const response = await fetch('/api/essentials', {
-          method: 'POST',
+        if (!token) throw new Error(t("essentials.noAuthToken"));
+
+        const response = await fetch("/api/essentials", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(newItem)
+          body: JSON.stringify(newItem),
         });
-        
-        if (!response.ok) throw new Error('Failed to add item');
-        
+
+        if (!response.ok) throw new Error(t("essentials.failedAddItem"));
+
         const addedItem = await response.json();
         setInventory([...inventory, addedItem]);
-        setNewItem({ 
-          name: "", 
-          category: "diapering", 
-          currentStock: "", 
-          minThreshold: "", 
-          unit: "pieces", 
-          notes: "" 
+        setNewItem({
+          name: "",
+          category: "diapering",
+          currentStock: "",
+          minThreshold: "",
+          unit: "pieces",
+          notes: "",
         });
         setIsAddingItem(false);
       } catch (err) {
         setError(err.message);
-        console.error('Error adding item:', err);
+        console.error("Error adding item:", err);
       }
     }
   };
@@ -119,27 +123,27 @@ export default function Page() {
   const updateItem = async (id, updatedItem) => {
     try {
       const token = getAuthToken();
-      if (!token) throw new Error('No authentication token found');
-      
+      if (!token) throw new Error(t("essentials.noAuthToken"));
+
       const response = await fetch(`/api/essentials/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(updatedItem)
+        body: JSON.stringify(updatedItem),
       });
-      
-      if (!response.ok) throw new Error('Failed to update item');
-      
+
+      if (!response.ok) throw new Error(t("essentials.failedUpdateItem"));
+
       const updatedItemData = await response.json();
-      setInventory(inventory.map(item => 
-        item._id === id ? updatedItemData : item
-      ));
+      setInventory(
+        inventory.map((item) => (item._id === id ? updatedItemData : item))
+      );
       setEditingItem(null);
     } catch (err) {
       setError(err.message);
-      console.error('Error updating item:', err);
+      console.error("Error updating item:", err);
     }
   };
 
@@ -147,59 +151,75 @@ export default function Page() {
   const deleteItem = async (id) => {
     try {
       const token = getAuthToken();
-      if (!token) throw new Error('No authentication token found');
-      
+      if (!token) throw new Error(t("essentials.noAuthToken"));
+
       const response = await fetch(`/api/essentials/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      
-      if (!response.ok) throw new Error('Failed to delete item');
-      
-      setInventory(inventory.filter(item => item._id !== id));
+
+      if (!response.ok) throw new Error(t("essentials.failedDeleteItem"));
+
+      setInventory(inventory.filter((item) => item._id !== id));
     } catch (err) {
       setError(err.message);
-      console.error('Error deleting item:', err);
+      console.error("Error deleting item:", err);
     }
   };
+
 
   // Update stock
   const updateStock = async (id, newStock) => {
     try {
       const token = getAuthToken();
-      if (!token) throw new Error('No authentication token found');
-      
+      if (!token) throw new Error(t("essentials.noAuthToken"));
+
       const response = await fetch(`/api/essentials/stock/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ currentStock: newStock })
+        body: JSON.stringify({ currentStock: newStock }),
       });
-      
-      if (!response.ok) throw new Error('Failed to update stock');
-      
+
+      if (!response.ok) throw new Error(t("essentials.failedUpdateStock"));
+
       const updatedItem = await response.json();
-      setInventory(inventory.map(item => 
-        item._id === id ? updatedItem : item
-      ));
+      setInventory(
+        inventory.map((item) => (item._id === id ? updatedItem : item))
+      );
     } catch (err) {
       setError(err.message);
-      console.error('Error updating stock:', err);
+      console.error("Error updating stock:", err);
     }
   };
 
-  const lowStockItems = inventory.filter((item) => item.currentStock <= item.minThreshold);
+  const lowStockItems = inventory.filter(
+    (item) => item.currentStock <= item.minThreshold && item.currentStock > 0
+  );
   const outOfStockItems = inventory.filter((item) => item.currentStock === 0);
 
   const getStockStatus = (item) => {
-    if (item.currentStock === 0) return { status: "out", color: "bg-red-400 text-red-700", text: "Out of Stock" };
+    if (item.currentStock === 0)
+      return {
+        status: "out",
+        color: "bg-red-400 text-red-700",
+        text: t("essentials.outOfStock"),
+      };
     if (item.currentStock <= item.minThreshold)
-      return { status: "low", color: "bg-yellow-500 text-yellow-700 ", text: "Low Stock" };
-    return { status: "good", color: "bg-green-500 text-green-700", text: "In Stock" };
+      return {
+        status: "low",
+        color: "bg-yellow-500 text-yellow-700",
+        text: t("essentials.lowStock"),
+      };
+    return {
+      status: "good",
+      color: "bg-green-500 text-green-700",
+      text: t("essentials.inStock"),
+    };
   };
 
   const getCategoryIcon = (categoryId) => {
@@ -209,8 +229,16 @@ export default function Page() {
 
   const handleAddEssentialToInventory = (essentialName, essentialCategory) => {
     const validCategories = [
-      "clothing", "traditional", "health", "diapering", "feeding", 
-      "bathing", "sleeping", "playtime", "travel", "cleaning"
+      "clothing",
+      "traditional",
+      "health",
+      "diapering",
+      "feeding",
+      "bathing",
+      "sleeping",
+      "playtime",
+      "travel",
+      "cleaning",
     ];
     const categoryToShow = validCategories.includes(essentialCategory)
       ? essentialCategory
@@ -218,14 +246,14 @@ export default function Page() {
 
     setNewItem({
       name: essentialName,
-      category: categoryToShow, 
-      currentStock: "", 
-      minThreshold: "", 
+      category: categoryToShow,
+      currentStock: "",
+      minThreshold: "",
       unit: "pieces",
       notes: "",
     });
-    setIsAddingItem(true); 
-    setEditingItem(null); 
+    setIsAddingItem(true);
+    setEditingItem(null);
   };
 
   if (isInventoryLoading) {
@@ -233,7 +261,7 @@ export default function Page() {
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p>Loading your baby essentials...</p>
+          <p>{t("essentials.loadingYourEssentials")}</p>
         </div>
       </div>
     );
@@ -244,13 +272,15 @@ export default function Page() {
       <div className="flex items-center justify-center h-screen">
         <div className="text-center p-6 max-w-md mx-auto bg-red-50 rounded-lg">
           <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-red-700 mb-2">Error Loading Data</h2>
+          <h2 className="text-xl font-bold text-red-700 mb-2">
+            {t("essentials.errorLoadingData")}
+          </h2>
           <p className="text-red-600 mb-4">{error}</p>
-          <Button 
+          <Button
             onClick={fetchInventory}
             className="bg-red-600 hover:bg-red-700"
           >
-            Retry
+            {t("essentials.retry")}
           </Button>
         </div>
       </div>
@@ -269,19 +299,19 @@ export default function Page() {
     );
   }
 
-  // Show login prompt if user is not authenticated
   if (!isAuth) {
     return <LoginPrompt sectionName="essentials tracker" />;
   }
 
-return (
+  return (
     <div className="space-y-6 px-4 sm:px-6 md:px-8 py-6 max-w-7xl mx-auto">
-      {/* Header and Add Item Button */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-1">Baby Essentials Tracker</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-1">
+            {t("essentials.babyEssentialsTracker")}
+          </h2>
           <p className="text-gray-600 text-sm">
-            Keep track of diapers, formula, and other baby essentials
+            {t("essentials.trackerDescription")}
           </p>
         </div>
         <Button
@@ -289,14 +319,14 @@ return (
           className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
         >
           <Plus className="w-4 h-4 mr-2" />
-          Add Item
+          {t("essentials.addItem")}
         </Button>
       </div>
 
       {/* "See Essentials" Toggle */}
       <div className="border-t pt-6 mt-6">
         <h3 className="text-xl font-semibold text-black mb-1 flex items-center justify-between">
-          <span>Not sure what to add? Start with these essentials:</span>
+          <span>{t("essentials.notSureWhatToAdd")}</span>
           <Button
             variant="outline"
             onClick={() => setShowEssentials(!showEssentials)}
@@ -304,18 +334,21 @@ return (
           >
             {showEssentials ? (
               <>
-                Hide Essentials <ChevronUp className="w-4 h-4 ml-1" />
+                {t("essentials.hideEssentials")}
+                <ChevronUp className="w-4 h-4 ml-1" />
               </>
             ) : (
               <>
-                See Essentials <ChevronDown className="w-4 h-4 ml-1" />
+                {t("essentials.seeEssentials")}
+                <ChevronDown className="w-4 h-4 ml-1" />
               </>
             )}
           </Button>
         </h3>
       </div>
+
       {showEssentials && (
-        <div className={`transition-all duration-300 ease-in-out ${showEssentials ? 'max-h-[500px]' : 'max-h-0'} overflow-hidden`}>
+        <div className="transition-all duration-300 ease-in-out max-h-[500px] overflow-hidden">
           <Babyessentials onAddEssential={handleAddEssentialToInventory} />
         </div>
       )}
@@ -328,7 +361,11 @@ return (
               <CardContent className="pt-4">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="w-5 h-5 text-red-600" />
-                  <span className="font-semibold text-red-800">Out of Stock ({outOfStockItems.length} items)</span>
+                  <span className="font-semibold text-red-800">
+                    {t("essentials.outOfStockWithCount", {
+                      count: outOfStockItems.length,
+                    })}
+                  </span>
                 </div>
                 <div className="flex flex-wrap gap-2 overflow-auto">
                   {outOfStockItems.map((item) => (
@@ -346,12 +383,19 @@ return (
               <CardContent className="pt-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Bell className="w-5 h-5 text-yellow-600" />
-                  <span className="font-semibold text-yellow-800">Low Stock Alert ({lowStockItems.length} items)</span>
+                  <span className="font-semibold text-yellow-800">
+                    {t("essentials.lowStockAlertWithCount", {
+                      count: lowStockItems.length,
+                    })}
+                  </span>
                 </div>
                 <div className="flex flex-wrap gap-2 overflow-auto">
                   {lowStockItems.map((item) => (
-                    <Badge key={item._id} className="bg-yellow-200 text-yellow-700">
-                      {item.name} ({item.currentStock} left)
+                    <Badge
+                      key={item._id}
+                      className="bg-yellow-200 text-yellow-700"
+                    >
+                      {item.name} ({item.currentStock})
                     </Badge>
                   ))}
                 </div>
@@ -367,15 +411,17 @@ return (
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Package className="w-5 h-5 text-blue-600" />
-              {editingItem ? "Edit Item" : "Add New Item"}
+              {editingItem ? t("essentials.edit_item") : t("essentials.add_item")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium mb-2">Item Name</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.item_name")}
+                </label>
                 <Input
-                  placeholder="e.g., Newborn Diapers"
+                  placeholder={t("essentials.item_name")}
                   value={editingItem ? editingItem.name : newItem.name}
                   onChange={(e) => {
                     if (editingItem) {
@@ -387,7 +433,9 @@ return (
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Category</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.category")}
+                </label>
                 <select
                   className="w-full p-2 border border-gray-300 rounded-md"
                   value={editingItem ? editingItem.category : newItem.category}
@@ -407,7 +455,9 @@ return (
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Current Stock</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.current_stock")}
+                </label>
                 <Input
                   type="number"
                   placeholder="0"
@@ -422,7 +472,9 @@ return (
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Low Stock Alert (minimum)</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.min_threshold")}
+                </label>
                 <Input
                   type="number"
                   placeholder="5"
@@ -437,7 +489,9 @@ return (
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Unit</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.unit")}
+                </label>
                 <select
                   className="w-full p-2 border border-gray-300 rounded-md"
                   value={editingItem ? editingItem.unit : newItem.unit}
@@ -458,9 +512,11 @@ return (
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Notes</label>
+                <label className="block text-sm font-medium mb-2">
+                  {t("essentials.notes")}
+                </label>
                 <Input
-                  placeholder="Optional notes"
+                  placeholder={t("essentials.notes")}
                   value={editingItem ? editingItem.notes : newItem.notes}
                   onChange={(e) => {
                     if (editingItem) {
@@ -474,11 +530,15 @@ return (
             </div>
             <div className="flex gap-2">
               <Button
-                onClick={editingItem ? () => updateItem(editingItem._id, editingItem) : addItem}
+                onClick={
+                  editingItem
+                    ? () => updateItem(editingItem._id, editingItem)
+                    : addItem
+                }
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {editingItem ? "Update" : "Add"} Item
+                {editingItem ? t("essentials.update") : t("essentials.add")}
               </Button>
               <Button
                 variant="outline"
@@ -495,7 +555,7 @@ return (
                   })
                 }}
               >
-                Cancel
+                {t("essentials.cancel")}
               </Button>
             </div>
           </CardContent>
@@ -507,7 +567,10 @@ return (
         {inventory.map((item) => {
           const stockStatus = getStockStatus(item)
           return (
-            <Card key={item._id} className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
+            <Card
+              key={item._id}
+              className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow"
+            >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
@@ -524,7 +587,7 @@ return (
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Current Stock:</span>
+                  <span className="text-sm text-gray-600">{t("essentials.current_stock")}:</span>
                   <div className="flex items-center gap-2">
                     <Input
                       type="number"
@@ -537,18 +600,25 @@ return (
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Alert when below:</span>
+                  <span className="text-gray-600">{t("essentials.alert_when_below")}:</span>
                   <span className="font-medium">
                     {item.minThreshold} {item.unit}
                   </span>
                 </div>
 
-                {item.notes && <p className="text-sm text-gray-500 italic">"{item.notes}"</p>}
+                {item.notes && (
+                  <p className="text-sm text-gray-500 italic">"{item.notes}"</p>
+                )}
 
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={() => setEditingItem(item)} className="flex-1">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setEditingItem(item)}
+                    className="flex-1"
+                  >
                     <Edit className="w-3 h-3 mr-1" />
-                    Edit
+                    {t("essentials.edit")}
                   </Button>
                   <Button
                     size="sm"
@@ -557,6 +627,7 @@ return (
                     className="text-red-600 hover:text-red-700"
                   >
                     <Trash2 className="w-3 h-3" />
+                    {t("essentials.delete")}
                   </Button>
                 </div>
               </CardContent>
@@ -565,18 +636,21 @@ return (
         })}
       </div>
 
+      {/* No Items Message */}
       {inventory.length === 0 && (
         <Card className="bg-white/80 backdrop-blur-sm">
           <CardContent className="text-center py-12">
             <Package className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">No items in inventory</h3>
-            <p className="text-gray-500 mb-4">Start tracking your baby essentials to get low stock alerts</p>
+            <h3 className="text-lg font-semibold text-gray-600 mb-2">
+              {t("essentials.no_items_title")}
+            </h3>
+            <p className="text-gray-500 mb-4">{t("essentials.no_items_desc")}</p>
             <Button
               onClick={() => setIsAddingItem(true)}
               className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add Your First Item
+              {t("essentials.add_first_item")}
             </Button>
           </CardContent>
         </Card>
@@ -588,17 +662,22 @@ return (
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ShoppingCart className="w-5 h-5 text-orange-600" />
-              Shopping List
+              {t("essentials.shopping_list")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2 overflow-auto">
                 {lowStockItems.map((item) => (
-                  <div key={item._id} className="flex items-center justify-between p-2 bg-white/50 rounded">
+                  <div
+                    key={item._id}
+                    className="flex items-center justify-between p-2 bg-white/50 rounded"
+                  >
                     <span>{item.name}</span>
                     <Badge variant="outline">
-                      Need: {Math.max(item.minThreshold * 2 - item.currentStock, item.minThreshold)} {item.unit}
+                      {t("essentials.need")}:{" "}
+                      {Math.max(item.minThreshold * 2 - item.currentStock, item.minThreshold)}{" "}
+                      {item.unit}
                     </Badge>
                   </div>
                 ))}

@@ -1,4 +1,3 @@
-
 "use client";
 
 import axios from "axios";
@@ -8,11 +7,17 @@ import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { useTranslation, Trans } from "react-i18next";
 
 export default function SignupPage() {
+  const { t } = useTranslation("common");
+
+
   useEffect(() => {
-    document.title = "Signup | NeoNest";
+    document.title = t("signup.pagetitle");
   }, []);
+
 
   const router = useRouter();
   const { login } = useAuth();
@@ -36,7 +41,7 @@ export default function SignupPage() {
   // Function to validate name
   const validateName = (nameValue) => {
     if (!nameValue.trim()) {
-      setNameError("Name cannot be empty.");
+      setNameError(t("signup.errorEmptyName"));
       return false;
     }
     setNameError("");
@@ -46,11 +51,11 @@ export default function SignupPage() {
   // Function to validate email
   const validateEmail = (emailValue) => {
     if (!emailValue.trim()) {
-      setEmailError("Email cannot be empty.");
+      setEmailError(t("signup.errorEmptyEmail"));
       return false;
     }
     if (!emailValue.includes("@") || !emailValue.includes(".")) {
-      setEmailError("Please enter a valid email address.");
+      setEmailError(t("signup.errorInvalidEmail"));
       return false;
     }
     setEmailError("");
@@ -60,14 +65,14 @@ export default function SignupPage() {
   // Function to validate password
   const validatePassword = (passwordValue) => {
     if (!passwordValue.trim()) {
-      setPasswordError("Password cannot be empty.");
+      setPasswordError(t("signup.errorEmptyPassword"));
       return false;
     }
     // IMPORTANT: Ensure this matches your backend's password length requirement.
     // Your backend previously had < 9, but your client-side now has < 6.
     // For consistency, I will assume 8 characters is the minimum as per earlier discussions.
     if (passwordValue.length < 6) {
-      setPasswordError("Password must be at least 6 characters.");
+      setPasswordError(t("signup.errorShortPassword"));
       return false;
     }
     setPasswordError("");
@@ -86,7 +91,7 @@ export default function SignupPage() {
     setEmail(value);
     validateEmail(value);
     // Clear the specific "Email already exists" error when email changes
-    if (emailError.includes("Email already exists")) {
+    if (emailError.includes(t("signup.errorEmailExists"))) {
       setEmailError("");
     }
   };
@@ -122,7 +127,7 @@ export default function SignupPage() {
     const passwordValid = validatePassword(password);
 
     if (!nameValid || !emailValid || !passwordValid) {
-      toast.error("Please correct the errors in the form.");
+      toast.error(t("signup.errorFormInvalid"));
       return;
     }
 
@@ -151,15 +156,16 @@ export default function SignupPage() {
       console.error("Signup error:", err);
       if (axios.isAxiosError(err) && err.response) {
         const backendError = err.response.data.error;
-        toast.error(backendError || "An unexpected error occurred.");
+        toast.error(backendError || t("signup.errorUnknown"));
+
 
         if (backendError && backendError.includes("Email already exists")) {
           // Set the specific error message to be rendered with the link
-          setEmailError("Email already exists! Login instead.");
+          setEmailError(t("signup.errorNetwork"));
           setEmailTouched(true);
         }
       } else {
-        toast.error("Network error or unexpected problem.");
+        toast.error(t("signup.emailLabel"));
       }
     }
   };
@@ -171,13 +177,13 @@ export default function SignupPage() {
         className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md"
       >
         <h1 className="text-2xl font-bold mb-4 text-center text-pink-600">
-          Parent Signup
+          {t("signup.title")}
         </h1>
 
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Your Name"
+            placeholder={t("signup.namePlaceholder")}
             value={name}
             onChange={handleNameChange}
             onBlur={() => setNameTouched(true)}
@@ -192,7 +198,7 @@ export default function SignupPage() {
         <div className="mb-4">
           <input
             type="email"
-            placeholder="Your Email"
+            placeholder={t("signup.emailPlaceholder")}
             value={email}
             onChange={handleEmailChange}
             onBlur={() => setEmailTouched(true)}
@@ -203,58 +209,67 @@ export default function SignupPage() {
           />
           {(emailError && emailTouched) && (
             <p className="text-red-500 text-sm mt-1">
-              Email already exists!{' '}
-              <span
-                onClick={() => router.push('/Login')} // Navigate to login page
-                className="text-pink-600 italic cursor-pointer hover:underline"
-              >
-                Login
-              </span>{' '}
-              instead.
+              <span className="w-1 h-1 bg-red-500 rounded-full mr-2"></span>
+
+              {emailError.includes("Email already exists") ? (
+                <Trans i18nKey="signup.loginInstead" t={t} components={[
+                  <span
+                    onClick={() => router.push("/Login")}
+                    className="text-pink-600 italic cursor-pointer hover:underline font-medium hover:text-pink-700 transition-colors duration-300"
+                  />
+                ]}
+                />
+              ) : (
+                emailError
+              )}
             </p>
           )}
         </div>
 
-          <div className="mb-6 relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Create Password"
-              value={password}
-              onChange={handlePasswordChange}
-              onBlur={() => setPasswordTouched(true)}
-              required
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2
+        <div className="mb-6 relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Create Password"
+            value={password}
+            onChange={handlePasswordChange}
+            onBlur={() => setPasswordTouched(true)}
+            required
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2
                 ${(passwordError && passwordTouched) ? 'border-red-500 focus:ring-red-400' : 'border-pink-300 focus:ring-pink-400'}
               `}
-            />
-            <FontAwesomeIcon
-              icon={showPassword ? faEyeSlash : faEye}
-              onClick={togglePasswordVisibility}
-              className="absolute right-3 top-1/3 translate-y-[-50%]  cursor-pointer text-gray-500"
-              style={{ userSelect: "none" }}
-              aria-label={showPassword ? "Hide password" : "Show password"}
-            />
-            <p className="text-[11px] mt-1 text-gray-700 italic">Password must be at least 6 characters.</p>
-            {(passwordError && passwordTouched) && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-          </div>
+          />
+
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-1/3 translate-y-[-50%]  cursor-pointer text-gray-500"
+            style={{ userSelect: "none" }}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          />
+          <p className="text-[11px] mt-1 text-gray-700 italic"> {t("signup.passwordNote")}</p>
+          {(passwordError && passwordTouched) && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+        </div>
 
         <p className="text-center text-sm text-gray-500 mb-4">
-          At NeoNest, your data privacy is paramount. We are committed to
-          keeping your information confidential and do not share it with third
-          parties.
+          {t("signup.privacyNotice")}
         </p>
 
         <button
           type="submit"
           disabled={!isFormValid}
-          className={`w-full py-2 rounded-lg font-semibold transition-transform
-            ${isFormValid
-              ? "bg-gradient-to-r from-pink-400 to-purple-500 text-white hover:scale-105"
+          className={`w-full py-3 rounded-xl font-semibold shadow-lg transition-all duration-300 transform
+              ${isFormValid
+              ? "bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl hover:shadow-pink-200"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }
-          `}
+            `}
+          style={{
+            boxShadow: isFormValid
+              ? "0 10px 15px -3px rgba(236, 72, 153, 0.3), 0 4px 6px -2px rgba(236, 72, 153, 0.2)"
+              : "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+          }}
         >
-          Next
+          {isFormValid ? t("signup.submitButton") : t("signup.submitButtonDisabled")}
         </button>
       </form>
     </div>

@@ -235,10 +235,10 @@ export async function PUT(req) {
     }
     // Corrected condition: BabyDet.length should match noOfBabies
     if (BabyDet.length !== noOfBabies) {
-        return Response.json(
-            { error: "Please provide all baby details for the specified number of babies" }, // More specific error
-            { status: 422 }
-        );
+      return Response.json(
+        { error: "Please provide all baby details for the specified number of babies" }, // More specific error
+        { status: 422 }
+      );
     }
     for (let i = 0; i < noOfBabies; i++) {
       // console.log("Checking baby details for index:", i, BabyDet[i]); // Uncomment for debugging if needed
@@ -267,15 +267,15 @@ export async function PUT(req) {
         { status: 422 }
       );
     }
-    const updatedUser = await User.findByIdAndUpdate( user.id , {
+    const updatedUser = await User.findByIdAndUpdate(user.id, {
       noOfBabies,
       deliveryType,
       BabyDet // No need to JSON.stringify here, it's already an array
     },
-    {
-      new: true,
-      runValidators: false, // Important! Consider enabling this for stricter schema validation
-    });
+      {
+        new: true,
+        runValidators: false, // Important! Consider enabling this for stricter schema validation
+      });
 
     console.log("Updated User in PUT:", updatedUser);
 

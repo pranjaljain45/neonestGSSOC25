@@ -15,10 +15,15 @@ import {
   ChevronUp,
 } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 export default function SignupBabyPage() {
+  const { t } = useTranslation("common");
+  
   useEffect(() => {
     document.title = "Baby Details | NeoNest";
   }, []);
+
 
   const router = useRouter();
   const { token, user } = useAuth();
@@ -51,7 +56,7 @@ export default function SignupBabyPage() {
   // --- Validation Functions ---
   const validateDeliveryType = (value) => {
     if (!value) {
-      setDeliveryTypeError("Delivery type is required.");
+      setDeliveryTypeError(t("babypage.validation.delivery_required"));
       return false;
     }
     setDeliveryTypeError("");
@@ -63,19 +68,19 @@ export default function SignupBabyPage() {
     let isValid = true;
 
     if (!baby.babyName.trim()) {
-      currentBabyErrors.babyName = "Name is required.";
+      currentBabyErrors.babyName = t("babypage.validation.babyname_required");
       isValid = false;
     }
     if (!baby.dateOfBirth) {
-      currentBabyErrors.dateOfBirth = "Date of birth is required.";
+      currentBabyErrors.dateOfBirth = t("babypage.validation.dob_required");
       isValid = false;
     }
     if (!baby.time) {
-      currentBabyErrors.time = "Time of birth is required.";
+      currentBabyErrors.time = t("babypage.validation.time_required");
       isValid = false;
     }
     if (!baby.gender) {
-      currentBabyErrors.gender = "Gender is required.";
+      currentBabyErrors.gender = t("babypage.validation.gender_required");
       isValid = false;
     }
 
@@ -159,7 +164,7 @@ export default function SignupBabyPage() {
     );
 
     if (!deliveryTypeIsValid || !allBabiesAreValid) {
-      toast.error("Please correct the errors in the form.");
+      toast.error(t("babypage.toast.form_error"));
       return;
     }
 
@@ -189,18 +194,18 @@ export default function SignupBabyPage() {
 
         router.push(`/`);
       } else {
-        toast.error(data.error || "An unexpected error occurred.");
+        toast.error(data.error || t("babypage.toast.server_error"));
       }
     } catch (err) {
       console.error("Signup Baby error:", err);
       if (axios.isAxiosError(err) && err.response) {
         const backendError = err.response.data.error;
         toast.error(
-          backendError || "An unexpected error occurred from server."
+          backendError || t("babypage.toast.server_error")
         );
 
         if (backendError.includes("Please provide all details")) {
-          setDeliveryTypeError("Delivery type is required.");
+          setDeliveryTypeError(t("babypage.form.deliveryTypeRequired"));
           setDeliveryTypeTouched(true);
         }
         if (backendError.includes("Please provide all baby details")) {
@@ -208,7 +213,7 @@ export default function SignupBabyPage() {
           setBabiesTouched(Array.from({ length: noOfBabies }, () => true));
         }
       } else {
-        toast.error("Network error or unexpected problem.");
+        toast.error(t("babypage.toast.network_error"));
       }
     }
   };
@@ -326,10 +331,10 @@ export default function SignupBabyPage() {
                 </div>
               </div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-2 hover:from-pink-700 hover:to-purple-700 transition-all duration-300">
-                Baby Details
+                {t("babypage.title")}
               </h1>
               <p className="text-gray-600 text-sm hover:text-gray-700 transition-colors duration-300">
-                Tell us about your little one(s) to personalize your experience
+                {t("babypage.subtitle")}
               </p>
             </div>
 
@@ -337,13 +342,13 @@ export default function SignupBabyPage() {
             <div className="bg-gray-50 rounded-xl p-6 mb-8 hover:bg-gray-100 transition-all duration-300 hover:scale-[1.02] group">
               <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center group-hover:text-gray-900 transition-colors duration-300">
                 <Users className="w-5 h-5 mr-2 text-pink-600 group-hover:text-pink-700 transition-colors duration-300" />
-                General Information
+                {t("babypage.generalInfo")}
               </h2>
 
               {/* Number of Babies */}
               <div className="mb-6 group">
                 <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                  Number of babies at birth
+                  {t("babypage.noOfBabies")}
                 </label>
                 <div className="relative">
                   <select
@@ -351,9 +356,9 @@ export default function SignupBabyPage() {
                     onChange={handleNoOfBabiesChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white appearance-none cursor-pointer hover:border-pink-300 hover:bg-gray-50 transition-all duration-300"
                   >
-                    <option value={1}>1 (Single)</option>
-                    <option value={2}>2 (Twins)</option>
-                    <option value={3}>3 (Triplets)</option>
+                    <option value={1}>{t("babypage.noOfBabiesOptions.1")}</option>
+                    <option value={2}>{t("babypage.noOfBabiesOptions.2")}</option>
+                    <option value={3}>{t("babypage.noOfBabiesOptions.3")}</option>
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none group-hover:text-pink-500 transition-colors duration-300" />
                 </div>
@@ -362,7 +367,7 @@ export default function SignupBabyPage() {
               {/* Delivery Type */}
               <div className="mb-4 group">
                 <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                  Type of Delivery
+                  {t("babypage.delivery_type")}
                 </label>
                 <div className="relative">
                   <select
@@ -371,17 +376,16 @@ export default function SignupBabyPage() {
                     onBlur={handleDeliveryTypeBlur}
                     required
                     className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 bg-white appearance-none cursor-pointer hover:bg-gray-50 transition-all duration-300
-                      ${
-                        deliveryTypeError && deliveryTypeTouched
-                          ? "border-red-500 focus:ring-red-400"
-                          : "border-gray-300 focus:ring-pink-400 hover:border-pink-300"
+                      ${deliveryTypeError && deliveryTypeTouched
+                        ? "border-red-500 focus:ring-red-400"
+                        : "border-gray-300 focus:ring-pink-400 hover:border-pink-300"
                       }
                     `}
                   >
-                    <option value="">Select Delivery Type</option>
-                    <option value="Normal">Normal</option>
-                    <option value="C-Section">C-Section</option>
-                    <option value="Assisted">Assisted</option>
+                    <option value="">{t("babypage.select_delivery")}</option>
+                    <option value="Normal">{t("babypage.deliveryTypes.normal")}</option>
+                    <option value="C-Section">{t("babypage.deliveryTypes.csection")}</option>
+                    <option value="Assisted">{t("babypage.deliveryTypes.assisted")}</option>
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none group-hover:text-pink-500 transition-colors duration-300" />
                 </div>
@@ -403,28 +407,27 @@ export default function SignupBabyPage() {
                 >
                   <h3 className="font-semibold text-purple-700 mb-4 flex items-center group-hover:text-purple-800 transition-colors duration-300">
                     <Baby className="w-5 h-5 mr-2 group-hover:text-purple-600 transition-colors duration-300" />
-                    Baby {index + 1}
+                    {t("babypage.baby")}  {index + 1}
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Baby Name */}
                     <div className="md:col-span-2 group">
                       <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                        Baby's Name
+                        {t("babypage.form.babyName")}
                       </label>
                       <div
                         className={`flex items-center border rounded-xl px-3 py-3 bg-white focus-within:ring-2 transition-all duration-300 hover:bg-gray-50 hover:border-purple-300 group
-                        ${
-                          babyErrors[index]?.babyName && babiesTouched[index]
+                        ${babyErrors[index]?.babyName && babiesTouched[index]
                             ? "border-red-500 focus-within:ring-red-400"
                             : "border-gray-300 focus-within:ring-purple-400"
-                        }
+                          }
                       `}
                       >
                         <Baby className="w-5 h-5 text-gray-400 mr-3 group-hover:text-purple-500 transition-colors duration-300" />
                         <input
                           type="text"
-                          placeholder="Enter baby's name"
+                          placeholder={t("babypage.form.babyName")}
                           value={baby.babyName}
                           onChange={(e) =>
                             handleBabyChange(index, "babyName", e.target.value)
@@ -445,15 +448,14 @@ export default function SignupBabyPage() {
                     {/* Date of Birth */}
                     <div className="group">
                       <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                        Date of Birth
+                        {t("babypage.form.dob")}
                       </label>
                       <div
                         className={`flex items-center border rounded-xl px-3 py-3 bg-white focus-within:ring-2 transition-all duration-300 hover:bg-gray-50 hover:border-purple-300 group
-                        ${
-                          babyErrors[index]?.dateOfBirth && babiesTouched[index]
+                        ${babyErrors[index]?.dateOfBirth && babiesTouched[index]
                             ? "border-red-500 focus-within:ring-red-400"
                             : "border-gray-300 focus-within:ring-purple-400"
-                        }
+                          }
                       `}
                       >
                         <Calendar className="w-5 h-5 text-gray-400 mr-3 group-hover:text-purple-500 transition-colors duration-300" />
@@ -484,15 +486,14 @@ export default function SignupBabyPage() {
                     {/* Time of Birth */}
                     <div className="group">
                       <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                        Time of Birth
+                        {t("babypage.form.time")}
                       </label>
                       <div
                         className={`flex items-center border rounded-xl px-3 py-3 bg-white focus-within:ring-2 transition-all duration-300 hover:bg-gray-50 hover:border-purple-300 group
-                        ${
-                          babyErrors[index]?.time && babiesTouched[index]
+                        ${babyErrors[index]?.time && babiesTouched[index]
                             ? "border-red-500 focus-within:ring-red-400"
                             : "border-gray-300 focus-within:ring-purple-400"
-                        }
+                          }
                       `}
                       >
                         <Clock className="w-5 h-5 text-gray-400 mr-3 group-hover:text-purple-500 transition-colors duration-300" />
@@ -518,7 +519,7 @@ export default function SignupBabyPage() {
                     {/* Gender */}
                     <div className="group">
                       <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                        Gender
+                        {t("babypage.form.gender")}
                       </label>
                       <div className="relative">
                         <select
@@ -529,17 +530,16 @@ export default function SignupBabyPage() {
                           onBlur={() => handleBabyBlur(index)}
                           required
                           className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 bg-white appearance-none cursor-pointer hover:bg-gray-50 transition-all duration-300
-                            ${
-                              babyErrors[index]?.gender && babiesTouched[index]
-                                ? "border-red-500 focus:ring-red-400"
-                                : "border-gray-300 focus:ring-purple-400 hover:border-purple-300"
+                            ${babyErrors[index]?.gender && babiesTouched[index]
+                              ? "border-red-500 focus:ring-red-400"
+                              : "border-gray-300 focus:ring-purple-400 hover:border-purple-300"
                             }
                           `}
                         >
-                          <option value="">Select Gender</option>
-                          <option value="Boy">Boy</option>
-                          <option value="Girl">Girl</option>
-                          <option value="Other">Other</option>
+                          <option value="">{t("babypage.form.selectGender")}</option>
+                          <option value="Boy">{t("babypage.genderOptions.boy")}</option>
+                          <option value="Girl">{t("babypage.genderOptions.girl")}</option>
+                          <option value="Other">{t("babypage.genderOptions.other")}</option>
                         </select>
                         <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none group-hover:text-purple-500 transition-colors duration-300" />
                       </div>
@@ -554,7 +554,7 @@ export default function SignupBabyPage() {
                     {/* Weight */}
                     <div className="group">
                       <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-                        Weight at Birth (kg)
+                        {t("babypage.form.weight")} (kg)
                       </label>
                       <div className="flex items-center border border-gray-300 rounded-xl px-3 py-3 bg-white focus-within:ring-2 focus-within:ring-purple-400 transition-all duration-300 hover:bg-gray-50 hover:border-purple-300 group">
                         <Scale className="w-5 h-5 text-gray-400 mr-3 group-hover:text-purple-500 transition-colors duration-300" />
@@ -579,9 +579,8 @@ export default function SignupBabyPage() {
             {/* Privacy Notice */}
             <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-all duration-300 hover:scale-[1.02] group">
               <p className="text-sm text-blue-800 leading-relaxed group-hover:text-blue-900 transition-colors duration-300">
-                <span className="font-medium">Privacy Notice:</span> At NeoNest,
-                your data privacy is paramount. We are committed to keeping your
-                information confidential and do not share it with third parties.
+                <span className="font-medium"> {t("babypage.privacy")}</span>
+                {t("babypage.privacyNotice")}
               </p>
             </div>
 
@@ -590,16 +589,13 @@ export default function SignupBabyPage() {
               type="submit"
               disabled={!isFormValid}
               className={`w-full py-3 rounded-xl font-semibold shadow-md transition-all duration-300 transform
-                ${
-                  isFormValid
-                    ? "bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-purple-200"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                ${isFormValid
+                  ? "bg-gradient-to-r from-purple-400 to-pink-500 hover:from-purple-500 hover:to-pink-600 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-purple-200"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }
               `}
             >
-              {isFormValid
-                ? "Complete Setup"
-                : "Please fill all required fields"}
+              {isFormValid ? t("babypage.submit.complete") : t("babypage.submit.incomplete")}
             </button>
           </form>
         </div>

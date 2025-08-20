@@ -5,49 +5,36 @@ import {
     Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, ListMusic, Languages, Clock, Upload
 } from 'lucide-react';
 
-// --- INITIAL DATA FOR LULLABIES ---
-const initialLullabies = [
-    {
-        id: 1,
-        title: "Twinkle Twinkle Little Star",
-        artist: "Jane Doe",
-        language: "English",
-        audioSrc: "/TwinkleTwinkle.mp3",
-        coverArt: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
-    },
-    {
-        id: 2,
-        title: "Chanda Hai Tu",
-        artist: "Traditional",
-        language: "Hindi",
-        audioSrc: "/chandaHaiTu.mp3",
-        coverArt: "linear-gradient(to top, #d299c2 0% , #fe9d7 100%)",
-    },
-    {
-        id: 3,
-        title: "Lori Lori",
-        artist: "Traditional",
-        language: "Hindi",
-        audioSrc: "/LoriLori.mp3",
-        coverArt: "linear-gradient(to right, #ffecd2 0%, #fcb69f 100%)",
-    },
-    {
-        id: 4,
-        title: "Lakdi Ki Kathi",
-        artist: "Traditional",
-        language: "Hindi",
-        audioSrc: "/LakdiKiKathi.mp3",
-        coverArt: "linear-gradient(120deg, #f093fb 0%, #f5576c 100%)",
-    },
-    {
-        id: 5,
-        title: "Baa Baa Black Sheep",
-        artist: "Jane Doe",
-        language: "English",
-        audioSrc: "/babaBlackSheep.mp3",
-        coverArt: "linear-gradient(to right, #4facfe 0%, #00f2fe 100%)",
-    },
-];
+import { useTranslation } from "react-i18next";
+
+// --- LULLABIES HOOK ---
+function useLullabies() {
+    const { t, i18n } = useTranslation("common");
+
+    // Get the lullabies object from i18n JSON whenever language changes
+    const lullabiesData = t("lullabies", { returnObjects: true });
+
+    // State for all tracks (reset when language changes)
+    const [tracks, setTracks] = useState(lullabiesData.tracks || []);
+
+    // Reset tracks whenever language changes
+    useEffect(() => {
+        setTracks(lullabiesData.tracks || []);
+    }, [i18n.language]);
+
+    return {
+        tracks,
+        uploadYourOwn: lullabiesData.uploadYourOwn,
+        customUpload: lullabiesData.customUpload,
+        playlist: lullabiesData.playlist,
+        sleepTimer: lullabiesData.sleepTimer,
+        minutesPlaceholder: lullabiesData.minutesPlaceholder,
+        setTimer: lullabiesData.setTimer,
+        stopIn: lullabiesData.stopIn,
+        noLullabiesAvailable: lullabiesData.noLullabiesAvailable,
+        setTracks
+    };
+}
 
 // --- HELPER FUNCTIONS ---
 const formatTime = (seconds) => {
@@ -60,7 +47,20 @@ const formatTime = (seconds) => {
 
 // --- MAIN COMPONENT ---
 export default function LullabyPage() {
-    const [allLullabies, setAllLullabies] = useState(initialLullabies);
+    const {
+        tracks: allLullabies,
+        uploadYourOwn,
+        customUpload,
+        playlist,
+        sleepTimer,
+        minutesPlaceholder,
+        setTimer: setTimerText,
+        stopIn,
+        noLullabiesAvailable,
+        setTracks
+    } = useLullabies();
+
+
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -72,7 +72,7 @@ export default function LullabyPage() {
 
     const audioRef = useRef(null);
     const fileInputRef = useRef(null);
-    const sleepTimeoutIdRef = useRef(null); 
+    const sleepTimeoutIdRef = useRef(null);
     const countdownIntervalRef = useRef(null);
 
     // Filter lullabies based on language
@@ -134,6 +134,7 @@ export default function LullabyPage() {
             audio.pause();
         }
     }, [isPlaying, currentTrack, volume]);
+
 
     useEffect(() => {
         const audio = audioRef.current;
@@ -230,7 +231,7 @@ export default function LullabyPage() {
             setSleepTimerRemaining(null);
         }
     };
-    
+
     const handleTimerInputChange = (e) => {
         if (e.target.value === '' || parseInt(e.target.value, 10) >= 0) {
             setTimerInput(e.target.value);
@@ -242,7 +243,7 @@ export default function LullabyPage() {
     useEffect(() => {
         if (audioRef.current && currentTrack) {
             audioRef.current.src = currentTrack.audioSrc;
-            
+
             if (isPlaying) {
                 audioRef.current.load();
                 audioRef.current.play().catch(e => {
@@ -256,20 +257,19 @@ export default function LullabyPage() {
     if (!currentTrack) {
         return (
             <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center text-gray-700 p-4">
-                 <div className="text-center mb-8">
+                <div className="text-center mb-8">
                     <h1 className="text-4xl font-bold text-pink-500 mb-2">Soothe & Sleep</h1>
-                    <p className="text-lg text-gray-500">No lullabies available for the selected language.</p>
+                    <p className="text-lg text-gray-500">{noLullabiesAvailable}</p>
                 </div>
                 <div className="flex flex-wrap justify-center gap-3 mb-8">
                     {languages.map(lang => (
                         <button
                             key={lang}
                             onClick={() => setSelectedLanguage(lang)}
-                            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${
-                                selectedLanguage === lang
-                                    ? 'bg-pink-500 text-white shadow-lg'
-                                    : 'bg-white text-gray-600 hover:bg-pink-100'
-                            }`}
+                            className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 ${selectedLanguage === lang
+                                ? 'bg-pink-500 text-white shadow-lg'
+                                : 'bg-white text-gray-600 hover:bg-pink-100'
+                                }`}
                         >
                             {lang}
                         </button>
@@ -278,7 +278,7 @@ export default function LullabyPage() {
             </div>
         );
     }
-    
+
     return (
         <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center font-sans p-4">
             <audio ref={audioRef} preload="metadata" />
@@ -340,20 +340,20 @@ export default function LullabyPage() {
                         </div>
                         <div className="flex items-center gap-3">
                             <label htmlFor="sleep-timer-input" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                <Clock size={16}/>
-                                Sleep Timer
+                                <Clock size={16} />
+                                {sleepTimer}
                             </label>
                             <input
                                 id="sleep-timer-input"
                                 type="number"
-                                placeholder="Mins"
+                                placeholder={minutesPlaceholder}
                                 value={timerInput}
                                 onChange={handleTimerInputChange}
                                 min="0"
                                 className="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:ring-pink-500 focus:border-pink-500"
                             />
                             <button onClick={handleSetTimer} className="px-3 py-1.5 text-sm font-semibold text-white bg-pink-500 rounded-lg hover:bg-pink-600 transition-colors w-36 text-center">
-                                {sleepTimerRemaining !== null ? `Stop in ${formatTime(sleepTimerRemaining)}` : 'Set Timer'}
+                                {sleepTimerRemaining !== null ? `${stopIn} ${formatTime(sleepTimerRemaining)}` : setTimerText}
                             </button>
                         </div>
                     </div>
@@ -361,23 +361,22 @@ export default function LullabyPage() {
 
                 {/* Playlist Section */}
                 <div className="bg-white rounded-3xl shadow-2xl p-6 flex flex-col backdrop-blur-md bg-opacity-70">
-                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2"><ListMusic/> Playlist</h3>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2"><ListMusic /> {playlist}</h3>
                         <div className="relative">
-                           <Languages className="text-gray-500"/>
+                            <Languages className="text-gray-500" />
                         </div>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-2 mb-4">
-                         {languages.map(lang => (
+                        {languages.map(lang => (
                             <button
                                 key={lang}
                                 onClick={() => setSelectedLanguage(lang)}
-                                className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${
-                                    selectedLanguage === lang
-                                        ? 'bg-pink-500 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-pink-100'
-                                }`}
+                                className={`px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-300 ${selectedLanguage === lang
+                                    ? 'bg-pink-500 text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-pink-100'
+                                    }`}
                             >
                                 {lang}
                             </button>
@@ -389,9 +388,8 @@ export default function LullabyPage() {
                             <div
                                 key={track.id}
                                 onClick={() => handleTrackSelect(index)}
-                                className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer transition-all duration-200 ${
-                                    index === currentTrackIndex ? 'bg-pink-100' : 'hover:bg-gray-100'
-                                }`}
+                                className={`flex items-center gap-4 p-3 rounded-lg cursor-pointer transition-all duration-200 ${index === currentTrackIndex ? 'bg-pink-100' : 'hover:bg-gray-100'
+                                    }`}
                             >
                                 <div
                                     className="w-12 h-12 rounded-md flex-shrink-0"
@@ -403,21 +401,21 @@ export default function LullabyPage() {
                                 </div>
                                 {index === currentTrackIndex && isPlaying && (
                                     <div className="flex items-center gap-1">
-                                        <span className="w-1 h-3 bg-pink-500 rounded-full animate-pulse" style={{animationDelay: '0s'}}></span>
-                                        <span className="w-1 h-4 bg-pink-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></span>
-                                        <span className="w-1 h-3 bg-pink-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></span>
+                                        <span className="w-1 h-3 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0s' }}></span>
+                                        <span className="w-1 h-4 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></span>
+                                        <span className="w-1 h-3 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></span>
                                     </div>
                                 )}
                             </div>
                         ))}
                     </div>
-                    
-                    <button 
+
+                    <button
                         onClick={() => fileInputRef.current.click()}
                         className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-purple-500 rounded-lg hover:bg-purple-600 transition-colors shadow-md"
                     >
                         <Upload size={16} />
-                        Upload Your Own Lullaby
+                        {uploadYourOwn}
                     </button>
                 </div>
             </div>

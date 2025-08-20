@@ -1,4 +1,4 @@
-  "use client";
+"use client";
 import { useState, useEffect, useRef } from "react";
 import {
   ThumbsUp,
@@ -28,6 +28,8 @@ import NewSections from "./Newsections";
 import NotificationDemo from "./NotificationDemo";
 import { Toaster, toast } from 'sonner';
 
+import { useTranslation } from 'react-i18next';
+
 const Homepage = () => {
   const [showReviewPrompt, setShowReviewPrompt] = useState(false);
   const [selectedRating, setSelectedRating] = useState(0);
@@ -36,36 +38,50 @@ const Homepage = () => {
   const [userReview, setUserReview] = useState(null);
   const [showWelcomeOverlay, setShowWelcomeOverlay] = useState(false);
 
+  const { t } = useTranslation('common');
+
   const reviewRef = useRef(null);
 
   const featuredReviews = [
     {
-      name: "Riya Sharma",
-      tag: "Recommendations",
-      content:
-        "Got neonest recommended by a friend... imagining my son, Aarav's first year without it gives me goosebumps",
-      keywords: ["Must have", "Smart parenting", "Better child care"],
+      name: t('homepage.reviews.riya.name'),
+      tag: t('homepage.reviews.riya.tag'),
+      content: t('homepage.reviews.riya.content'),
+      keywords: [
+        t('.reviews.riya.keywords.0'),
+        t('homepage.reviews.riya.keywords.1'),
+        t('homepage.reviews.riya.keywords.2'),
+      ],
     },
     {
-      name: "Parag Mehta",
-      tag: "Happy life",
-      content:
-        "My wife's been happier ever since she started using neonest. our parenting life in the first year was really good. Thankyou neonest💕",
-      keywords: ["Helpful", "Life saver", "Easy parenting"],
+      name: t('homepage.reviews.parag.name'),
+      tag: t('homepage.reviews.parag.tag'),
+      content: t('homepage.reviews.parag.content'),
+      keywords: [
+        t('homepage.reviews.parag.keywords.0'),
+        t('homepage.reviews.parag.keywords.1'),
+        t('homepage.reviews.parag.keywords.2'),
+      ],
     },
     {
-      name: "Pooja Desai",
-      tag: "AI Pediatrician",
-      content:
-        "The AI pediatrician diagnosed my child's sickness based on symptoms and I was able to consult the doctor on time and help my child. Genius!",
-      keywords: ["Health", "Reliable", "Safety"],
+      name: t('homepage.reviews.pooja.name'),
+      tag: t('homepage.reviews.pooja.tag'),
+      content: t('homepage.reviews.pooja.content'),
+      keywords: [
+        t('homepage.reviews.pooja.keywords.0'),
+        t('homepage.reviews.pooja.keywords.1'),
+        t('homepage.reviews.pooja.keywords.2'),
+      ],
     },
     {
-      name: "Nisha Gupta",
-      tag: "AI motherly",
-      content:
-        "AI mother role bohot motivate karta hai aur hamesha supportive rehta hai. Love it!",
-      keywords: ["AI roles", "Helpful", "Comforting"],
+      name: t('homepage.reviews.nisha.name'),
+      tag: t('homepage.reviews.nisha.tag'),
+      content: t('homepage.reviews.nisha.content'),
+      keywords: [
+        t('homepage.reviews.nisha.keywords.0'),
+        t('homepage.reviews.nisha.keywords.1'),
+        t('homepage.reviews.nisha.keywords.2'),
+      ],
     },
   ];
 
@@ -106,45 +122,45 @@ const Homepage = () => {
     return () => clearInterval(interval);
   }, []);
 
-useEffect(() => {
-  const showWelcomeToast = sessionStorage.getItem('showWelcomeToast');
-  const showWelcomeBackToast = sessionStorage.getItem('showWelcomeBackToast');
-  const parentName = sessionStorage.getItem('parentName');
+  useEffect(() => {
+    const showWelcomeToast = sessionStorage.getItem('showWelcomeToast');
+    const showWelcomeBackToast = sessionStorage.getItem('showWelcomeBackToast');
+    const parentName = sessionStorage.getItem('parentName');
 
-  let timer;
+    let timer;
 
-  if (showWelcomeToast === 'true' && parentName) {
-    setShowWelcomeOverlay(true);
-    toast.success(
-      `Welcome ${parentName}! Explore NeoNest and make your parenting experience beautiful!`,
-      { duration: 3000 }
-    );
-    timer = setTimeout(() => {
-      sessionStorage.removeItem('showWelcomeToast');
-      sessionStorage.removeItem('parentName');
-      setShowWelcomeOverlay(false);
-    }, 3000);
-  } else if (showWelcomeBackToast === 'true' && parentName) {
-    setShowWelcomeOverlay(true);
-    toast.success(
-      `Welcome back ${parentName}! Continue your parenting journey with NeoNest!`,
-      { duration: 3000 }
-    );
-    timer = setTimeout(() => {
-      sessionStorage.removeItem('showWelcomeBackToast');
-      sessionStorage.removeItem('parentName');
-      setShowWelcomeOverlay(false);
-    }, 3000);
-  }
+    if (showWelcomeToast === 'true' && parentName) {
+      setShowWelcomeOverlay(true);
+      toast.success(
+        t('homepage.toastMessages.welcome', { name: parentName }),
+        { duration: 3000 }
+      );
+      timer = setTimeout(() => {
+        sessionStorage.removeItem('showWelcomeToast');
+        sessionStorage.removeItem('parentName');
+        setShowWelcomeOverlay(false);
+      }, 3000);
+    } else if (showWelcomeBackToast === 'true' && parentName) {
+      setShowWelcomeOverlay(true);
+      toast.success(
+        t('homepage.toastMessages.welcomeBack', { name: parentName }),
+        { duration: 3000 }
+      );
+      timer = setTimeout(() => {
+        sessionStorage.removeItem('showWelcomeBackToast');
+        sessionStorage.removeItem('parentName');
+        setShowWelcomeOverlay(false);
+      }, 3000);
+    }
 
-  return () => clearTimeout(timer);
-}, []);
- 
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const handleSubmitReview = () => {
     const newReview = {
-      name: "You",
-      tag: "Shared Experience",
+      name: t('homepage.reviewForm.you'),
+      tag: t('homepage.reviewForm.sharedExperience'),
       content: reviewText,
       keywords: [`${selectedRating} ★`],
     };
@@ -161,6 +177,7 @@ useEffect(() => {
 
     console.log("Review submitted:", selectedRating, reviewText);
   };
+
 
   const handleReaction = (index, type) => {
     setReactions((prev) => {
@@ -215,29 +232,29 @@ useEffect(() => {
 
   const features = [
     {
-      title: "Personalized Baby Tracker",
-      desc: "NeoNest tailors insights based on your baby's age, growth, and needs, so you're never left guessing.",
+      title: t("homepage.features.personalizedBabyTracker.title"),
+      desc: t("homepage.features.personalizedBabyTracker.desc"),
       icon: Baby,
       borderColor: "border-pink-400",
       bgColor: "bg-pink-50",
     },
     {
-      title: "Expert-Backed Guidance",
-      desc: "All resources and tips are curated by pediatricians and parenting experts to ensure accuracy and care.",
+      title: t("homepage.features.expertBackedGuidance.title"),
+      desc: t("homepage.features.expertBackedGuidance.desc"),
       icon: Heart,
       borderColor: "border-blue-400",
       bgColor: "bg-blue-50",
     },
     {
-      title: "AI-Powered Assistant",
-      desc: "Got questions at 2 AM? Our AI Chatbot is trained on baby care data and is always ready to help.",
+      title: t("homepage.features.aiPoweredAssistant.title"),
+      desc: t("homepage.features.aiPoweredAssistant.desc"),
       icon: Star,
       borderColor: "border-purple-400",
       bgColor: "bg-purple-50",
     },
     {
-      title: "Community + Memory Vault",
-      desc: "Connect with other parents, share experiences, and save memories that last a lifetime.",
+      title: t("homepage.features.communityMemoryVault.title"),
+      desc: t("homepage.features.communityMemoryVault.desc"),
       icon: Users,
       borderColor: "border-green-400",
       bgColor: "bg-green-50",
@@ -257,18 +274,16 @@ useEffect(() => {
           <div className="container mx-auto text-center max-w-6xl">
             <div className="mb-10">
               <h1 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent leading-tight">
-                Your Baby's First Year Journey
+                {t('homepage.title')}
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Expert guidance, milestone tracking, and loving support for
-                parents navigating their baby's incredible first year of life.
-                Now with AI-powered chat support!
+                {t('homepage.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12"></div>
               <div className="relative w-full max-w-2xl mx-auto">
                 <Image
                   src="/happyBaby.png"
-                  alt="Happy baby with parents"
+                  alt={t('homepage.imageAlt')}
                   width={500}
                   height={500}
                   className="mx-auto mt-8 rounded-2xl shadow-2xl w-full h-auto"
@@ -288,10 +303,10 @@ useEffect(() => {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4 text-gray-800">
-                Everything You Need in One Place
+                {t('homepage.featuresTitle')}
               </h2>
               <p className="text-xl text-gray-600">
-                Comprehensive tools to support your parenting journey
+                {t('homepage.featuresSubtitle')}
               </p>
             </div>
 
@@ -302,10 +317,10 @@ useEffect(() => {
                     <Utensils className="w-6 h-6 text-pink-600" />
                   </div>
                   <CardTitle className="group-hover:text-pink-600 transition-colors text-xl font-semibold">
-                    Feeding Schedule
+                    {t('homepage.cards.feeding.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Track feeding times, amounts, and create custom schedules
+                    {t('homepage.cards.feeding.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -316,10 +331,10 @@ useEffect(() => {
                     <Package className="w-6 h-6 text-blue-600" />
                   </div>
                   <CardTitle className="group-hover:text-blue-600 transition-colors text-xl font-semibold">
-                    Inventory Tracker
+                    {t('homepage.cards.inventory.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Monitor baby essentials and get low stock alerts
+                    {t('homepage.cards.inventory.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -330,10 +345,10 @@ useEffect(() => {
                     <Camera className="w-6 h-6 text-purple-600" />
                   </div>
                   <CardTitle className="group-hover:text-purple-600 transition-colors text-xl font-semibold">
-                    Memory Vault
+                    {t('homepage.cards.memory.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Capture precious moments and share with community
+                    {t('homepage.cards.memory.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -344,10 +359,10 @@ useEffect(() => {
                     <Shield className="w-6 h-6 text-green-600" />
                   </div>
                   <CardTitle className="group-hover:text-green-600 transition-colors text-xl font-semibold">
-                    Vaccine Tracker
+                    {t('homepage.cards.vaccine.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Track vaccinations and upload medical records
+                    {t('homepage.cards.vaccine.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -358,10 +373,10 @@ useEffect(() => {
                     <PlayCircle className="w-6 h-6 text-orange-600" />
                   </div>
                   <CardTitle className="group-hover:text-orange-600 transition-colors text-xl font-semibold">
-                    Parent Resources
+                    {t('homepage.cards.resources.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Videos, articles, and expert advice
+                    {t('homepage.cards.resources.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -372,10 +387,10 @@ useEffect(() => {
                     <HelpCircle className="w-6 h-6 text-teal-600" />
                   </div>
                   <CardTitle className="group-hover:text-teal-600 transition-colors text-xl font-semibold">
-                    FAQs
+                    {t('homepage.cards.faq.title')}
                   </CardTitle>
                   <CardDescription className="text-gray-600 text-sm">
-                    Quick answers to common baby care questions
+                    {t('homepage.cards.faq.desc')}
                   </CardDescription>
                 </CardHeader>
               </Card>
@@ -390,12 +405,10 @@ useEffect(() => {
           <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4 text-gray-8000 leading-tight">
-                Why Mothers Trust NeoNest
+                {t("homepage.why_trust_title")}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                From sleepless nights to first giggles, NeoNest supports every
-                step of your parenting journey. Here's why thousands of parents
-                trust us.
+                {t("homepage.why_trust_desc")}
               </p>
             </div>
 
@@ -405,21 +418,18 @@ useEffect(() => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className={`relative w-full flex items-center mb-20 ${
-                    index % 2 === 0 ? "justify-start" : "justify-end"
-                  }`}
+                  className={`relative w-full flex items-center mb-20 ${index % 2 === 0 ? "justify-start" : "justify-end"
+                    }`}
                 >
                   <div
                     className={`absolute z-10 w-8 h-8 border-4 rounded-full bg-white flex items-center justify-center
-                      ${
-                        index % 2 === 0
-                          ? "left-1/2 -translate-x-1/2"
-                          : "right-1/2 translate-x-1/2"
+                      ${index % 2 === 0
+                        ? "left-1/2 -translate-x-1/2"
+                        : "right-1/2 translate-x-1/2"
                       }
-                      ${
-                        index % 2 === 0
-                          ? "border-pink-400"
-                          : "border-blue-400"
+                      ${index % 2 === 0
+                        ? "border-pink-400"
+                        : "border-blue-400"
                       }
                       shadow-md transition-all duration-300 hover:scale-110 hover:shadow-lg
                     `}
@@ -429,10 +439,9 @@ useEffect(() => {
 
                   <div
                     className={`relative z-20 w-full max-w-md p-6 shadow-xl rounded-xl border-2
-                      ${
-                        index % 2 === 0
-                          ? "border-pink-400 mr-8"
-                          : "border-blue-400 ml-8"
+                      ${index % 2 === 0
+                        ? "border-pink-400 mr-8"
+                        : "border-blue-400 ml-8"
                       }
                       bg-white/90 backdrop-blur-sm
                       transition-all duration-300 hover:shadow-2xl
@@ -460,7 +469,7 @@ useEffect(() => {
           <div className="container mx-auto max-w-6xl">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
               <h2 className="text-3xl font-bold text-gray-800 text-center mt-6 md:text-left">
-                Read how NeoNest helped parents
+                {t("homepage.review.title")}
               </h2>
               <div className="text-center md:text-right">
                 <Button
@@ -468,7 +477,7 @@ useEffect(() => {
                   className="text-pink-600 border-pink-400 font-semibold hover:bg-pink-50 px-6 py-2 rounded-full"
                   onClick={handleAddReviewClick}
                 >
-                  + Add Your Review
+                  {t("homepage.review.addReview")}
                 </Button>
               </div>
             </div>
@@ -489,7 +498,7 @@ useEffect(() => {
                       {userReview.content}
                     </p>
                     <div className="text-xs text-gray-500 mb-2">
-                      Tags:{" "}
+                      {t("homepage.review.tags")}{" "}
                       {userReview.keywords.map((word) => `"${word}"`).join(", ")}
                     </div>
                   </CardContent>
@@ -522,17 +531,16 @@ useEffect(() => {
                         {review.content}
                       </p>
                       <div className="text-xs text-gray-500 mb-2">
-                        Popular tags:{" "}
+                        {t("homepage.review.popularTags")}{" "}
                         {review.keywords.map((word) => `"${word}"`).join(", ")}
                       </div>
 
                       <div className="flex items-center gap-6 text-sm mt-3">
                         <div
-                          className={`cursor-pointer flex items-center gap-1 transition-colors duration-200 ${
-                            reaction.helpful
-                              ? "text-green-600"
-                              : "text-gray-400 hover:text-green-500"
-                          }`}
+                          className={`cursor-pointer flex items-center gap-1 transition-colors duration-200 ${reaction.helpful
+                            ? "text-green-600"
+                            : "text-gray-400 hover:text-green-500"
+                            }`}
                           onClick={() => handleReaction(index, "helpful")}
                         >
                           <ThumbsUp size={18} />
@@ -541,11 +549,10 @@ useEffect(() => {
                           </span>
                         </div>
                         <div
-                          className={`cursor-pointer flex items-center gap-1 transition-colors duration-200 ${
-                            reaction.notHelpful
-                              ? "text-red-600"
-                              : "text-gray-400 hover:text-red-500"
-                          }`}
+                          className={`cursor-pointer flex items-center gap-1 transition-colors duration-200 ${reaction.notHelpful
+                            ? "text-red-600"
+                            : "text-gray-400 hover:text-red-500"
+                            }`}
                           onClick={() => handleReaction(index, "notHelpful")}
                         >
                           <ThumbsDown size={18} />
@@ -565,7 +572,7 @@ useEffect(() => {
                 variant="outline"
                 className="text-pink-600 border-pink-400 font-bold hover:bg-pink-50 px-8 py-3 rounded-full"
               >
-                View All Reviews →
+                {t("homepage.review.viewAll")}
               </Button>
             </div>
           </div>
@@ -578,16 +585,15 @@ useEffect(() => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Smart Notifications System
+                {t("homepage.notificationSection.title")}
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Experience our intelligent notification system that keeps you informed about feeding times, 
-                sleep schedules, vaccines, milestones, and more. Test it out below!
-              </p>
+                {t("homepage.notificationSection.description")} </p>
             </div>
             <NotificationDemo />
           </div>
         </section>
+
 
         {showReviewPrompt && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
@@ -598,30 +604,29 @@ useEffect(() => {
               <button
                 onClick={handleDismissReview}
                 className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-200"
-                aria-label="Dismiss feedback modal"
+                aria-label={t('homepage.feedbackForm.dismissModalAria')}
               >
                 <X size={24} />
               </button>
 
               {feedbackSubmitted ? (
                 <div className="text-center text-green-700 font-semibold text-lg py-4">
-                  ✅ Thank you for your feedback!
+                  {t('homepage.feedbackForm.feedbackThankYou')}
                 </div>
               ) : (
                 <>
                   <h3 className="text-2xl font-bold text-yellow-800 mb-4 text-center">
-                    Help us make NeoNest better!
+                    {t('homepage.feedbackForm.helpImprove')}
                   </h3>
                   <div className="flex justify-center gap-2 mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
                         onClick={() => setSelectedRating(star)}
-                        className={`w-10 h-10 text-3xl transition-colors duration-200 ${
-                          selectedRating >= star
-                            ? "text-yellow-500"
-                            : "text-gray-300 hover:text-yellow-400"
-                        }`}
+                        className={`w-10 h-10 text-3xl transition-colors duration-200 ${selectedRating >= star
+                          ? "text-yellow-500"
+                          : "text-gray-300 hover:text-yellow-400"
+                          }`}
                       >
                         ★
                       </button>
@@ -629,7 +634,7 @@ useEffect(() => {
                   </div>
                   <textarea
                     rows={4}
-                    placeholder="Share your thoughts about NeoNest..."
+                    placeholder={t('homepage.feedbackForm.placeholder')}
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     className="w-full border border-gray-300 rounded-lg p-3 text-base resize-y focus:ring-2 focus:ring-yellow-400 focus:border-transparent outline-none"
@@ -641,7 +646,7 @@ useEffect(() => {
                       onClick={handleSubmitReview}
                       disabled={!selectedRating || reviewText.trim() === ""}
                     >
-                      Submit Feedback
+                      {t('homepage.feedbackForm.submitFeedback')}
                     </Button>
                   </div>
                 </>

@@ -1,0 +1,1467 @@
+{
+    "language": "Language",
+    "homepage": {
+        "title": "Your Baby's First Year Journey",
+        "description": "Expert guidance, milestone tracking, and loving support for parents navigating their baby's incredible first year of life. Now with AI-powered chat support!",
+        "imageAlt": "Happy baby with parents",
+        "features": {
+            "personalizedBabyTracker": {
+                "title": "Personalized Baby Tracker",
+                "desc": "NeoNest tailors insights based on your baby's age, growth, and needs, so you're never left guessing."
+            },
+            "expertBackedGuidance": {
+                "title": "Expert-Backed Guidance",
+                "desc": "All resources and tips are curated by pediatricians and parenting experts to ensure accuracy and care."
+            },
+            "aiPoweredAssistant": {
+                "title": "AI-Powered Assistant",
+                "desc": "Got questions at 2 AM? Our AI Chatbot is trained on baby care data and is always ready to help."
+            },
+            "communityMemoryVault": {
+                "title": "Community + Memory Vault",
+                "desc": "Connect with other parents, share experiences, and save memories that last a lifetime."
+            }
+        },
+        "toastMessages": {
+            "welcome": "Welcome {{name}}! Explore NeoNest and make your parenting experience beautiful!",
+            "welcomeBack": "Welcome back {{name}}! Continue your parenting journey with NeoNest!"
+        },
+        "reviews": {
+            "riya": {
+                "name": "Riya Sharma",
+                "tag": "Recommendations",
+                "content": "Got neonest recommended by a friend... imagining my son, Aarav's first year without it gives me goosebumps",
+                "keywords": [
+                    "Must have",
+                    "Smart parenting",
+                    "Better child care"
+                ]
+            },
+            "parag": {
+                "name": "Parag Mehta",
+                "tag": "Happy life",
+                "content": "My wife's been happier ever since she started using neonest. our parenting life in the first year was really good. Thankyou neonest💕",
+                "keywords": [
+                    "Helpful",
+                    "Life saver",
+                    "Easy parenting"
+                ]
+            },
+            "pooja": {
+                "name": "Pooja Desai",
+                "tag": "AI Pediatrician",
+                "content": "The AI pediatrician diagnosed my child's sickness based on symptoms and I was able to consult the doctor on time and help my child. Genius!",
+                "keywords": [
+                    "Health",
+                    "Reliable",
+                    "Safety"
+                ]
+            },
+            "nisha": {
+                "name": "Nisha Gupta",
+                "tag": "AI motherly",
+                "content": "AI mother role bohot motivate karta hai aur hamesha supportive rehta hai. Love it!",
+                "keywords": [
+                    "AI roles",
+                    "Helpful",
+                    "Comforting"
+                ]
+            }
+        },
+        "reviewForm": {
+            "you": "You",
+            "sharedExperience": "Shared Experience"
+        },
+        "featuresTitle": "Everything You Need in One Place",
+        "featuresSubtitle": "Comprehensive tools to support your parenting journey",
+        "cards": {
+            "feeding": {
+                "title": "Feeding Schedule",
+                "desc": "Track feeding times, amounts, and create custom schedules"
+            },
+            "inventory": {
+                "title": "Inventory Tracker",
+                "desc": "Monitor baby essentials and get low stock alerts"
+            },
+            "memory": {
+                "title": "Memory Vault",
+                "desc": "Capture precious moments and share with community"
+            },
+            "vaccine": {
+                "title": "Vaccine Tracker",
+                "desc": "Track vaccinations and upload medical records"
+            },
+            "resources": {
+                "title": "Parent Resources",
+                "desc": "Videos, articles, and expert advice"
+            },
+            "faq": {
+                "title": "FAQs",
+                "desc": "Quick answers to common baby care questions"
+            }
+        },
+        "why_trust_title": "Why Mothers Trust NeoNest",
+        "why_trust_desc": "From sleepless nights to first giggles, NeoNest supports every step of your parenting journey. Here's why thousands of parents trust us.",
+        "review": {
+            "title": "Read how NeoNest helped parents",
+            "addReview": "+ Add Your Review",
+            "tags": "Tags:",
+            "popularTags": "Popular tags:",
+            "viewAll": "View All Reviews →"
+        },
+        "notificationSection": {
+            "title": "Smart Notifications System",
+            "description": "Experience our intelligent notification system that keeps you informed about feeding times, sleep schedules, vaccines, milestones, and more. Test it out below!"
+        },
+        "feedbackForm": {
+            "dismissModalAria": "  Dismiss feedback modal",
+            "feedbackThankYou": "Thank you for your feedback!",
+            "helpImprove": "Help us make NeoNest better!",
+            "placeholder": "Share your thoughts about NeoNest...",
+            "submitFeedback": "Submit Feedback"
+        }
+    },
+    "navbar": {
+        "home": "Home",
+        "growth": "Growth",
+        "feeding": "Feeding",
+        "sleep": "Sleep",
+        "medical": "Medical",
+        "essentials": "Essentials",
+        "memories": "Memories",
+        "resources": "Resources",
+        "faqs": "FAQs",
+        "lullaby": "Lullaby",
+        "login": "Login",
+        "signup": "Sign Up",
+        "logout": "Logout",
+        "logout_success": "Logged out successfully. {{loginLink}} again!"
+    },
+    "newsletter": {
+        "title": "Subscribe to Our Newsletter",
+        "placeholder": "Enter your email",
+        "button": "Subscribe",
+        "thankyou": "Thank you for subscribing! We’ll send updates to your email."
+    },
+    "stats": {
+        "babiesTracked": "Babies Tracked",
+        "aiResponses": "AI Responses",
+        "avgRating": "Avg. Rating",
+        "happyParents": "Happy Parents"
+    },
+    "notifications": {
+        "title": "Notification Demo",
+        "subtitle": "Test different types of notifications",
+        "success": "Notification created successfully!",
+        "failure": "Failed to create notification",
+        "creating": "Creating...",
+        "createButton": "Create Notification",
+        "types": {
+            "feeding": {
+                "title": "Feeding Reminder",
+                "description": "Create a feeding reminder for 5 minutes from now"
+            },
+            "sleep": {
+                "title": "Sleep Reminder",
+                "description": "Create a sleep reminder for 10 minutes from now"
+            },
+            "vaccine": {
+                "title": "Vaccine Reminder",
+                "description": "Create a vaccine reminder for tomorrow"
+            },
+            "milestone": {
+                "title": "Milestone Celebration",
+                "description": "Create a milestone celebration notification"
+            },
+            "essentials": {
+                "title": "Essentials Alert",
+                "description": "Create a low stock alert for diapers"
+            },
+            "weather": {
+                "title": "Weather Alert",
+                "description": "Create a weather-based reminder"
+            },
+            "appointment": {
+                "title": "Appointment Reminder",
+                "description": "Create an appointment reminder"
+            }
+        },
+        "howItWorksTitle": "How it works:",
+        "howItWorks": {
+            "step1": "Click any button above to create a test notification",
+            "step2": "Notifications will appear in the bell icon in the navbar",
+            "step3": "You can mark them as read, delete them, or click to navigate",
+            "step4": "Visit the notifications page to see all your notifications"
+        }
+    },
+    "footer": {
+        "tagline": "Supporting parents through their baby's first year with expert guidance, AI tools, and a loving community.",
+        "happyBaby": "Happy baby, Happy you!",
+        "features": "Features",
+        "support": "Support",
+        "projectLinks": "Project Links",
+        "copyright": "© 2025 NeoNest by",
+        "license": "MIT License",
+        "madeWith": "Made with",
+        "forParents": "for parents and babies",
+        "featuresList": {
+            "growth": "Growth Tracker",
+            "feeding": "Feed Scheduler",
+            "sleep": "Sleep Tracker",
+            "medical": "Vaccine Tracker",
+            "essentials": "Inventory Tracker"
+        },
+        "supportList": {
+            "about": "About NeoNest",
+            "faq": "FAQs",
+            "resources": "Resources",
+            "ai": "NeoNest AI",
+            "memories": "Memories, Community & Blogs"
+        },
+        "projectList": {
+            "repo": "GitHub Repository",
+            "live": "Live Website",
+            "guide": "Contributing Guide",
+            "discussions": "GitHub Discussions"
+        }
+    },
+    "loginPrompt": {
+        "title": "Access Your Baby's Personalized Features",
+        "description": "Please log in to access your baby's personalized {{section}} and track their progress with our comprehensive tools.",
+        "feature1": "Track growth and milestones",
+        "feature2": "Store precious memories",
+        "signIn": "Sign In",
+        "signUpHere": "Sign up here",
+        "noAccount": "Don't have an account?",
+        "loading": "Loading..."
+    },
+    "essentials": {
+        "pageTitle": "Essentials | NeoNest",
+        "babyEssentialsTracker": "Baby Essentials Tracker",
+        "trackerDescription": "Keep track of diapers, formula, and other baby essentials",
+        "addItem": "Add Item",
+        "notSureWhatToAdd": "Not sure what to add? Start with these essentials:",
+        "seeEssentials": "See Essentials",
+        "hideEssentials": "Hide Essentials",
+        "loadingYourEssentials": "Loading your baby essentials...",
+        "errorLoadingData": "Error Loading Data",
+        "retry": "Retry",
+        "loading": "Loading...",
+        "noAuthToken": "No authentication token found",
+        "failedFetchInventory": "Failed to fetch inventory",
+        "failedAddItem": "Failed to add item",
+        "failedUpdateItem": "Failed to update item",
+        "failedDeleteItem": "Failed to delete item",
+        "failedUpdateStock": "Failed to update stock",
+        "outOfStock": "Out of Stock",
+        "lowStock": "Low Stock",
+        "inStock": "In Stock",
+        "outOfStockWithCount": "{{count}} items out of stock",
+        "lowStockAlertWithCount": "{{count}} items low on stock",
+        "add_item": "Add New Item",
+        "edit_item": "Edit Item",
+        "item_name": "Item Name",
+        "category": "Category",
+        "current_stock": "Current Stock",
+        "min_threshold": "Low Stock Alert (minimum)",
+        "unit": "Unit",
+        "notes": "Notes",
+        "add": "Add Item",
+        "update": "Update Item",
+        "cancel": "Cancel",
+        "no_items_title": "No items in inventory",
+        "no_items_desc": "Start tracking your baby essentials to get low stock alerts",
+        "add_first_item": "Add Your First Item",
+        "alert_when_below": "Alert when below",
+        "edit": "Edit",
+        "delete": "Delete",
+        "shopping_list": "Shopping List",
+        "need": "Need"
+    },
+    "resources": {
+        "title": "Parenting Resources",
+        "subtitle": "Curated articles to support your parenting journey",
+        "searchPlaceholder": "Search articles...",
+        "categoryLabel": "Category:",
+        "categories": {
+            "all": "All Resources",
+            "feeding": "Feeding & Nutrition",
+            "sleep": "Sleep & Rest",
+            "development": "Development",
+            "health": "Health & Safety"
+        },
+        "buttons": {
+            "readArticle": "Read Article",
+            "clearFilters": "Clear Filters"
+        },
+        "noResults": "No articles found matching your criteria.",
+        "articles": [
+            {
+                "id": 1,
+                "title": "Introducing Solids: A Step-by-Step Guide",
+                "description": "Learn when and how to introduce solid foods to your baby, with tips for making the transition smooth",
+                "url": "https://example.com/introducing-solids",
+                "author": "Dr. Emily Parker",
+                "readTime": "8 min read",
+                "publishDate": "2024-03-15",
+                "category": "feeding",
+                "tags": [
+                    "weaning",
+                    "nutrition",
+                    "first foods"
+                ]
+            },
+            {
+                "id": 2,
+                "title": "Establishing Healthy Sleep Habits",
+                "description": "Practical advice for helping your baby develop good sleep patterns from the start",
+                "url": "https://example.com/sleep-habits",
+                "author": "Sleep Consultant Team",
+                "readTime": "10 min read",
+                "publishDate": "2024-02-28",
+                "category": "sleep",
+                "tags": [
+                    "sleep training",
+                    "routine",
+                    "newborn"
+                ]
+            },
+            {
+                "id": 3,
+                "title": "Baby-Proofing Your Home: The Complete Checklist",
+                "description": "Essential safety measures to protect your curious crawler and toddler",
+                "url": "https://example.com/baby-proofing",
+                "author": "Safety First Organization",
+                "readTime": "12 min read",
+                "publishDate": "2024-01-20",
+                "category": "health",
+                "tags": [
+                    "safety",
+                    "childproofing",
+                    "home"
+                ]
+            },
+            {
+                "id": 4,
+                "title": "Understanding Developmental Milestones",
+                "description": "What to expect in your baby's first year of growth and development",
+                "url": "https://example.com/developmental-milestones",
+                "author": "Dr. Michael Chen",
+                "readTime": "15 min read",
+                "publishDate": "2023-12-10",
+                "category": "development",
+                "tags": [
+                    "growth",
+                    "milestones",
+                    "first year"
+                ]
+            },
+            {
+                "id": 5,
+                "title": "Breastfeeding Tips for New Mothers",
+                "description": "Expert advice for overcoming common breastfeeding challenges",
+                "url": "https://example.com/breastfeeding-tips",
+                "author": "Lactation Consultant Team",
+                "readTime": "9 min read",
+                "publishDate": "2024-03-01",
+                "category": "feeding",
+                "tags": [
+                    "breastfeeding",
+                    "newborn",
+                    "latching"
+                ]
+            },
+            {
+                "id": 6,
+                "title": "The Importance of Tummy Time",
+                "description": "How tummy time helps your baby's development and ways to make it enjoyable",
+                "url": "https://example.com/tummy-time",
+                "author": "Pediatric Physical Therapists",
+                "readTime": "7 min read",
+                "publishDate": "2024-02-15",
+                "category": "development",
+                "tags": [
+                    "motor skills",
+                    "play",
+                    "development"
+                ]
+            }
+        ]
+    },
+    "faq": {
+        "pagetitle": "FAQs | NeoNest",
+        "title": "Frequently Asked Questions",
+        "subtitle": "Find quick answers to common baby care questions",
+        "searchPlaceholder": "Search FAQs...",
+        "categories": {
+            "feeding": "Feeding & Nutrition",
+            "sleep": "Sleep & Rest",
+            "development": "Development & Milestones",
+            "health": "Health & Safety"
+        },
+        "questions": {
+            "feeding": [
+                {
+                    "q": "When should I start introducing solid foods?",
+                    "a": "Most babies are ready for solid foods around 6 months of age. Signs of readiness include sitting up with support, showing interest in food, and losing the tongue-thrust reflex."
+                },
+                {
+                    "q": "How often should I breastfeed my newborn?",
+                    "a": "Newborns typically need to feed every 2-3 hours, or 8-12 times per day. Follow your baby's hunger cues rather than strict schedules."
+                },
+                {
+                    "q": "How do I know if my baby is getting enough milk?",
+                    "a": "Look for 6-8 wet diapers a day, steady weight gain, and a baby who seems content after feeding. Your pediatrician will track their growth at checkups."
+                },
+                {
+                    "q": "When can my baby have water?",
+                    "a": "It's best to wait until your baby is around 6 months old and starting solids. Breast milk or formula provides all the hydration they need before then."
+                },
+                {
+                    "q": "What's the difference between spit-up and vomit?",
+                    "a": "Spit-up is a gentle flow of milk from your baby's mouth, while vomit is more forceful and involves a larger volume. Frequent, forceful vomiting warrants a call to the doctor."
+                },
+                {
+                    "q": "How should I store expressed breast milk?",
+                    "a": "Store breast milk in clean bottles or bags. It can be kept at room temperature for up to 4 hours, in the fridge for up to 4 days, or in the freezer for about 6 months."
+                },
+                {
+                    "q": "What foods should I avoid giving my baby?",
+                    "a": "Avoid honey (before 12 months), whole nuts, hard candies, popcorn, and foods that are choking hazards. Also avoid cow's milk as a drink before 12 months."
+                }
+            ],
+            "sleep": [
+                {
+                    "q": "How much sleep does my baby need?",
+                    "a": "Newborns sleep 14-17 hours per day, while 6-12 month olds need 12-16 hours including naps. Sleep patterns vary greatly between babies."
+                },
+                {
+                    "q": "What is a good bedtime routine?",
+                    "a": "A simple, calming routine can help signal it's time to sleep. Try a warm bath, a gentle massage, reading a short story, or singing a lullaby."
+                },
+                {
+                    "q": "When will my baby sleep through the night?",
+                    "a": "Most babies can sleep through the night (6-8 hours) by 3-6 months, but this varies. Some may take longer, and that's completely normal."
+                },
+                {
+                    "q": "Is it safe for my baby to sleep on their stomach?",
+                    "a": "No, always place babies on their back to sleep to reduce the risk of SIDS. Once they can roll over on their own, it's okay if they choose to sleep on their stomach."
+                },
+                {
+                    "q": "When should I stop swaddling my baby?",
+                    "a": "Stop swaddling when your baby shows signs of rolling over, which is usually around 2-4 months. Transition to a sleep sack for safety."
+                },
+                {
+                    "q": "How do I handle sleep regressions?",
+                    "a": "Sleep regressions are normal and often linked to growth spurts or developmental milestones. Stick to your routine, offer extra comfort, and it should pass in a few weeks."
+                }
+            ],
+            "development": [
+                {
+                    "q": "When should my baby start crawling?",
+                    "a": "Most babies start crawling between 6-10 months. Some babies skip crawling entirely and go straight to walking, which is also normal."
+                },
+                {
+                    "q": "Why is tummy time important?",
+                    "a": "Tummy time helps strengthen your baby's neck and shoulder muscles, which are crucial for rolling over and crawling. It also helps prevent a flat spot on their head."
+                },
+                {
+                    "q": "How can I help with teething pain?",
+                    "a": "Offer a solid, chilled teething toy or a cool, wet washcloth. Gently massaging their gums with a clean finger can also provide relief."
+                },
+                {
+                    "q": "When do babies typically say their first words?",
+                    "a": "First words usually appear between 10-14 months. 'Mama' and 'dada' are often among the first words, though they may not be used meaningfully at first."
+                },
+                {
+                    "q": "Should I worry if my baby isn't hitting milestones?",
+                    "a": "Babies develop at their own pace, and there's a wide range of normal. However, if you have concerns about a significant delay, always discuss it with your pediatrician."
+                },
+                {
+                    "q": "How can I encourage my baby's development?",
+                    "a": "Talk, read, and sing to your baby regularly. Provide tummy time, offer age-appropriate toys, and respond to their cues and attempts at communication."
+                }
+            ],
+            "health": [
+                {
+                    "q": "When should I call the pediatrician?",
+                    "a": "Call for fever over 100.4°F (38°C) in a newborn, difficulty breathing, persistent vomiting, signs of dehydration, or if you're concerned about any changes in behavior."
+                },
+                {
+                    "q": "How often should I bathe my baby?",
+                    "a": "A full bath 2-3 times a week is usually enough for a baby in the first year. Too much bathing can dry out their sensitive skin."
+                },
+                {
+                    "q": "What should I do for a diaper rash?",
+                    "a": "Change diapers frequently, clean the area gently with water, and allow it to air dry. Apply a thick layer of zinc oxide diaper cream for protection."
+                },
+                {
+                    "q": "How do I care for the umbilical cord stump?",
+                    "a": "Keep the stump clean and dry until it falls off on its own, usually within 1-2 weeks. Fold the diaper down to expose it to air and give sponge baths until it has healed."
+                },
+                {
+                    "q": "How often should my baby have checkups?",
+                    "a": "Regular checkups are typically at birth, 3-5 days, 2 weeks, and then at 2, 4, 6, 9, and 12 months during the first year."
+                },
+                {
+                    "q": "What vaccines does my baby need?",
+                    "a": "Follow the CDC vaccination schedule, which includes vaccines for hepatitis B, DTaP, Hib, PCV, IPV, rotavirus, and others. Your pediatrician will guide you."
+                }
+            ]
+        }
+    },
+    "lullabies": {
+        "tracks": [
+            {
+                "id": 1,
+                "title": "Twinkle Twinkle Little Star",
+                "artist": "Jane Doe",
+                "language": "English",
+                "audioSrc": "/TwinkleTwinkle.mp3",
+                "coverArt": "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)"
+            },
+            {
+                "id": 2,
+                "title": "Baa Baa Black Sheep",
+                "artist": "Jane Doe",
+                "language": "English",
+                "audioSrc": "/babaBlackSheep.mp3",
+                "coverArt": "linear-gradient(to right, #4facfe 0%, #00f2fe 100%)"
+            },
+            {
+                "id": 3,
+                "title": "Lori Lori",
+                "artist": "Traditional",
+                "language": "Hindi",
+                "audioSrc": "/LoriLori.mp3",
+                "coverArt": "linear-gradient(to right, #ffecd2 0%, #fcb69f 100%)"
+            },
+            {
+                "id": 4,
+                "title": "Chanda Hai Tu",
+                "artist": "Traditional",
+                "language": "Hindi",
+                "audioSrc": "/chandaHaiTu.mp3",
+                "coverArt": "linear-gradient(to top, #d299c2 0% , #fe9d7 100%)"
+            },
+            {
+                "id": 5,
+                "title": "Lakdi Ki Kathi",
+                "artist": "Traditional",
+                "language": "Hindi",
+                "audioSrc": "/LakdiKiKathi.mp3",
+                "coverArt": "linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
+            }
+        ],
+        "uploadYourOwn": "Upload Your Own Lullaby",
+        "customUpload": "Custom Upload",
+        "playlist": "Playlist",
+        "sleepTimer": "Sleep Timer",
+        "minutesPlaceholder": "Mins",
+        "setTimer": "Set Timer",
+        "stopIn": "Will stop in",
+        "noLullabiesAvailable": "No lullabies available for the selected language."
+    },
+    "neochatbot": {
+        "switched_to_role": "Switched to {{role}} mode",
+        "oops_something_wrong": "Oops! Something went wrong. Please try again.",
+        "copied_to_clipboard": "Copied to clipboard!",
+        "failed_to_copy": "Failed to copy!",
+        "neonest_ai_chatbot": "NeoNest AI Chatbot",
+        "choose_role": "Choose the role you'd like to chat with",
+        "ai_advice_disclaimer": "AI advice is not a substitute for professional medical consultation.",
+        "copy_to_clipboard": "Copy to clipboard",
+        "listen_to_response": "Listen to response",
+        "ai_is_thinking": "NeoNest AI is thinking...",
+        "new_message": "New Message",
+        "listening_placeholder": "Listening... Speak now...",
+        "ask_about_baby": "Ask me about baby care...",
+        "voice_input_tooltip": "Click to start voice input (requires internet connection)",
+        "chat_analytics": "Chat Analytics",
+        "total_conversations": "Total Conversations",
+        "messages_sent": "Messages Sent",
+        "average_response_time": "Avg. Response Time",
+        "satisfaction": "Satisfaction",
+        "top_questions": "Top Questions",
+        "pediatrician": "Pediatrician",
+        "baby": "Baby",
+        "mother": "Motherly",
+        "when_should_baby_crawl": "When should baby crawl?",
+        "how_to_introduce_solid_foods": "How to introduce solid foods?",
+        "good_sleep_schedule_6_months": "Good sleep schedule for 6 months",
+        "is_babys_crying_normal": "Is baby's crying normal?",
+        "when_do_babies_teeth": "When do babies get teeth?",
+        "total_messages": "Message sent",
+        "satisfaction_rate": "satisfaction"
+    },
+    "autotaskmanager": {
+        "manageLogsPlaceholder": "Manage Your Logs Here... e.g. Add Essential",
+        "setTask": "Set Task",
+        "clear": "Clear",
+        "fileRemoved": "File removed",
+        "taskFailed": "❌ {{task}}",
+        "taskSuccess": "{{emoji}} {{task}}"
+    },
+    "login": {
+        "pagetitle": "Login | NeoNest",
+        "title": "Welcome Back to NeoNest!",
+        "subtitle": "Sign in to continue your parenting journey",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "you@example.com",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "••••••••",
+        "submitButton": "Sign In",
+        "submitButtonDisabled": "Please fill all fields",
+        "noAccount": "Don't have an account?",
+        "signupLink": "Sign up here",
+        "errorEmptyEmail": "Email cannot be empty.",
+        "errorInvalidEmail": "Please enter a valid email address.",
+        "errorEmptyPassword": "Password cannot be empty.",
+        "errorShortPassword": "Password must be at least 6 characters.",
+        "errorFormInvalid": "Please correct the errors in the form.",
+        "errorWrongPassword": "Invalid email or password.",
+        "errorMissingDetails": "Please enter both email and password.",
+        "errorUnknown": "An unexpected error occurred.",
+        "errorNetwork": "Network error or unexpected problem. Please try again.",
+        "errorNoUser": "No such user exists! <1>Sign up</1> instead."
+    },
+    "signup": {
+        "pagetitle": "Signup | NeoNest",
+        "title": "Parent Signup",
+        "subtitle": "Create your account to start your parenting journey",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Your name",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "Your email",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Create a strong password",
+        "passwordNote": "Password must be at least 6 characters.",
+        "submitButton": "Create Account",
+        "submitButtonDisabled": "Please fill all fields",
+        "loginInstead": "Email already exists! <1>Login</1> instead.",
+        "privacyNoticeLabel": "Privacy Notice:",
+        "alreadyAccount": "Already have an account?",
+        "signInHere": "Sign in here",
+        "privacyNotice": "At NeoNest, your data privacy is paramount. We are committed to keeping your information confidential and do not share it with third parties.",
+        "errorEmptyName": "Name cannot be empty.",
+        "errorShortName": "Name must be at least 2 characters.",
+        "errorEmptyEmail": "Email cannot be empty.",
+        "errorInvalidEmail": "Please enter a valid email address.",
+        "errorEmptyPassword": "Password cannot be empty.",
+        "errorShortPassword": "Password must be at least 6 characters.",
+        "errorWeakPassword": "Password must contain at least one letter and one number.",
+        "errorFormInvalid": "Please correct the errors in the form.",
+        "errorEmailExists": "Email already exists!",
+        "errorUnknown": "An unexpected error occurred.",
+        "errorNetwork": "Network error or unexpected problem."
+    },
+    "babypage": {
+        "title": "Baby Details",
+        "subtitle": "Tell us about your little one(s) to personalize your experience",
+        "generalInfo": "General Information",
+        "noOfBabies": "Number of Babies  at birth",
+        "delivery_type": "Type of Delivery",
+        "select_delivery": "Select Delivery Type",
+        "deliveryTypes": {
+            "normal": "Normal",
+            "csection": "C-Section",
+            "assisted": "Assisted"
+        },
+        "baby": "Baby",
+        "noOfBabiesOptions": {
+            "1": "1 (Single)",
+            "2": "2 (Twins)",
+            "3": "3 (Triplets)"
+        },
+        "form": {
+            "selectGender": "Select Gender",
+            "babyName": "Baby's Name",
+            "dob": "Date of Birth",
+            "time": "Time of Birth",
+            "gender": "Gender",
+            "weight": "Weight at Birth (kg)"
+        },
+        "genderOptions": {
+            "boy": "Boy",
+            "girl": "Girl",
+            "other": "Other"
+        },
+        "privacy": "Privacy Notice:",
+        "privacyNotice": "Privacy Notice: At NeoNest, your data privacy is paramount. We are committed to keeping your information confidential and do not share it with third parties.",
+        "submit": {
+            "complete": "Complete Setup",
+            "incomplete": "Please fill all required fields"
+        },
+        "validation": {
+            "delivery_required": "Delivery type is required.",
+            "babyname_required": "Name is required.",
+            "dob_required": "Date of birth is required.",
+            "time_required": "Time of birth is required.",
+            "gender_required": "Gender is required."
+        },
+        "toast": {
+            "form_error": "Please correct the errors in the form.",
+            "network_error": "Network error or unexpected problem.",
+            "server_error": "Unexpected server error"
+        }
+    },
+    "growth": {
+        "pagetitle": "Growth | NeoNest",
+        "title": "Growth Tracker",
+        "subtitle": "Log your baby's growth, track milestones, and visualize progress over time.",
+        "enterDob": "Enter your baby's Date of Birth",
+        "ageGroup": "Age Group:",
+        "logEntry": "Add Growth Log Entry",
+        "editEntry": "Edit Growth Log Entry",
+        "date": "Date (YYYY-MM-DD)",
+        "head": "Head Circumference (cm)",
+        "comment": "Comment",
+        "addEntry": "Add Entry",
+        "updateEntry": "Update Entry",
+        "logEntries": "Growth Log Entries",
+        "chart": "Growth Chart",
+        "heightLabel": "Height (cm)",
+        "weightLabel": "Weight (kg)",
+        "yourHeight": "Your Baby's Height",
+        "whoHeight": "WHO Standard Height",
+        "yourWeight": "Your Baby's Weight",
+        "whoWeight": "WHO Standard Weight",
+        "noEntries": "No growth log entries yet. Please add your baby's growth records.",
+        "milestone": "Developmental Milestones",
+        "badge": "Congratulations! 🎉 Your baby has unlocked a milestone badge for rolling over and sitting without support.",
+        "moreInfo": "For more information and guidance, please visit our",
+        "resources": "Resources",
+        "or": "or",
+        "faqs": "FAQs",
+        "milestones": {
+            "0": [
+                "Lifts head",
+                "Responds to sound"
+            ],
+            "1": [
+                "Smiles at people",
+                "Follows objects"
+            ],
+            "2": [
+                "Rolls over",
+                "Holds head steady"
+            ],
+            "3": [
+                "Sits without support",
+                "Pushes down on legs"
+            ]
+        },
+        "labels": {
+            "enterMilestone": "Enter milestone",
+            "month": "Month",
+            "add": "Add",
+            "completed": "Completed",
+            "pending": "Pending",
+            "askChatbot": "⚠️ Ask Chatbot about milestone delay?"
+        },
+        "growthTips": {
+            "title": "Growth Tracking Tips",
+            "measure": "Measure at the same time of day for consistency",
+            "weigh": "Weigh before feeding for accurate results",
+            "track": "Track weekly for infants, bi-weekly for toddlers",
+            "consult": "Consult your pediatrician about growth patterns"
+        },
+        "noEntriesTitle": "No Growth Entries Yet",
+        "noEntriesDescription": "Start logging your baby's measurements to unlock growth charts and insights!",
+        "missingBabyInfo": "Please fill in baby information above first",
+        "whoChartTitle": "WHO Growth Standards Chart",
+        "recentChanges": "Recent Changes",
+        "totalGrowth": "Total Growth",
+        "height": "Height",
+        "weight": "Weight",
+        "overDays": "Over {{count}} days",
+        "statisticsTitle": "Growth Statistics",
+        "addEntriesNote": "Add more entries to see growth statistics.",
+        "whoReferenceLabel": "WHO Reference",
+        "whoReferenceDescription": "The colored bars show World Health Organization growth standards (50th percentile) for {{gender}} to help track your baby's growth progress.",
+        "boys": "boys",
+        "girls": "girls",
+        "babyInfoTitle": "Baby Information",
+        "dobLabel": "Date of Birth",
+        "dobPlaceholder": "Select date of birth",
+        "genderLabel": "Gender",
+        "selectGender": "Select Gender",
+        "genderMale": "Male",
+        "genderFemale": "Female",
+        "currentAge": "Current Age",
+        "gender": "Gender",
+        "boy": "Boy",
+        "girl": "Girl",
+        "milestoneGroup": "Milestone Group"
+    },
+    "interaction": {
+        "heading": "Interaction Tips by Age",
+        "subheading": "Discover meaningful ways to engage with your baby",
+        "stages": {
+            "0_3": {
+                "title": "0–3 Months",
+                "tips": [
+                    "⮞ Make eye contact and smile often",
+                    "⮞ Talk softly and describe what you're doing",
+                    "⮞ Sing lullabies and gentle songs",
+                    "⮞ Practice supervised tummy time daily",
+                    "⮞ Give gentle baby massages",
+                    "⮞ Use high-contrast toys and patterns",
+                    "⮞ Hold baby close during feeding times",
+                    "⮞ Respond to their coos and sounds",
+                    "⮞ Show different facial expressions",
+                    "⮞ Create a calm, soothing environment"
+                ]
+            },
+            "4_6": {
+                "title": "4–6 Months",
+                "tips": [
+                    "⮞ Play peekaboo games",
+                    "⮞ Use mirrors for interactive play",
+                    "⮞ Introduce age-appropriate rattles",
+                    "⮞ Read simple picture books together",
+                    "⮞ Encourage rolling and reaching",
+                    "⮞ Let them grasp safe toys",
+                    "⮞ Practice sitting with support",
+                    "⮞ Make different sounds and voices",
+                    "⮞ Show cause and effect toys",
+                    "⮞ Name objects and body parts"
+                ]
+            },
+            "7_9": {
+                "title": "7–9 Months",
+                "tips": [
+                    "⮞ Play interactive songs with actions",
+                    "⮞ Let them explore safe objects",
+                    "⮞ Support crawling attempts",
+                    "⮞ Play with different textures",
+                    "⮞ Practice object permanence games",
+                    "⮞ Encourage self-feeding practice",
+                    "⮞ Create safe exploration spaces",
+                    "⮞ Use simple words consistently",
+                    "⮞ Play gentle chase games",
+                    "⮞ Introduce basic finger games"
+                ]
+            },
+            "10_12": {
+                "title": "10–12 Months",
+                "tips": [
+                    "⮞ Name objects and actions regularly",
+                    "⮞ Support standing and cruising",
+                    "⮞ Play stacking and sorting games",
+                    "⮞ Encourage clapping and waving",
+                    "⮞ Practice walking with support",
+                    "⮞ Read interactive books together",
+                    "⮞ Play simple hide and seek",
+                    "⮞ Encourage imitation of sounds",
+                    "⮞ Use simple puzzles and shapes",
+                    "⮞ Create music with simple instruments"
+                ]
+            }
+        }
+    },
+    "feeding": {
+        "pagetitle": "Feeding | NeoNest",
+        "title": "Feeding: Tips and Schedule",
+        "subtitle": "Track your baby's feeding times and learn best practices with our intuitive interface.",
+        "addFeeding": "Add Feeding",
+        "editFeeding": "Edit Feeding",
+        "addNewFeeding": "Add New Feeding",
+        "updateFeeding": "Update Feeding",
+        "cancel": "Cancel",
+        "time": "Time",
+        "type": "Type",
+        "amount": "Amount",
+        "notes": "Notes",
+        "placeholderAmount": "e.g., 4 oz, 30 min, 1/2 cup",
+        "placeholderNotes": "Optional notes",
+        "todaySchedule": "Today's Feeding Schedule",
+        "feedingsCount": "{{count}} feedings",
+        "loading": "Loading...",
+        "errorLoading": "Failed to load schedules. Please try again later.",
+        "errorAdd": "Failed to add feeding log.",
+        "errorUpdate": "Failed to update feeding log.",
+        "errorDelete": "Failed to delete feeding log.",
+        "emptyMessage": "No feedings scheduled for today",
+        "addFirstFeeding": "Add First Feeding",
+        "breastfeeding": "Breastfeeding",
+        "bottle": "Bottle",
+        "solidFood": "Solid Food"
+    },
+    "feedingtips": {
+        "title": "Feeding Tips",
+        "subtitle": "Essential guidance for safe and healthy feeding",
+        "categories": [
+            {
+                "title": "General Feeding Tips",
+                "tips": [
+                    "⮞ Always feed in a calm, comfortable setting.",
+                    "⮞ Sterilize bottles and utensils properly.",
+                    "⮞ Watch for hunger cues rather than sticking to strict schedules.",
+                    "⮞ Burp your baby after every feed.",
+                    "⮞ Do not add cereal to bottles unless prescribed.",
+                    "⮞ Gradually introduce one solid food at a time after 6 months.",
+                    "⮞ Ensure baby stays upright during and after feeding.",
+                    "⮞ Avoid honey before 12 months.",
+                    "⮞ Keep hydrated – breast milk or formula covers hydration until 6 months.",
+                    "⮞ Trust your baby's appetite – don't force-feed."
+                ]
+            },
+            {
+                "title": "Feeding Cautions & Notes",
+                "tips": [
+                    "⮞ Do not feed cow's milk before 1 year.",
+                    "⮞ Avoid choking hazards – no nuts, grapes, or raw carrots early on.",
+                    "⮞ Check food temperature before feeding.",
+                    "⮞ Don't prop bottles or leave baby unattended.",
+                    "⮞ Limit juice; it's not necessary for infants.",
+                    "⮞ Watch for food allergies – introduce one new food every 3 days.",
+                    "⮞ No added salt or sugar in baby foods.",
+                    "⮞ Always supervise during solid feeding.",
+                    "⮞ Avoid overfeeding – look for satiety signs.",
+                    "⮞ Breastfeeding mothers should monitor their diet too."
+                ]
+            }
+        ],
+        "ageTipsTitle": "Tips by Age",
+        "ageTipsSubtitle": "Age-appropriate feeding guidance for your baby",
+        "ageBasedTips": [
+            {
+                "title": "0–3 Months",
+                "tips": [
+                    "⮞ Exclusive breastfeeding or formula feeding.",
+                    "⮞ Feed every 2–3 hours, or 8–12 times per day.",
+                    "⮞ Each feeding may take 20-40 minutes.",
+                    "⮞ Watch for hunger cues: rooting, sucking motions.",
+                    "⮞ No water or solid foods needed yet.",
+                    "⮞ Expect 6-8 wet diapers daily.",
+                    "⮞ Feed on demand, not by strict schedule.",
+                    "⮞ Learn proper latching techniques.",
+                    "⮞ Keep track of feeding times and sides.",
+                    "⮞ Maintain proper feeding position."
+                ]
+            },
+            {
+                "title": "4–6 Months",
+                "tips": [
+                    "⮞ Continue breast milk or formula as main nutrition.",
+                    "⮞ May begin solid foods if showing readiness signs.",
+                    "⮞ Start with single-grain iron-fortified cereals.",
+                    "⮞ Introduce one new food at a time.",
+                    "⮞ Wait 3-5 days between new foods.",
+                    "⮞ Look for signs of food allergies.",
+                    "⮞ Feed solids after milk/formula.",
+                    "⮞ Start with 1-2 tablespoons per feeding.",
+                    "⮞ Use proper consistency - very runny at first.",
+                    "⮞ Never force feed - follow baby's cues."
+                ]
+            },
+            {
+                "title": "7–9 Months",
+                "tips": [
+                    "⮞ Introduce pureed fruits and vegetables.",
+                    "⮞ Begin finger foods when ready.",
+                    "⮞ Offer soft, small pieces of food.",
+                    "⮞ Continue breast milk or formula.",
+                    "⮞ Establish regular meal times.",
+                    "⮞ Include protein-rich foods.",
+                    "⮞ Watch for pincer grasp development.",
+                    "⮞ Encourage self-feeding attempts.",
+                    "⮞ Offer water in sippy cup.",
+                    "⮞ Make mealtime interactive and fun."
+                ]
+            },
+            {
+                "title": "10–12 Months",
+                "tips": [
+                    "⮞ Transition to more table foods.",
+                    "⮞ Offer three meals plus snacks.",
+                    "⮞ Continue breast milk or formula.",
+                    "⮞ Introduce cup drinking.",
+                    "⮞ Encourage self-feeding.",
+                    "⮞ Offer variety of textures.",
+                    "⮞ Include iron-rich foods.",
+                    "⮞ Make food bite-sized.",
+                    "⮞ Establish family meal routines.",
+                    "⮞ Avoid foods that are choking hazards."
+                ]
+            }
+        ],
+        "moreInfo": "For more information, visit",
+        "resources": "Resources",
+        "faqs": "FAQs"
+    },
+    "sleep": {
+        "pagetitle": "Sleep | NeoNest",
+        "sleepTitle": "Sleep: Tips & Routine",
+        "sleepDescription": "Track your baby’s naps, nighttime sleep, and moods after rest.",
+        "addSleepLog": "Add Sleep Log",
+        "editSleepLog": "Edit Sleep Log",
+        "time": "Time",
+        "sleepType": "Sleep Type",
+        "duration": "Duration",
+        "moodAfterSleep": "Mood After Sleep",
+        "notes": "Notes",
+        "add": "Add",
+        "update": "Update",
+        "cancel": "Cancel",
+        "nap": "Nap",
+        "nightSleep": "Night Sleep",
+        "moodAfterSleepHappy": "Happy 😊",
+        "moodAfterSleepSleepy": "Still Sleepy 😴",
+        "moodAfterSleepCranky": "Cranky 😠",
+        "moodAfterSleepPlayful": "Playful 😄",
+        "todayScheduleTitle": "Today's Sleep Schedule",
+        "previousLogsTitle": "Previous Sleep Logs",
+        "entriesCount": "{{count}} entries",
+        "noTodayEntries": "No sleep entries for today",
+        "addFirstSleepLog": "Add First Sleep Log",
+        "noPastLogs": "No past sleep logs found.",
+        "night": "Night"
+    },
+    "sleeptips": {
+        "sleepStages": {
+            "0_3": {
+                "title": "0–3 Months",
+                "tips": [
+                    "⮞ Newborns sleep ~14–17 hours/day in short stretches.",
+                    "⮞ No fixed routine — follow baby's natural rhythm.",
+                    "⮞ Feed-sleep cycles dominate at this stage.",
+                    "⮞ Place baby on their back to sleep.",
+                    "⮞ Swaddling (when done safely) can soothe.",
+                    "⮞ Avoid overstimulation before naps.",
+                    "⮞ Respond calmly to night wakings — it's normal.",
+                    "⮞ Use dim lights at night to help differentiate day/night.",
+                    "⮞ Burp gently before laying baby down.",
+                    "⮞ Track sleep patterns to understand habits early on."
+                ]
+            },
+            "4_6": {
+                "title": "4–6 Months",
+                "tips": [
+                    "⮞ Begin a consistent bedtime routine (bath, book, lullaby).",
+                    "⮞ Baby may sleep 6–8 hour stretches at night.",
+                    "⮞ Transition from 3–4 naps to 2–3 naps daily.",
+                    "⮞ Start sleep training gently if needed.",
+                    "⮞ Use blackout curtains for better naps.",
+                    "⮞ Avoid late-evening naps — they can delay bedtime.",
+                    "⮞ Watch for sleep cues: rubbing eyes, yawning, fussiness.",
+                    "⮞ Allow time for baby to self-soothe before intervening.",
+                    "⮞ No need for feeding every time they wake up at night.",
+                    "⮞ Offer comfort objects like a soft cloth (under supervision)."
+                ]
+            },
+            "7_12": {
+                "title": "7–12 Months",
+                "tips": [
+                    "⮞ Sleep becomes more stable ~11–12 hours/night.",
+                    "⮞ 2 naps/day are common at this stage.",
+                    "⮞ Avoid stimulating play just before bedtime.",
+                    "⮞ Use bedtime stories to build consistent wind-down.",
+                    "⮞ Sleep regressions may occur (around 8–10 months).",
+                    "⮞ Reassure during separation anxiety, but stay consistent.",
+                    "⮞ Keep night-time interactions quiet and low-energy.",
+                    "⮞ Avoid late-night feeds unless necessary.",
+                    "⮞ Stick to a wake-sleep schedule to build habit.",
+                    "⮞ Encourage falling asleep in crib (not in arms)."
+                ]
+            }
+        },
+        "heading": "Baby Sleep Tips by Age",
+        "subheading": "Because if baby sleeps well, so do you!",
+        "footer": {
+            "pre": "For more information, visit",
+            "resources": "Resources",
+            "or": "or",
+            "faqs": "FAQs"
+        }
+    },
+    "medical": {
+        "title": "Medical | NeoNest",
+        "pageTitle": "Medical Records: Vaccines & Important Contacts",
+        "pageSubtitle": "Keep track of your baby's vaccination schedule and essential medical contacts for quick access.",
+        "addVaccine": "Add Vaccine",
+        "setBirthDate": "Set Baby's Birth Date",
+        "generateSchedule": "Generate Schedule",
+        "overdueVaccines": "Overdue Vaccines",
+        "upcomingVaccines": "Upcoming Vaccines",
+        "addNewVaccine": "Add New Vaccine",
+        "editVaccine": "Edit Vaccine",
+        "vaccineName": "Vaccine Name",
+        "status": "Status",
+        "scheduledDate": "Scheduled Date",
+        "completedDate": "Completed Date",
+        "notes": "Notes",
+        "uploadDocument": "Upload Document",
+        "chooseFile": "Choose File",
+        "update": "Update",
+        "add": "Add",
+        "cancel": "Cancel",
+        "vaccinationRecord": "Vaccination Record",
+        "completed": "Completed",
+        "scheduled": "Scheduled",
+        "dueSoon": "Due Soon",
+        "overdue": "Overdue",
+        "noVaccines": "No vaccines recorded yet",
+        "addFirstVaccine": "Add First Vaccine",
+        "resources": "Resources",
+        "faqs": "FAQs",
+        "moreInfo": "For more information regarding this section, visit"
+    },
+    "contact": {
+        "importantContactsTitle": "Important Medical Contacts",
+        "importantContactsDescription": "Store essential doctor numbers, hospital contacts, and useful medical links.",
+        "addContact": "Add Contact",
+        "editContact": "Edit Contact",
+        "addNewContact": "Add New Contact",
+        "contactName": "Contact Name",
+        "category": "Category (e.g., Pediatrician, Gynecologist)",
+        "type": "Type",
+        "phoneNumber": "Phone Number",
+        "websiteLink": "Website Link",
+        "websiteURL": "Website URL",
+        "descriptionOptional": "Description (Optional)",
+        "briefDescription": "Brief description or notes...",
+        "updateContact": "Update Contact",
+        "cancel": "Cancel",
+        "yourImportantContacts": "Your Important Contacts",
+        "noContacts": "No important contacts added yet.",
+        "addYourFirstContact": "Add Your First Contact",
+        "categoryPlaceholder": "e.g., Pediatrician",
+        "contactNamePlaceholder": "e.g., Dr. Smith",
+        "websitePlaceholder": "https://example.com",
+        "phonePlaceholder": "+1234567890",
+        "descriptionPlaceholder": "Brief description or notes..."
+    },
+    "memories": {
+        "PageTitle": "Memories, Community & Blogs | NeoNest",
+        "fetchMemoriesError": "Failed to fetch memories:",
+        "operationFailed": "Operation failed",
+        "confirmDeleteMemory": "Are you sure you want to delete this memory?",
+        "deleteFailed": "Delete failed",
+        "likeToggleFailed": "Like toggle failed",
+        "loginPromptSectionMemories": "memories and community",
+        "CommunityBlogs": "Memories, Community & Blogs",
+        "Description": "Share your precious stories, save your personal memories, and connect with a supportive community.",
+        "addNewMemory": "Add New Memory",
+        "editYourMemory": "Edit Your Memory",
+        "shareNewMemory": "Share a New Memory",
+        "title": "Title",
+        "titlePlaceholder": "e.g., Baby's First Steps",
+        "type": "Type",
+        "photo": "Photo",
+        "video": "Video",
+        "description": "Description",
+        "descriptionPlaceholder": "What's the story behind this precious moment?",
+        "uploadMedia": "Upload Media",
+        "chooseFile": "Choose File",
+        "fileSelected": "File selected",
+        "cancel": "Cancel",
+        "save": "Save",
+        "tagsLabel": "Tags (comma separated)",
+        "tagsPlaceholder": "e.g., #firsts, #babylove, #funny",
+        "isPublicLabelPublic": "Public (Share with community)",
+        "isPublicLabelPrivate": "Private (Keep to myself)",
+        "buttonAddMemory": "Add Memory",
+        "buttonUpdateMemory": "Update Memory",
+        "buttonAdding": "Adding...",
+        "buttonUpdating": "Updating...",
+        "buttonCancel": "Cancel",
+        "communityBlogTitle": "Community Blog",
+        "communityBlogDescription": "Discover and connect with shared memories from our community.",
+        "noPublicMemories": "No public memories yet",
+        "noPublicMemoriesDescription": "Be the first to share a memory with the community!",
+        "privateVaultTitle": "Your Private Memory Vault",
+        "privateVaultDescription": "Your personal collection of cherished moments, kept just for you.",
+        "noPrivateMemories": "Your memory vault is empty",
+        "noPrivateMemoriesDescription": "Start capturing your personal precious moments.",
+        "editButton": "Edit",
+        "deleteButton": "Delete",
+        "createdOn": "Created on",
+        "likes": "Likes",
+        "comments": "Comments"
+    },
+    "babyEssentials": {
+        "Title": "Common Baby Essentials",
+        "items": [
+            {
+                "name": "Cotton Diapers (Langot)",
+                "use": "Traditional, reusable diapers for comfort.",
+                "category": "clothing"
+            },
+            {
+                "name": "Mustard Seed Pillow (Sarson ka Takiya)",
+                "use": "Shapes baby's head and prevents flat head syndrome.",
+                "category": "traditional"
+            },
+            {
+                "name": "Baby Massage Oil",
+                "use": "For daily massages to promote circulation and bonding.",
+                "category": "health"
+            },
+            {
+                "name": "Kajal/Surma",
+                "use": "Applied around eyes for traditional beliefs and to ward off evil eye.",
+                "category": "traditional"
+            },
+            {
+                "name": "Baby Wipes/Soft Cloths",
+                "use": "For quick and gentle cleaning during diaper changes.",
+                "category": "diapering"
+            },
+            {
+                "name": "Formula/Breast Milk Storage",
+                "use": "Essential for feeding, whether nursing or formula feeding.",
+                "category": "feeding"
+            },
+            {
+                "name": "Swaddling Cloths",
+                "use": "Helps soothe baby and promotes better sleep.",
+                "category": "clothing"
+            },
+            {
+                "name": "Baby Bathtub/Bucket",
+                "use": "For safe and convenient bathing.",
+                "category": "bathing"
+            },
+            {
+                "name": "Baby Soap/Shampoo",
+                "use": "Mild cleansers for baby's delicate skin and hair.",
+                "category": "bathing"
+            },
+            {
+                "name": "Nail Clipper/File",
+                "use": "To keep baby's nails short and prevent scratches.",
+                "category": "health"
+            },
+            {
+                "name": "Thermometer",
+                "use": "To monitor baby's temperature when unwell.",
+                "category": "health"
+            },
+            {
+                "name": "Burp Cloths",
+                "use": "Protects clothes from spit-up during and after feeding.",
+                "category": "feeding"
+            },
+            {
+                "name": "Mosquito Net",
+                "use": "Protects baby from mosquito bites while sleeping.",
+                "category": "sleeping"
+            },
+            {
+                "name": "Baby Carrier/Sling",
+                "use": "For hands-free carrying and bonding.",
+                "category": "travel"
+            },
+            {
+                "name": "Rattles/Soft Toys",
+                "use": "Stimulates senses and provides entertainment.",
+                "category": "playtime"
+            },
+            {
+                "name": "Cotton Nappies",
+                "use": "Soft reusable nappies for newborns during daytime.",
+                "category": "clothing"
+            },
+            {
+                "name": "Baby Blanket (Lightweight)",
+                "use": "Keeps baby warm during naps and sleep.",
+                "category": "sleeping"
+            },
+            {
+                "name": "Quick-Dry Sheet",
+                "use": "Prevents bed from getting wet during leaks.",
+                "category": "sleeping"
+            },
+            {
+                "name": "Jhablas (Cotton Tops)",
+                "use": "Easy-to-wear loose shirts for warm weather.",
+                "category": "clothing"
+            },
+            {
+                "name": "Baby Cap & Mittens Set",
+                "use": "Regulates temperature and prevents scratches.",
+                "category": "clothing"
+            },
+            {
+                "name": "Wooden Neem Comb",
+                "use": "Promotes scalp health and prevents cradle cap.",
+                "category": "health"
+            },
+            {
+                "name": "Towel with Hood",
+                "use": "Wraps baby after bath and keeps head warm.",
+                "category": "bathing"
+            },
+            {
+                "name": "Diaper Rash Powder/Cream",
+                "use": "Soothes and prevents diaper rashes.",
+                "category": "diapering"
+            },
+            {
+                "name": "Baby Comb & Brush Set",
+                "use": "Grooms fine baby hair gently.",
+                "category": "bathing"
+            },
+            {
+                "name": "Feeding Bowl & Spoon",
+                "use": "For starting solids around 6 months.",
+                "category": "feeding"
+            },
+            {
+                "name": "Sterilizing Container",
+                "use": "For cleaning feeding accessories without boiling.",
+                "category": "feeding"
+            },
+            {
+                "name": "Lullaby Music Toy",
+                "use": "Helps baby relax and sleep better.",
+                "category": "sleeping"
+            },
+            {
+                "name": "Teething Gel",
+                "use": "Soothes sore gums during teething phase.",
+                "category": "health"
+            },
+            {
+                "name": "Liquid Cleanser (for bottles & toys)",
+                "use": "Cleans feeding items and toys safely.",
+                "category": "cleaning"
+            },
+            {
+                "name": "Antiseptic Cream",
+                "use": "For minor cuts and rashes during crawling phase.",
+                "category": "health"
+            }
+        ],
+        "categories": {
+            "clothing": "Clothing",
+            "health": "Health",
+            "feeding": "Feeding",
+            "diapering": "Diapering",
+            "bathing": "Bathing",
+            "sleeping": "Sleeping",
+            "playtime": "Playtime",
+            "travel": "Travel",
+            "traditional": "Traditional",
+            "cleaning": "Cleaning"
+        }
+    },
+    "notificationsNew": {
+        "title": "Notifications",
+        "searchPlaceholder": "Search notifications...",
+        "all": "All notifications",
+        "unread": "Unread",
+        "read": "Read",
+        "feedingReminder": "Feeding reminders",
+        "sleepReminder": "Sleep reminders",
+        "vaccineReminder": "Vaccine reminders",
+        "milestoneCelebration": "Milestone celebrations",
+        "essentialsAlert": "Essentials alerts",
+        "weatherAlert": "Weather alerts",
+        "markAllRead": "Mark all read",
+        "noNotifications": "No notifications found",
+        "noNotificationsMessage": "You're all caught up! We'll notify you about important updates.",
+        "tryAdjusting": "Try adjusting your search or filters",
+        "newBadge": "New",
+        "notificationTypes": {
+            "feeding_reminder": "Feeding reminder",
+            "sleep_reminder": "Sleep reminder",
+            "vaccine_reminder": "Vaccine reminder",
+            "milestone_celebration": "Milestone celebration",
+            "essentials_alert": "Essentials alert",
+            "weather_alert": "Weather alert"
+        },
+        "priority": {
+            "urgent": "Urgent",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        }
+    },
+    "growthCategory": {
+        "title": "WHO Growth Standards Comparison",
+        "subtitle": "Based on WHO Child Growth Standards 2006 (50th percentile)",
+        "latestMeasurement": "Latest Measurement Summary",
+        "age": "Age",
+        "heightStatus": "Height Status",
+        "weightStatus": "Weight Status",
+        "totalEntries": "Total Entries",
+        "attentionNeeded": "⚠️ Attention Needed",
+        "input": {
+            "maxAgeLabel": "Max Age (months):"
+        },
+        "toggleGuidance": "Toggle comprehensive guidance details",
+        "guidanceSectionTitle": "Comprehensive Growth Guidance",
+        "guidanceTitle": "Comprehensive Growth Analysis & Professional Guidance",
+        "direction": {
+            "taller": "taller",
+            "heavier": "heavier",
+            "shorter": "shorter",
+            "lighter": "lighter"
+        },
+        "actions": {
+            "continue": "Continue current feeding and care routine",
+            "checkups": "Maintain regular pediatric check-ups",
+            "nutrition": "Keep balanced nutrition with appropriate portions"
+        },
+        "statusMessages": {
+            "perfect": "Your baby's {{measurementName}} ({{measurement}}{{unit}}) is perfectly aligned with WHO standards for {{genderText}} at {{ageText}}. This indicates optimal growth conditions.",
+            "excellent": "Your baby's {{measurementName}} is excellent and within the healthy WHO range for {{genderText}} at {{ageText}}. Growth is on track."
+        },
+        "heightAnalysisTitleMale": "Official WHO Height Standards for Boys Height Analysis",
+        "heightAnalysisTitleFemale": "Official WHO Height Standards for Girls Height Analysis",
+        "urgent": "URGENT",
+        "weightAnalysis": "Weight Analysis",
+        "officialWhoWeightStandards": "Official WHO Weight Standards for {{gender}}",
+        "recommendedActions": "Recommended Actions:",
+        "boys": "Boys",
+        "girls": "Girls",
+        "heightDeviationLabel": "Height Deviation from WHO Median:",
+        "detailedComparisonTitle": "Detailed Statistical Comparison",
+        "percentileInfo": {
+            "title": "Understanding Percentiles:",
+            "description": "The 50th percentile represents the median (average). 25th-75th percentile is considered normal range. Below 5th or above 95th percentile may require medical attention."
+        },
+        "weightDeviationLabel": "Weight Deviation from WHO Median:",
+        "noData": {
+            "title": "No Growth Data Yet",
+            "description": "Add some growth measurements above to see your baby's progress compared to WHO standards.",
+            "note": "Only real measurements will be displayed - no dummy data."
+        },
+        "whoDescription": "The WHO Child Growth Standards describe how children should grow under optimal conditions. These charts show the 50th percentile (median) values based on data from healthy, breastfed children from diverse populations worldwide. Normal growth typically falls within the 3rd to 97th percentiles.",
+        "links": {
+            "overview": "WHO Growth Standards Overview",
+            "height": "Height Standards by Age",
+            "weight": "Weight Standards by Age"
+        },
+        "disclaimer": {
+            "educational": "This chart uses official WHO Child Growth Standards 2006 and is for educational purposes only. It should not replace professional medical advice or diagnosis.",
+            "medical": "Always consult with your pediatrician for personalized guidance on your baby's growth and development. In case of concerning measurements, seek professional medical evaluation promptly."
+        },
+        "months": "months",
+        "whoReference": "WHO",
+        "summary": {
+            "ageLabel": "Age",
+            "heightStatus": "Height Status",
+            "weightStatus": "Weight Status",
+            "totalEntries": "Total Entries"
+        },
+        "details": {
+            "alert": "Please fill in date, height, and weight"
+        },
+        "heightWeight": {
+            "alert": "Please enter valid positive numbers for height and weight"
+        },
+        "head": {
+            "alert": "Please enter a valid positive number for head circumference"
+        },
+        "futureDate": {
+            "alert": "Entry date cannot be in the future"
+        },
+        "dob": {
+            "alert": "Entry date cannot be before baby's birth date"
+        }
+    }
+}

@@ -17,8 +17,10 @@ import Badge from "../components/ui/Badge";
 import Sleeptips from "../components/Sleeptips";
 import { useAuth } from "../context/AuthContext";
 import LoginPrompt from "../components/LoginPrompt";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+  const { t } = useTranslation("common");
   const { isAuth, token } = useAuth();
   const [schedules, setSchedules] = useState([]);
   const [isAddingSchedule, setIsAddingSchedule] = useState(false);
@@ -35,19 +37,19 @@ export default function Page() {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
   useEffect(() => {
-    document.title = "Sleep | NeoNest";
+    document.title = t("sleep.pagetitle");
     if (isAuth) {
-    const fetchLogs = async () => {
-      try {
-        const res = await axios.get("/api/sleep", { headers });
-        setSchedules(res.data);
-      } catch (err) {
-        console.error("Failed to fetch logs:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchLogs();
+      const fetchLogs = async () => {
+        try {
+          const res = await axios.get("/api/sleep", { headers });
+          setSchedules(res.data);
+        } catch (err) {
+          console.error("Failed to fetch logs:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchLogs();
     }
   }, [isAuth]);
 
@@ -126,31 +128,35 @@ export default function Page() {
 
   // Show login prompt if user is not authenticated
   if (!isAuth) {
-    return <LoginPrompt sectionName="sleep tracking" />;
+    return <LoginPrompt sectionName={t("sleep.sleepTitle")} />;
   }
+
 
   if (loading) {
     return (
-      <div className="text-center text-gray-500 p-8">Loading sleep logs...</div>
+      <div className="text-center text-gray-500 p-8">
+        {t("sleep.loading", "Loading sleep logs...")}
+      </div>
     );
   }
+
 
   return (
     <div className="container mx-auto space-y-6 p-4">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold text-gray-800">
-            Sleep: Tips & Routine
+            {t("sleep.sleepTitle")}
           </h2>
           <p className="text-gray-600">
-            Track your baby’s naps, nighttime sleep, and moods after rest.
+            {t("sleep.sleepDescription")}
           </p>
         </div>
         <Button
           onClick={() => setIsAddingSchedule(true)}
           className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white"
         >
-          <Plus className="w-4 h-4 mr-2" /> Add Sleep Log
+          <Plus className="w-4 h-4 mr-2" /> {t("sleep.addSleepLog")}
         </Button>
       </div>
 
@@ -158,12 +164,15 @@ export default function Page() {
         <div className="bg-gradient-to-r from-indigo-50 to-violet-50 border border-indigo-200 rounded-lg p-6">
           <h3 className="text-xl font-semibold flex items-center gap-2 mt-3 mb-10">
             <Moon className="w-5 h-5 text-indigo-400" />
-            {editingSchedule ? "Edit Sleep Log" : "Add New Sleep Entry"}
+            {editingSchedule
+              ? t("sleep.editSleepLog")
+              : t("sleep.addSleepLog")}
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Time</label>
+              <label className="block text-sm font-medium mb-2">  {t("sleep.time")}
+              </label>
               <Input
                 type="time"
                 value={editingSchedule ? editingSchedule.time : newSchedule.time}
@@ -171,16 +180,16 @@ export default function Page() {
                   const value = e.target.value;
                   editingSchedule
                     ? setEditingSchedule({
-                        ...editingSchedule,
-                        time: value,
-                      })
+                      ...editingSchedule,
+                      time: value,
+                    })
                     : setNewSchedule({ ...newSchedule, time: value });
                 }}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Sleep Type</label>
+              <label className="block text-sm font-medium mb-2"> {t("sleep.sleepType")}</label>
               <select
                 className="w-full p-2 border border-gray-300 rounded-md"
                 value={
@@ -190,19 +199,19 @@ export default function Page() {
                   const value = e.target.value;
                   editingSchedule
                     ? setEditingSchedule({
-                        ...editingSchedule,
-                        type: value,
-                      })
+                      ...editingSchedule,
+                      type: value,
+                    })
                     : setNewSchedule({ ...newSchedule, type: value });
                 }}
               >
-                <option value="nap">Nap</option>
-                <option value="night">Night Sleep</option>
+                <option value="nap">{t("sleep.nap")}</option>
+                <option value="night">{t("sleep.nightSleep")}</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Duration</label>
+              <label className="block text-sm font-medium mb-2">  {t("sleep.duration")}</label>
               <Input
                 placeholder="e.g., 45 mins, 2 hrs"
                 value={
@@ -214,9 +223,9 @@ export default function Page() {
                   const value = e.target.value;
                   editingSchedule
                     ? setEditingSchedule({
-                        ...editingSchedule,
-                        duration: value,
-                      })
+                      ...editingSchedule,
+                      duration: value,
+                    })
                     : setNewSchedule({ ...newSchedule, duration: value });
                 }}
               />
@@ -224,7 +233,7 @@ export default function Page() {
 
             <div>
               <label className="block text-sm font-medium mb-2">
-                Mood After Sleep
+                {t("sleep.moodAfterSleep")}
               </label>
               <select
                 className="w-full p-2 border border-gray-300 rounded-md"
@@ -235,22 +244,23 @@ export default function Page() {
                   const value = e.target.value;
                   editingSchedule
                     ? setEditingSchedule({
-                        ...editingSchedule,
-                        mood: value,
-                      })
+                      ...editingSchedule,
+                      mood: value,
+                    })
                     : setNewSchedule({ ...newSchedule, mood: value });
                 }}
               >
-                <option value="">Select Mood</option>
-                <option value="happy">Happy 😊</option>
-                <option value="sleepy">Still Sleepy 😴</option>
-                <option value="cranky">Cranky 😠</option>
-                <option value="playful">Playful 😄</option>
+                <option value="">{t("sleep.selectMood")}</option>
+                <option value="happy">{t("sleep.moodAfterSleepHappy")}</option>
+                <option value="sleepy">{t("sleep.moodAfterSleepSleepy")}</option>
+                <option value="cranky">{t("sleep.moodAfterSleepCranky")}</option>
+                <option value="playful">{t("sleep.moodAfterSleepPlayful")}</option>
               </select>
             </div>
 
             <div className="col-span-full">
-              <label className="block text-sm font-medium mb-2">Notes</label>
+              <label className="block text-sm font-medium mb-2">  {t("sleep.notes")}
+              </label>
               <Input
                 placeholder="Optional notes..."
                 value={
@@ -260,9 +270,9 @@ export default function Page() {
                   const value = e.target.value;
                   editingSchedule
                     ? setEditingSchedule({
-                        ...editingSchedule,
-                        notes: value,
-                      })
+                      ...editingSchedule,
+                      notes: value,
+                    })
                     : setNewSchedule({ ...newSchedule, notes: value });
                 }}
               />
@@ -279,10 +289,10 @@ export default function Page() {
               className="bg-gradient-to-r from-indigo-500 to-violet-500"
             >
               <Save className="w-4 h-4 mr-2" />
-              {editingSchedule ? "Update" : "Add"} Sleep Log
+              {editingSchedule ? t("sleep.update") : t("sleep.add")}
             </Button>
             <Button onClick={resetForm} className="border border-gray-300">
-              Cancel
+              {t("sleep.cancel")}
             </Button>
           </div>
         </div>
@@ -292,19 +302,20 @@ export default function Page() {
       <div className="bg-white/80 backdrop-blur-sm rounded-lg border p-6">
         <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
           <Calendar className="w-5 h-5 text-indigo-600" />
-          Today's Sleep Schedule
-          <Badge>{todaySchedules.length} entries</Badge>
+          {t("sleep.todayScheduleTitle")}
+          <Badge>{t("sleep.entriesCount", { count: todaySchedules.length })}</Badge>
         </h3>
+
 
         {todaySchedules.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
             <Moon className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-            <p>No sleep entries for today</p>
+            <p>{t("sleep.noTodayEntries")}</p>
             <Button
               onClick={() => setIsAddingSchedule(true)}
               className="mt-4 border border-gray-300 text-white"
             >
-              <Plus className="w-4 h-4 mr-2" /> Add First Sleep Log
+              <Plus className="w-4 h-4 mr-2" />  {t("sleep.addFirstSleepLog")}
             </Button>
           </div>
         ) : (
@@ -321,7 +332,7 @@ export default function Page() {
                   </div>
                   <Badge className={getTypeColor(s.type)}>
                     <Moon className="w-3 h-3 mr-1" />
-                    {s.type === "nap" ? "Nap" : "Night"}
+                    {s.type === "nap" ? t("sleep.nap") : t("sleep.night")}
                   </Badge>
                   {s.duration && (
                     <span className="text-sm text-gray-600">{s.duration}</span>
@@ -361,12 +372,12 @@ export default function Page() {
       <div className="bg-white/80 backdrop-blur-sm rounded-lg border p-6">
         <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
           <Calendar className="w-5 h-5 text-indigo-600" />
-          Previous Sleep Logs
+          {t("sleep.previousLogsTitle")}
           <Badge>{schedules.length} total</Badge>
         </h3>
 
         {schedules.filter((s) => s.date !== today).length === 0 ? (
-          <p className="text-center text-gray-500">No past sleep logs found.</p>
+          <p className="text-center text-gray-500">{t("sleep.noPastLogs")}</p>
         ) : (
           <div className="space-y-3">
             {schedules
@@ -385,7 +396,7 @@ export default function Page() {
                     </div>
                     <Badge className={getTypeColor(s.type)}>
                       <Moon className="w-3 h-3 mr-1" />
-                      {s.type === "nap" ? "Nap" : "Night"}
+                      {s.type === "nap" ? t("sleep.nap") : t("sleep.night")}
                     </Badge>
                     {s.duration && (
                       <span className="text-sm text-gray-600">{s.duration}</span>
@@ -421,7 +432,7 @@ export default function Page() {
         )}
       </div>
 
-      <Sleeptips/>
+      <Sleeptips />
     </div>
   );
 }

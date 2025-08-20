@@ -4,13 +4,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { Lock, PlusCircle, PartyPopper, Check, MinusCircle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
-const defaultMilestones = {
-  "0": ["Lifts head", "Responds to sound"],
-  "1": ["Smiles at people", "Follows objects"],
-  "2": ["Rolls over", "Holds head steady"],
-  "3": ["Sits without support", "Pushes down on legs"],
-};
+// const defaultMilestones = {
+//   "0": ["Lifts head", "Responds to sound"],
+//   "1": ["Smiles at people", "Follows objects"],
+//   "2": ["Rolls over", "Holds head steady"],
+//   "3": ["Sits without support", "Pushes down on legs"],
+// };
+
+
 
 const getMonthDiff = (dob) => {
   const now = new Date();
@@ -19,7 +22,16 @@ const getMonthDiff = (dob) => {
 };
 
 export default function MilestoneTracker({ babyDOB }) {
-  const [milestones, setMilestones] = useState(defaultMilestones);
+  const { t, i18n } = useTranslation();
+  const [milestones, setMilestones] = useState({});
+
+  useEffect(() => {
+    const defaultMilestones = t("growth.milestones", { returnObjects: true }) || {};
+    setMilestones(defaultMilestones);
+  }, [i18n.language, t]);
+
+
+
   const [completed, setCompleted] = useState({});
   const [visibleMonth, setVisibleMonth] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(0);
@@ -87,7 +99,7 @@ export default function MilestoneTracker({ babyDOB }) {
           const isCurrent = i === visibleMonth;
           const isPast = i < currentMonth;
           const isFuture = i > currentMonth;
-          const monthMilestones = milestones[i] || [];
+          const monthMilestones = Array.isArray(milestones[i]) ? milestones[i] : [];
           const completedAll = monthMilestones.every((m) => completed[`${i}:${m}`]);
           const showRedAlert = isPast && !completedAll;
 
@@ -98,22 +110,21 @@ export default function MilestoneTracker({ babyDOB }) {
               onClick={() => {
                 if (visibleMonth !== i) scrollToCard(i);
               }}
-              className={`min-w-[250px] sm:min-w-[300px] rounded-xl p-4 transition-all duration-300 shadow-md relative flex flex-col justify-between border-2 snap-start ${isCurrent ? "scale-110 mx-2" : "scale-100"} ${
-                i === visibleMonth && i === currentMonth
-                  ? "bg-purple-200 border-purple-500 scale-110 ring-2 ring-purple-500 z-10"
-                  : i === visibleMonth
-                    ? "bg-white border-purple-300 scale-105 ring-1 ring-purple-300 z-10"
-                    : showRedAlert
-                      ? "bg-red-100 border-red-400"
-                      : i === currentMonth
-                        ? "bg-purple-100 border-purple-400"
-                        : isPast
-                          ? "bg-purple-50 border-purple-200 opacity-70"
-                          : "bg-gray-100 border-gray-200 opacity-50"}
+              className={`min-w-[250px] sm:min-w-[300px] rounded-xl p-4 transition-all duration-300 shadow-md relative flex flex-col justify-between border-2 snap-start ${isCurrent ? "scale-110 mx-2" : "scale-100"} ${i === visibleMonth && i === currentMonth
+                ? "bg-purple-200 border-purple-500 scale-110 ring-2 ring-purple-500 z-10"
+                : i === visibleMonth
+                  ? "bg-white border-purple-300 scale-105 ring-1 ring-purple-300 z-10"
+                  : showRedAlert
+                    ? "bg-red-100 border-red-400"
+                    : i === currentMonth
+                      ? "bg-purple-100 border-purple-400"
+                      : isPast
+                        ? "bg-purple-50 border-purple-200 opacity-70"
+                        : "bg-gray-100 border-gray-200 opacity-50"}
               }`}
             >
               <div>
-                <h3 className="text-lg font-bold text-purple-800 mb-2">Month {i + 1}</h3>
+                <h3 className="text-lg font-bold text-purple-800 mb-2"> {t("growth.labels.month")} {i + 1}</h3>
                 <ul className="space-y-1">
                   {monthMilestones.map((m) => (
                     <li
@@ -169,7 +180,7 @@ export default function MilestoneTracker({ babyDOB }) {
                     variant="ghost"
                     className="text-purple-600 text-sm hover:bg-transparent hover:text-purple-800"
                   >
-                    <PlusCircle className="w-4 h-4 mr-1" /> Add
+                    <PlusCircle className="w-4 h-4 mr-1" /> {t("growth.labels.add")}
                   </Button>
                 )}
 
@@ -190,7 +201,7 @@ export default function MilestoneTracker({ babyDOB }) {
                     href="/NeonestAi"
                     className="text-sm text-black/80 hover:text-red-800 hover:underline font-medium"
                   >
-                    ⚠️ Ask Chatbot about milestone delay?
+                    {t("growth.labels.askChatbot")}
                   </Link>
                 )}
               </div>
@@ -199,7 +210,7 @@ export default function MilestoneTracker({ babyDOB }) {
                 {monthMilestones.map((m, d) => (
                   <span
                     key={d}
-                    title={`${m} - ${completed[`${i}:${m}`] ? "Completed" : "Pending"}`}
+                    title={`${m} - ${completed[`${i}:${m}`] ? t("growth.labels.completed") : t("growth.labels.pending")}`}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${completed[`${i}:${m}`] ? "bg-green-500" : "bg-gray-300"
                       }`}
                   ></span>

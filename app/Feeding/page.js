@@ -11,7 +11,10 @@ import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 import LoginPrompt from "../components/LoginPrompt";
 
+import { useTranslation } from "react-i18next";
+
 export default function Page() {
+  const { t } = useTranslation("common");
   const router = useRouter();
   const { isAuth, token } = useAuth();
   const [schedules, setSchedules] = useState([]);
@@ -27,7 +30,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Feeding | NeoNest";
+    document.title = t("feeding.pagetitle");
 
     const fetchSchedules = async () => {
       if (!isAuth) {
@@ -41,7 +44,7 @@ export default function Page() {
             Authorization: `Bearer ${token}`,
           },
         });
-        
+
         if (response.data && Array.isArray(response.data.feed)) {
           setSchedules(response.data.feed);
         } else {
@@ -50,7 +53,7 @@ export default function Page() {
 
       } catch (error) {
         console.error(error);
-        setError('Failed to load schedules. Please try again later.');
+        setError(t("feeding.errorLoading"));
         setSchedules([]);
       } finally {
         setLoading(false);
@@ -84,7 +87,7 @@ export default function Page() {
       setIsAddingSchedule(false);
     } catch (err) {
       console.error("Error adding feed:", err);
-      setError('Failed to add feeding log.');
+      setError(t("feeding.errorAdd"));
     }
   };
 
@@ -104,7 +107,7 @@ export default function Page() {
       setEditingSchedule(null);
     } catch (err) {
       console.error("Error updating feed:", err);
-      setError('Failed to update feeding log.');
+      setError(t("feeding.errorUpdate"));
     }
   };
 
@@ -119,7 +122,7 @@ export default function Page() {
       setSchedules((prev) => prev.filter((s) => s._id !== id));
     } catch (err) {
       console.error("Error deleting feed:", err);
-      setError('Failed to delete feeding log.');
+      setError(t("feeding.errorDelete"));
     }
   };
 
@@ -179,23 +182,23 @@ export default function Page() {
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight relative">
               <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-                Feeding: Tips and Schedule
+                {t("feeding.title")}
               </span>
               <div className="absolute -top-2 -right-2 w-3 h-3 bg-pink-400 rounded-full animate-pulse"></div>
             </h2>
             <p className="text-sm sm:text-base text-gray-600 max-w-2xl leading-relaxed">
-              Track your baby's feeding times and learn best practices with our intuitive interface.
+              {t("feeding.subtitle")}
             </p>
           </div>
           <Button
             onClick={() => {
               setIsAddingSchedule(true);
-              setEditingSchedule(null); 
+              setEditingSchedule(null);
             }}
             className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white w-full sm:w-auto min-h-[44px] sm:min-h-[40px] text-sm sm:text-base px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-md"
           >
             <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-bounce-gentle" />
-            Add Feeding
+            {t("feeding.addFeeding")}
           </Button>
         </div>
 
@@ -207,7 +210,7 @@ export default function Page() {
                 <Utensils className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <span className="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-                {editingSchedule ? "Edit Feeding" : "Add New Feeding"}
+                {editingSchedule ? t("feeding.editFeeding") : t("feeding.addNewFeeding")}
               </span>
             </h3>
 
@@ -237,9 +240,10 @@ export default function Page() {
                       : setNewSchedule({ ...newSchedule, type: e.target.value })
                   }
                 >
-                  <option value="Breastfeeding">Breastfeeding</option>
-                  <option value="Bottle">Bottle</option>
-                  <option value="Solid Food">Solid Food</option>
+                  <option value="Breastfeeding">{t("feeding.breastfeeding")}</option>
+                  <option value="Bottle">{t("feeding.bottle")}</option>
+                  <option value="Solid Food">{t("feeding.solidFood")}</option>
+
                 </select>
               </div>
 
@@ -282,7 +286,7 @@ export default function Page() {
                 className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 min-h-[44px] sm:min-h-[40px] text-sm sm:text-base px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg shadow-md order-1 sm:order-none"
               >
                 <Save className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                {editingSchedule ? "Update" : "Add"} Feeding
+                {editingSchedule ? t("feeding.updateFeeding") : t("feeding.addFeeding")}
               </Button>
               <Button
                 onClick={() => {
@@ -292,7 +296,7 @@ export default function Page() {
                 }}
                 className="border-2 border-pink-300 text-pink-600 hover:bg-pink-50 min-h-[44px] sm:min-h-[40px] text-sm sm:text-base px-6 py-3 rounded-xl font-medium transition-all duration-300 order-2 sm:order-none hover:border-pink-400 hover:text-pink-700"
               >
-                Cancel
+                {t("feeding.cancel")}
               </Button>
             </div>
           </div>
@@ -305,16 +309,16 @@ export default function Page() {
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center animate-glow">
                 <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Today's Feeding Schedule</span>
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{t("feeding.todaySchedule")}</span>
             </div>
             <Badge className="w-fit bg-gradient-to-r from-pink-400 to-purple-400 text-white shadow-lg animate-pulse">
-              {todaySchedules.length} feedings
+              {t("feeding.feedingsCount", { count: todaySchedules.length })}
             </Badge>
           </h3>
 
           {/* Display loading or error messages */}
           {loading ? (
-            <div className="text-center py-8 sm:py-12 text-gray-500">Loading...</div>
+            <div className="text-center py-8 sm:py-12 text-gray-500">{t("feeding.loading")}</div>
           ) : error ? (
             <div className="text-center py-8 sm:py-12 text-red-500">{error}</div>
           ) : todaySchedules.length === 0 ? (
@@ -322,13 +326,13 @@ export default function Page() {
               <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center animate-pulse">
                 <Utensils className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <p className="text-sm sm:text-base mb-4">No feedings scheduled for today</p>
+              <p className="text-sm sm:text-base mb-4">{t("feeding.emptyMessage")}</p>
               <Button
                 onClick={() => setIsAddingSchedule(true)}
                 className="border-2 border-pink-300 text-pink-600 hover:bg-pink-50 min-h-[44px] sm:min-h-[40px] text-sm sm:text-base px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:border-pink-400 hover:text-pink-700"
               >
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Add First Feeding
+                {t("feeding.addFirstFeeding")}
               </Button>
             </div>
           ) : (
@@ -366,11 +370,11 @@ export default function Page() {
                       )}
                     </div>
                     <div className="flex gap-2 sm:gap-3 self-end sm:self-auto">
-                      <Button 
+                      <Button
                         onClick={() => {
                           setEditingSchedule(s);
                           setIsAddingSchedule(false);
-                        }} 
+                        }}
                         className="text-sm min-h-[44px] sm:min-h-[40px] px-3 sm:px-4 py-2 border border-pink-300 rounded-lg hover:bg-pink-50 transition-all duration-300 hover:border-pink-400 hover:scale-105"
                       >
                         <Edit className="w-4 h-4 text-pink-600" />

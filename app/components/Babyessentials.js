@@ -2,39 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { ShoppingCart, Plus } from "lucide-react";
 import Badge from "./ui/Badge";
-
-const indianBabyEssentials = [
-  { name: "Cotton Diapers (Langot)", use: "Traditional, reusable diapers for comfort.", category: "clothing" },
-  { name: "Mustard Seed Pillow (Sarson ka Takiya)", use: "Shapes baby's head and prevents flat head syndrome.", category: "traditional" },
-  { name: "Baby Massage Oil", use: "For daily massages to promote circulation and bonding.", category: "health" },
-  { name: "Kajal/Surma", use: "Applied around eyes for traditional beliefs and to ward off evil eye.", category: "traditional" },
-  { name: "Baby Wipes/Soft Cloths", use: "For quick and gentle cleaning during diaper changes.", category: "diapering" },
-  { name: "Formula/Breast Milk Storage", use: "Essential for feeding, whether nursing or formula feeding.", category: "feeding" },
-  { name: "Swaddling Cloths", use: "Helps soothe baby and promotes better sleep.", category: "clothing" },
-  { name: "Baby Bathtub/Bucket", use: "For safe and convenient bathing.", category: "bathing" },
-  { name: "Baby Soap/Shampoo", use: "Mild cleansers for baby's delicate skin and hair.", category: "bathing" },
-  { name: "Nail Clipper/File", use: "To keep baby's nails short and prevent scratches.", category: "health" },
-  { name: "Thermometer", use: "To monitor baby's temperature when unwell.", category: "health" },
-  { name: "Burp Cloths", use: "Protects clothes from spit-up during and after feeding.", category: "feeding" },
-  { name: "Mosquito Net", use: "Protects baby from mosquito bites while sleeping.", category: "sleeping" },
-  { name: "Baby Carrier/Sling", use: "For hands-free carrying and bonding.", category: "travel" },
-  { name: "Rattles/Soft Toys", use: "Stimulates senses and provides entertainment.", category: "playtime" },
-  { name: "Cotton Nappies", use: "Soft reusable nappies for newborns during daytime.", category: "clothing" },
-  { name: "Baby Blanket (Lightweight)", use: "Keeps baby warm during naps and sleep.", category: "sleeping" },
-  { name: "Quick-Dry Sheet", use: "Prevents bed from getting wet during leaks.", category: "sleeping" },
-  { name: "Jhablas (Cotton Tops)", use: "Easy-to-wear loose shirts for warm weather.", category: "clothing" },
-  { name: "Baby Cap & Mittens Set", use: "Regulates temperature and prevents scratches.", category: "clothing" },
-  { name: "Wooden Neem Comb", use: "Promotes scalp health and prevents cradle cap.", category: "health" },
-  { name: "Towel with Hood", use: "Wraps baby after bath and keeps head warm.", category: "bathing" },
-  { name: "Diaper Rash Powder/Cream", use: "Soothes and prevents diaper rashes.", category: "diapering" },
-  { name: "Baby Comb & Brush Set", use: "Grooms fine baby hair gently.", category: "bathing" },
-  { name: "Feeding Bowl & Spoon", use: "For starting solids around 6 months.", category: "feeding" },
-  { name: "Sterilizing Container", use: "For cleaning feeding accessories without boiling.", category: "feeding" },
-  { name: "Lullaby Music Toy", use: "Helps baby relax and sleep better.", category: "sleeping" },
-  { name: "Teething Gel", use: "Soothes sore gums during teething phase.", category: "health" },
-  { name: "Liquid Cleanser (for bottles & toys)", use: "Cleans feeding items and toys safely.", category: "cleaning" },
-  { name: "Antiseptic Cream", use: "For minor cuts and rashes during crawling phase.", category: "health" },
-];
+import { useTranslation } from "react-i18next";
 
 const getCategoryBadgeProps = (category) => {
   switch (category) {
@@ -64,17 +32,34 @@ const getCategoryBadgeProps = (category) => {
 };
 
 const Babyessentials = ({ onAddEssential }) => {
+  const { t } = useTranslation("common");
+
+  // Fetch baby essentials and categories from JSON
+  const babyData = t("babyEssentials", { returnObjects: true });
+  const essentials = babyData.items || [];
+  const categories = babyData.categories || {};
+
+  // Translate each essential
+  const translateEssential = (essential) => ({
+    name: essential.name,
+    use: essential.use,
+    category: categories[essential.category] || essential.category,
+    categoryKey: essential.category
+  });
+
   return (
     <Card className="bg-white/80 backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShoppingCart className="w-5 h-5 text-green-600" />
-          Common Baby Essentials
+          {t("babyEssentials.Title", "Common Baby Essentials")}
         </CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[250px] overflow-y-auto pr-2">
-        {indianBabyEssentials.map((item, index) => {
-          const badgeProps = getCategoryBadgeProps(item.category);
+        {essentials.map((item, index) => {
+          const { name, use, category, categoryKey } = translateEssential(item);
+          const badgeProps = getCategoryBadgeProps(categoryKey);
+
           return (
             <div
               key={index}
@@ -82,20 +67,19 @@ const Babyessentials = ({ onAddEssential }) => {
                          hover:bg-pink-50 hover:border-blue-200 hover:shadow-md
                          transition-all duration-200 cursor-default flex flex-col justify-between"
             >
-              <div> 
-                <p className="font-semibold text-gray-800 mb-1">{item.name}</p>
-                <p className="text-sm text-gray-600 mb-2">{item.use}</p>
+              <div>
+                <p className="font-semibold text-gray-800 mb-1">{name}</p>
+                <p className="text-sm text-gray-600 mb-2">{use}</p>
               </div>
-              <div className="flex items-center justify-between gap-2"> 
+              <div className="flex items-center justify-between gap-2">
                 <Badge className={`${badgeProps.className} capitalize`}>
-  {item.category}
-</Badge>
-
+                  {category}
+                </Badge>
                 <button
-                  onClick={() => onAddEssential(item.name, item.category)}
+                  onClick={() => onAddEssential(name, categoryKey)}
                   className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors
                              focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                  title={`Add ${item.name} to inventory`}
+                  title={t("addButtonTitle", { name })}
                 >
                   <Plus className="w-4 h-4" />
                 </button>

@@ -6,9 +6,10 @@ import Input from "../components/ui/Input"
 import { Button } from "../components/ui/Button"
 import ImportantContacts from "../components/ImportantContacts "
 import Badge from "../components/ui/Badge"
-import {Plus,Shield,Calendar,AlertTriangle,CheckCircle,Clock,Upload,FileText,Edit,Trash2,Bell,Save,} from "lucide-react"
+import { Plus, Shield, Calendar, AlertTriangle, CheckCircle, Clock, Upload, FileText, Edit, Trash2, Bell, Save, } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import LoginPrompt from "../components/LoginPrompt"
+import { useTranslation } from 'react-i18next'
 
 
 function getVaccineStatus(vaccine) {
@@ -53,6 +54,7 @@ const staticStandardVaccines = [
 ];
 
 export default function VaccineTracker({ babyId }) {
+  const { t } = useTranslation("common")
   const { isAuth } = useAuth()
   const [vaccines, setVaccines] = useState([])
   const [babyBirthDate, setBabyBirthDate] = useState("")
@@ -64,16 +66,16 @@ export default function VaccineTracker({ babyId }) {
     completedDate: "",
     status: "scheduled",
     notes: "",
-    document: null, 
+    document: null,
   })
 
   const getAuthToken = () => localStorage.getItem("token")
 
   useEffect(() => {
-    document.title = "Medical | NeoNest"
+    document.title = t("medical.title")
     if (isAuth) {
-    fetchVaccines()
-    // fetchBabyBirthDate() 
+      fetchVaccines()
+      // fetchBabyBirthDate() 
     }
   }, [isAuth])
 
@@ -90,12 +92,12 @@ export default function VaccineTracker({ babyId }) {
   }
 
   const initializeStandardSchedule = async () => {
-    if (!babyBirthDate) return; 
+    if (!babyBirthDate) return;
 
     try {
       const token = getAuthToken()
       await axios.patch(
-        "/api/vaccine/initialize-schedule", 
+        "/api/vaccine/initialize-schedule",
         { babyId, birthDate: babyBirthDate },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -120,7 +122,7 @@ export default function VaccineTracker({ babyId }) {
       )
       setIsAddingVaccine(false)
       setNewVaccine({ name: "", scheduledDate: "", completedDate: "", status: "scheduled", notes: "", document: null })
-      fetchVaccines() 
+      fetchVaccines()
     } catch (error) {
       console.error("Error adding vaccine:", error)
     }
@@ -131,13 +133,13 @@ export default function VaccineTracker({ babyId }) {
 
     try {
       const token = getAuthToken()
-      await axios.put( 
-        `/api/vaccine/${editingVaccine._id}`, 
+      await axios.put(
+        `/api/vaccine/${editingVaccine._id}`,
         { ...editingVaccine, babyId },
         { headers: { Authorization: `Bearer ${token}` } }
       )
       setEditingVaccine(null)
-      fetchVaccines() 
+      fetchVaccines()
     } catch (error) {
       console.error("Error updating vaccine:", error)
     }
@@ -147,37 +149,37 @@ export default function VaccineTracker({ babyId }) {
     try {
       const token = getAuthToken()
       await axios.delete(
-        `/api/vaccine/${id}`, 
+        `/api/vaccine/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      fetchVaccines() 
+      fetchVaccines()
     } catch (error) {
       console.error("Error deleting vaccine:", error)
     }
   }
 
   const markAsCompleted = async (id) => {
-  try {
-    const token = getAuthToken();
-    await axios.patch(
-      `/api/vaccine`,
-      {
-        vaccineId: id,
-        newStatus: "completed"
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+    try {
+      const token = getAuthToken();
+      await axios.patch(
+        `/api/vaccine`,
+        {
+          vaccineId: id,
+          newStatus: "completed"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      }
-    );
-    fetchVaccines();
-  } catch (error) {
-    console.error("Error marking vaccine as completed:", error);
-  }
-};
+      );
+      fetchVaccines();
+    } catch (error) {
+      console.error("Error marking vaccine as completed:", error);
+    }
+  };
 
   const handleFileUpload = (e, targetVaccine = null) => {
     const file = e.target.files[0]
@@ -227,19 +229,19 @@ export default function VaccineTracker({ babyId }) {
       {/* Page Header */}
       <div className="flex flex-wrap items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-gray-800">Medical Records: Vaccines & Important Contacts</h2>
-          <p className="text-gray-600">Keep track of your baby's vaccination schedule and essential medical contacts for quick access.</p>
+          <h2 className="text-3xl font-bold text-gray-800">{t('medical.pageTitle')}</h2>
+          <p className="text-gray-600">{t('medical.pageSubtitle')}</p>
         </div>
         <Button
           onClick={() => {
             setIsAddingVaccine(true);
-            setEditingVaccine(null); 
-            setNewVaccine({ name: "", scheduledDate: "", completedDate: "", status: "scheduled", notes: "", document: null }); 
+            setEditingVaccine(null);
+            setNewVaccine({ name: "", scheduledDate: "", completedDate: "", status: "scheduled", notes: "", document: null });
           }}
           className="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600"
         >
-        <Plus className="w-4 h-4 mr-2" />
-          Add Vaccine
+          <Plus className="w-4 h-4 mr-2" />
+          {t('medical.addVaccine')}
         </Button>
       </div>
 
@@ -249,12 +251,12 @@ export default function VaccineTracker({ babyId }) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-600" />
-              Set Baby's Birth Date
+              {t('medical.setBirthDate')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-gray-600">
-              Enter your baby's birth date to automatically generate the standard vaccination schedule.
+              {t('medical.pageSubtitle')}
             </p>
             <div className="flex gap-4 flex-wrap">
               <Input
@@ -268,7 +270,7 @@ export default function VaccineTracker({ babyId }) {
                 disabled={!babyBirthDate}
                 className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
               >
-                Generate Schedule
+                {t('medical.generateSchedule')}
               </Button>
             </div>
           </CardContent>
@@ -281,7 +283,7 @@ export default function VaccineTracker({ babyId }) {
           <CardContent className="pt-4">
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className="w-5 h-5 text-red-600" />
-              <span className="font-semibold text-red-800">Overdue Vaccines ({overdueVaccines.length})</span>
+              <span className="font-semibold text-red-800">{t('medical.overdueVaccines')} ({overdueVaccines.length})</span>
             </div>
             <div className="space-y-2">
               {overdueVaccines.map((vaccine) => (
@@ -314,7 +316,7 @@ export default function VaccineTracker({ babyId }) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Bell className="w-5 h-5 text-blue-600" />
-              Upcoming Vaccines
+              {t('medical.upcomingVaccines')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -325,15 +327,14 @@ export default function VaccineTracker({ babyId }) {
                   <div key={vaccine._id} className="flex items-center justify-between p-3 bg-white/50 rounded-lg">
                     <div className="flex items-center gap-3">
                       <status.icon
-                        className={`w-5 h-5 ${
-                          status.status === "completed"
-                            ? "text-green-600"
-                            : status.status === "overdue"
-                              ? "text-red-600"
-                              : status.status === "due"
-                                ? "text-yellow-600"
-                                : "text-blue-600"
-                        }`}
+                        className={`w-5 h-5 ${status.status === "completed"
+                          ? "text-green-600"
+                          : status.status === "overdue"
+                            ? "text-red-600"
+                            : status.status === "due"
+                              ? "text-yellow-600"
+                              : "text-blue-600"
+                          }`}
                       />
                       <div>
                         <h4 className="font-medium">{vaccine.name}</h4>
@@ -360,13 +361,13 @@ export default function VaccineTracker({ babyId }) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="w-5 h-5 text-blue-600" />
-              {editingVaccine ? "Edit Vaccine" : "Add New Vaccine"}
+              {editingVaccine ? t('medical.editVaccine') : t('medical.addNewVaccine')}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Vaccine Name</label>
+                <label className="block text-sm font-medium mb-2">{t('medical.vaccineName')}</label>
                 <Input
                   placeholder="e.g., DTaP"
                   value={editingVaccine ? editingVaccine.name : newVaccine.name}
@@ -380,7 +381,7 @@ export default function VaccineTracker({ babyId }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Status</label>
+                <label className="block text-sm font-medium mb-2">{t('medical.status')}</label>
                 <select
                   className="w-full p-2 border border-gray-300 rounded-md"
                   value={editingVaccine ? editingVaccine.status : newVaccine.status}
@@ -392,12 +393,12 @@ export default function VaccineTracker({ babyId }) {
                     }
                   }}
                 >
-                  <option value="scheduled">Scheduled</option>
-                  <option value="completed">Completed</option>
+                  <option value="scheduled">{t('medical.scheduled')}</option>
+                  <option value="completed">{t('medical.completed')}</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Scheduled Date</label>
+                <label className="block text-sm font-medium mb-2">{t('medical.scheduledDate')}</label>
                 <Input
                   type="date"
                   value={editingVaccine ? editingVaccine.scheduledDate?.split("T")[0] : newVaccine.scheduledDate}
@@ -411,7 +412,7 @@ export default function VaccineTracker({ babyId }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Completed Date</label>
+                <label className="block text-sm font-medium mb-2">{t('medical.completedDate')}</label>
                 <Input
                   type="date"
                   value={editingVaccine ? editingVaccine.completedDate?.split("T")[0] : newVaccine.completedDate}
@@ -427,7 +428,7 @@ export default function VaccineTracker({ babyId }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Notes</label>
+              <label className="block text-sm font-medium mb-2">{t('medical.notes')}</label>
               <textarea
                 className="w-full p-2 border border-gray-300 rounded-md h-20"
                 placeholder="Any additional notes..."
@@ -443,7 +444,7 @@ export default function VaccineTracker({ babyId }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Upload Document</label>
+              <label className="block text-sm font-medium mb-2">{t('medical.uploadDocument')}</label>
               <div className="flex items-center gap-4">
                 <input
                   type="file"
@@ -457,10 +458,10 @@ export default function VaccineTracker({ babyId }) {
                   className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50"
                 >
                   <Upload className="w-4 h-4" />
-                  Choose File
+                  {t('medical.chooseFile')}
                 </label>
                 {(editingVaccine?.document || newVaccine.document) && (
-                  <span className="text-sm text-green-600">Document uploaded ✓</span>
+                  <span className="text-sm text-green-600">{t('medical.documentUploaded')} </span>
                 )}
               </div>
             </div>
@@ -471,7 +472,7 @@ export default function VaccineTracker({ babyId }) {
                 className="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600"
               >
                 <Save className="w-4 h-4 mr-2" />
-                {editingVaccine ? "Update" : "Add"} Vaccine
+                {editingVaccine ? t('medical.update') : t('medical.add')} {t('medical.vaccineName')}
               </Button>
               <Button
                 variant="outline"
@@ -488,21 +489,22 @@ export default function VaccineTracker({ babyId }) {
                   })
                 }}
               >
-                Cancel
+                {t('medical.cancel')}
               </Button>
             </div>
           </CardContent>
         </Card>
-      )}
+      )
+      }
 
       {/* Vaccine List */}
       <Card className="bg-white/80 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-600" />
-            Vaccination Record
+            {t('medical.vaccinationRecord')}
             <Badge variant="secondary">
-              {vaccines.filter((v) => v.status === "completed").length} / {vaccines.length} completed
+              {vaccines.filter((v) => v.status === "completed").length} / {vaccines.length} {t('medical.completed')}
             </Badge>
           </CardTitle>
         </CardHeader>
@@ -510,12 +512,12 @@ export default function VaccineTracker({ babyId }) {
           {vaccines.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <Shield className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No vaccines recorded yet</p>
+              <p>{t('medical.noVaccines')}</p>
               <Button
                 className="bg-gradient-to-r from-blue-600 to-pink-600 hover:from-blue-700 hover:to-pink-700 text-white mt-4"
                 onClick={() => setIsAddingVaccine(true)}
               >
-                Add First Vaccine
+                {t('medical.addFirstVaccine')}
               </Button>
             </div>
           ) : (
@@ -526,20 +528,19 @@ export default function VaccineTracker({ babyId }) {
                   const status = getVaccineStatus(vaccine)
                   return (
                     <div
-                      key={vaccine._id} 
+                      key={vaccine._id}
                       className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <status.icon
-                          className={`w-5 h-5 ${
-                            status.status === "completed"
-                              ? "text-green-600"
-                              : status.status === "overdue"
-                                ? "text-red-600"
-                                : status.status === "due"
-                                  ? "text-yellow-600"
-                                  : "text-blue-600"
-                          }`}
+                          className={`w-5 h-5 ${status.status === "completed"
+                            ? "text-green-600"
+                            : status.status === "overdue"
+                              ? "text-red-600"
+                              : status.status === "due"
+                                ? "text-yellow-600"
+                                : "text-blue-600"
+                            }`}
                         />
                         <div>
                           <h4 className="font-medium">{vaccine.name}</h4>
@@ -552,11 +553,11 @@ export default function VaccineTracker({ babyId }) {
                         <div className="text-right">
                           <Badge className={status.color}>{status.text}</Badge>
                           <p className="text-sm text-gray-500 mt-1">
-                            Scheduled: {new Date(vaccine.scheduledDate).toLocaleDateString()}
+                            {t('medical.scheduled')}: {new Date(vaccine.scheduledDate).toLocaleDateString()}
                           </p>
                           {vaccine.completedDate && (
                             <p className="text-sm text-green-600">
-                              Completed: {new Date(vaccine.completedDate).toLocaleDateString()}
+                              {t('medical.completed')}: {new Date(vaccine.completedDate).toLocaleDateString()}
                             </p>
                           )}
                         </div>
@@ -625,7 +626,7 @@ export default function VaccineTracker({ babyId }) {
                 <CheckCircle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-green-600">Completed</p>
+                <p className="text-sm text-green-600">{t('medical.completed')}</p>
                 <p className="text-2xl font-bold text-green-700">
                   {vaccines.filter((v) => v.status === "completed").length}
                 </p>
@@ -641,7 +642,7 @@ export default function VaccineTracker({ babyId }) {
                 <Clock className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-blue-600">Scheduled</p>
+                <p className="text-sm text-blue-600">{t('medical.scheduled')}</p>
                 <p className="text-2xl font-bold text-blue-700">
                   {vaccines.filter((v) => v.status === "scheduled").length}
                 </p>
@@ -657,7 +658,7 @@ export default function VaccineTracker({ babyId }) {
                 <Bell className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-yellow-600">Due Soon</p>
+                <p className="text-sm text-yellow-600">{t('medical.dueSoon')}</p>
                 <p className="text-2xl font-bold text-yellow-700">
                   {
                     vaccines.filter((v) => {
@@ -680,7 +681,7 @@ export default function VaccineTracker({ babyId }) {
                 <AlertTriangle className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm text-red-600">Overdue</p>
+                <p className="text-sm text-red-600">{t('medical.overdue')}</p>
                 <p className="text-2xl font-bold text-red-700">{overdueVaccines.length}</p>
               </div>
             </div>
@@ -696,16 +697,16 @@ export default function VaccineTracker({ babyId }) {
 
       {/* Information about health and safety */}
       <div className="text-center text-gray-500 text-sm mt-8">
-        For more information regarding this section, visit{" "}
+        {t('medical.moreInfo')}{" "}
         <a href="/Resources" className="text-pink-600 hover:underline">
-          Resources
+          {t('medical.resources')}
         </a>{" "}
         or{" "}
         <a href="/Faqs" className="text-pink-600 hover:underline">
-          FAQs
+          {t('medical.faqs')}
         </a>
         .
       </div>
-    </div>
+    </div >
   )
 }

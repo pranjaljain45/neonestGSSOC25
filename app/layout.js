@@ -25,9 +25,12 @@ export const metadata = {
     "Supporting parents through their baby's incredible first year with expert guidance, AI assistance, and loving community.",
 };
 
-export default function RootLayout({ children }) {
+
+export default function RootLayout({ children, params }) {
+  const locale = params.locale;
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`w-screen flex flex-col min-h-screen overflow-x-hidden ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -36,7 +39,7 @@ export default function RootLayout({ children }) {
             <NotificationProvider>
               <Navbar />
               <main className="flex-grow">{children}</main>
-              <AutoTaskManager/>
+              <AutoTaskManager />
               <Footer />
               <GoToTop />
             </NotificationProvider>

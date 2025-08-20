@@ -9,10 +9,14 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation, Trans } from "react-i18next";
+
 
 export default function LoginPage() {
+  const { t } = useTranslation("common");
+
   useEffect(() => {
-    document.title = "Login | NeoNest";
+    document.title = t("login.pagetitle");
   }, []);
 
   const [email, setEmail] = useState("");
@@ -29,12 +33,12 @@ export default function LoginPage() {
 
   const validateEmail = (emailValue) => {
     if (!emailValue.trim()) {
-      setEmailError("Email cannot be empty.");
+      setEmailError(t("login.errorEmptyEmail"));
       return false;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailValue)) {
-      setEmailError("Please enter a valid email address.");
+      setEmailError(t("login.errorInvalidEmail"));
       return false;
     }
     setEmailError("");
@@ -43,11 +47,11 @@ export default function LoginPage() {
 
   const validatePassword = (passwordValue) => {
     if (!passwordValue.trim()) {
-      setPasswordError("Password cannot be empty.");
+      setPasswordError(t("login.errorEmptyPassword"));
       return false;
     }
     if (passwordValue.length < 6) {
-      setPasswordError("Password must be at least 6 characters.");
+      setPasswordError(t("login.errorShortPassword"));
       return false;
     }
     setPasswordError("");
@@ -86,7 +90,7 @@ export default function LoginPage() {
     const passwordValid = validatePassword(password);
 
     if (!emailValid || !passwordValid) {
-      toast.error("Please correct the errors in the form.");
+      toast.error(t("login.errorFormInvalid"));
       return;
     }
 
@@ -107,36 +111,44 @@ export default function LoginPage() {
 
         router.push("/");
       } else {
-        toast.error(data.error || "Invalid login credentials.");
+        toast.error(data.error || t("login.errorWrongPassword"));
       }
     } catch (error) {
       console.error("Login error:", error);
+
       if (axios.isAxiosError(error) && error.response) {
         const backendError = error.response.data.error;
+
         if (backendError === "no such user exists! signup instead") {
-          toast.error(
-            <>
-              No such user exists!{" "}
-              <span
-                onClick={() => router.push("/Signup")}
-                className="text-pink-600 italic cursor-pointer hover:underline"
-              >
-                Sign up
-              </span>{" "}
-              instead.
-            </>
+          toast(
+            <div className="text-sm">
+              <Trans
+                i18nKey="login.errorNoUser"
+                components={{
+                  1: (
+                    <span
+                      onClick={() => router.push("/Signup")}
+                      className="text-pink-600 italic cursor-pointer hover:underline"
+                    />
+                  ),
+                }}
+              />
+            </div>,
+            {
+              type: "error",
+            }
           );
         } else if (backendError === "wrong password") {
-          toast.error("Invalid email or password.");
-          setPasswordError("Incorrect password.");
+          toast.error(t("login.errorWrongPassword"));
+          setPasswordError(t("login.errorWrongPassword"));
           setPasswordTouched(true);
         } else if (backendError === "Please provide all details") {
-          toast.error("Please enter both email and password.");
+          toast.error(t("login.errorMissingDetails"));
         } else {
-          toast.error(backendError || "An unexpected error occurred.");
+          toast.error(backendError || t("login.errorUnknown"));
         }
       } else {
-        toast.error("Network error or unexpected problem. Please try again.");
+        toast.error(t("login.errorNetwork"));
       }
     }
   }
@@ -152,25 +164,24 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-2 hover:from-pink-700 hover:to-purple-700 transition-all duration-300">
-              Welcome Back to NeoNest!
+              {t("login.title")}
             </h2>
             <p className="text-gray-600 text-sm hover:text-gray-700 transition-colors duration-300">
-              Sign in to continue your parenting journey
+              {t("login.subtitle")}
             </p>
           </div>
 
           {/* Email Field */}
           <div className="mb-6 group">
             <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-              Email Address
+              {t("login.emailLabel")}
             </label>
             <div
               className={`flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 focus-within:bg-white transition-all duration-300 hover:bg-gray-100 hover:border-pink-300 group
-              ${
-                emailError && emailTouched
+              ${emailError && emailTouched
                   ? "border-red-500 focus-within:ring-red-400"
                   : "border-gray-300 focus-within:ring-pink-400"
-              }
+                }
             `}
             >
               <Mail className="w-5 h-5 text-gray-400 mr-3 group-hover:text-pink-500 transition-colors duration-300" />
@@ -195,15 +206,14 @@ export default function LoginPage() {
           {/* Password Field */}
           <div className="mb-6 group">
             <label className="block text-sm font-medium text-gray-700 mb-2 group-hover:text-gray-800 transition-colors duration-300">
-              Password
+              {t("login.passwordLabel")}
             </label>
             <div
               className={`flex items-center border rounded-xl px-3 py-3 bg-gray-50 focus-within:ring-2 focus-within:bg-white transition-all duration-300 hover:bg-gray-100 hover:border-pink-300 group
-              ${
-                passwordError && passwordTouched
+              ${passwordError && passwordTouched
                   ? "border-red-500 focus-within:ring-red-400"
                   : "border-gray-300 focus-within:ring-pink-400"
-              }
+                }
             `}
             >
               <Lock className="w-5 h-5 text-gray-400 mr-3 group-hover:text-pink-500 transition-colors duration-300" />
@@ -241,24 +251,23 @@ export default function LoginPage() {
             type="submit"
             disabled={!isFormValid}
             className={`w-full py-3 rounded-xl font-semibold shadow-md transition-all duration-300 transform
-              ${
-                isFormValid
-                  ? "bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-pink-200"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+              ${isFormValid
+                ? "bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-500 hover:to-purple-600 text-white hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-pink-200"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }
             `}
           >
-            {isFormValid ? "Sign In" : "Please fill all fields"}
+            {isFormValid ? t("login.submitButton") : t("login.submitButtonDisabled")}
           </button>
 
           {/* Signup Link */}
           <p className="mt-6 text-sm text-center text-gray-600">
-            Don't have an account?{" "}
+            {t("login.noAccount")}{" "}
             <a
               href="/Signup"
               className="text-pink-600 hover:text-pink-700 font-medium transition-colors duration-300 hover:underline"
             >
-              Sign up here
+              {t("login.signupLink")}
             </a>
           </p>
         </form>

@@ -14,7 +14,11 @@ import {
 } from "recharts";
 import { AlertCircle, ExternalLink, Info, TrendingUp, TrendingDown, ChevronDown, ChevronUp, AlertTriangle } from "lucide-react";
 
+import { useTranslation } from "react-i18next";
+
 export default function GrowthChart({ defaultMonths = 24 }) {
+  const { t } = useTranslation("common");
+
   const [months, setMonths] = useState(defaultMonths);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,17 +32,17 @@ export default function GrowthChart({ defaultMonths = 24 }) {
   const calculateAgeInMonths = (birthDate, measurementDate) => {
     const birth = new Date(birthDate);
     const measurement = new Date(measurementDate);
-    
+
     if (measurement < birth) return -1;
-    
+
     let months = (measurement.getFullYear() - birth.getFullYear()) * 12;
     months += measurement.getMonth() - birth.getMonth();
-    
+
     // Adjust for day of month
     if (measurement.getDate() < birth.getDate()) {
       months--;
     }
-    
+
     return Math.max(0, months);
   };
 
@@ -54,7 +58,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       31: 93.6, 32: 94.4, 33: 95.1, 34: 95.9, 35: 96.6, 36: 97.4,
       42: 102.0, 48: 106.3, 54: 110.3, 60: 114.0
     };
-    
+
     const femaleHeightData = {
       0: 49.1, 1: 53.7, 2: 57.1, 3: 59.8, 4: 62.1, 5: 64.0, 6: 65.7,
       7: 67.3, 8: 68.7, 9: 70.1, 10: 71.5, 11: 72.8, 12: 74.0,
@@ -74,11 +78,11 @@ export default function GrowthChart({ defaultMonths = 24 }) {
 
     // Linear interpolation for months not in the table
     const months = Object.keys(heightData).map(Number).sort((a, b) => a - b);
-    
+
     // Find surrounding months
     let lowerMonth = 0;
     let upperMonth = 60;
-    
+
     for (let i = 0; i < months.length - 1; i++) {
       if (ageMonths >= months[i] && ageMonths <= months[i + 1]) {
         lowerMonth = months[i];
@@ -86,7 +90,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
         break;
       }
     }
-    
+
     // Handle edge cases
     if (ageMonths <= 0) return heightData[0];
     if (ageMonths >= 60) {
@@ -94,12 +98,12 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       const growthRate = gender === "male" ? 0.5 : 0.45;
       return heightData[60] + ((ageMonths - 60) * growthRate);
     }
-    
+
     // Interpolate between two known values
     const lowerHeight = heightData[lowerMonth];
     const upperHeight = heightData[upperMonth];
     const ratio = (ageMonths - lowerMonth) / (upperMonth - lowerMonth);
-    
+
     return lowerHeight + (ratio * (upperHeight - lowerHeight));
   }, []);
 
@@ -115,7 +119,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       31: 14.2, 32: 14.4, 33: 14.7, 34: 14.9, 35: 15.2, 36: 15.4,
       42: 17.0, 48: 18.6, 54: 20.3, 60: 22.0
     };
-    
+
     const femaleWeightData = {
       0: 3.2, 1: 4.2, 2: 5.1, 3: 5.8, 4: 6.4, 5: 6.9, 6: 7.3,
       7: 7.6, 8: 7.9, 9: 8.2, 10: 8.5, 11: 8.7, 12: 8.9,
@@ -134,10 +138,10 @@ export default function GrowthChart({ defaultMonths = 24 }) {
 
     // Linear interpolation for months not in the table
     const months = Object.keys(weightData).map(Number).sort((a, b) => a - b);
-    
+
     let lowerMonth = 0;
     let upperMonth = 60;
-    
+
     for (let i = 0; i < months.length - 1; i++) {
       if (ageMonths >= months[i] && ageMonths <= months[i + 1]) {
         lowerMonth = months[i];
@@ -145,18 +149,18 @@ export default function GrowthChart({ defaultMonths = 24 }) {
         break;
       }
     }
-    
+
     if (ageMonths <= 0) return weightData[0];
     if (ageMonths >= 60) {
       // Extrapolate beyond 60 months
       const weightGain = gender === "male" ? 0.25 : 0.22;
       return weightData[60] + ((ageMonths - 60) * weightGain);
     }
-    
+
     const lowerWeight = weightData[lowerMonth];
     const upperWeight = weightData[upperMonth];
     const ratio = (ageMonths - lowerMonth) / (upperMonth - lowerMonth);
-    
+
     return lowerWeight + (ratio * (upperWeight - lowerWeight));
   }, []);
 
@@ -170,7 +174,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
   const loadGrowthData = useCallback(() => {
     try {
       console.log("Loading data from memory:", memoryStorage);
-      
+
       if (memoryStorage.babyDOB) setBabyDOB(memoryStorage.babyDOB);
       if (memoryStorage.babyGender) setBabyGender(memoryStorage.babyGender);
 
@@ -189,7 +193,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
             ageMonths: ageMonths
           };
         }).filter(entry => entry.ageMonths >= 0 && entry.ageMonths <= months);
-        
+
         console.log("Processed real entries:", processedEntries);
         setGrowthEntries(processedEntries);
       } else {
@@ -218,7 +222,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
     };
 
     window.addEventListener('growthDataUpdated', handleGrowthDataUpdate);
-    
+
     return () => {
       window.removeEventListener('growthDataUpdated', handleGrowthDataUpdate);
     };
@@ -285,57 +289,57 @@ export default function GrowthChart({ defaultMonths = 24 }) {
   const validateGrowth = (actualHeight, actualWeight, whoHeight, whoWeight, ageMonths, gender) => {
     const heightDiff = actualHeight - whoHeight;
     const weightDiff = actualWeight - whoWeight;
-    
+
     const heightPercent = (Math.abs(heightDiff) / whoHeight) * 100;
     const weightPercent = (Math.abs(weightDiff) / whoWeight) * 100;
-    
+
     // More nuanced status determination
     const getDetailedStatus = (actual, expected, percent, type) => {
       const isAbove = actual > expected;
       const genderText = gender === 'male' ? 'boys' : 'girls';
-      
+
       if (percent <= 3) {
-        return { 
-          status: 'perfect', 
+        return {
+          status: 'perfect',
           color: 'text-emerald-600',
           severity: 'excellent',
           percentile: '~50th percentile'
         };
       }
       if (percent <= 8) {
-        return { 
-          status: 'excellent', 
+        return {
+          status: 'excellent',
           color: 'text-green-600',
           severity: 'normal',
           percentile: isAbove ? '50th-75th percentile' : '25th-50th percentile'
         };
       }
       if (percent <= 15) {
-        return { 
-          status: isAbove ? 'above-normal' : 'below-normal', 
+        return {
+          status: isAbove ? 'above-normal' : 'below-normal',
           color: 'text-blue-600',
           severity: 'monitor',
           percentile: isAbove ? '75th-85th percentile' : '15th-25th percentile'
         };
       }
       if (percent <= 25) {
-        return { 
-          status: isAbove ? 'high-normal' : 'low-normal', 
+        return {
+          status: isAbove ? 'high-normal' : 'low-normal',
           color: 'text-yellow-600',
           severity: 'attention',
           percentile: isAbove ? '85th-95th percentile' : '5th-15th percentile'
         };
       }
       if (percent <= 35) {
-        return { 
-          status: isAbove ? 'concerning-high' : 'concerning-low', 
+        return {
+          status: isAbove ? 'concerning-high' : 'concerning-low',
           color: 'text-orange-600',
           severity: 'concerning',
           percentile: isAbove ? '>95th percentile' : '<5th percentile'
         };
       }
-      return { 
-        status: isAbove ? 'significantly-high' : 'significantly-low', 
+      return {
+        status: isAbove ? 'significantly-high' : 'significantly-low',
         color: 'text-red-600',
         severity: 'urgent',
         percentile: isAbove ? '>>95th percentile' : '<<5th percentile'
@@ -355,19 +359,19 @@ export default function GrowthChart({ defaultMonths = 24 }) {
   // Comprehensive and specific guidance messages
   const getComprehensiveGuidance = (validation, ageMonths, gender) => {
     if (!validation) return null;
-    
+
     const { heightStatus, weightStatus, heightDiff, weightDiff } = validation;
     const genderText = gender === 'male' ? 'boys' : 'girls';
     const ageText = ageMonths < 12 ? `${ageMonths} months` : `${Math.floor(ageMonths / 12)} years ${ageMonths % 12} months`;
-   
+
     const getSpecificGuidance = (status, measurement, diff, type) => {
       const isHeight = type === 'height';
       const unit = isHeight ? 'cm' : 'kg';
       const measurementName = isHeight ? 'height' : 'weight';
-      
+
       const guidance = {
         'perfect': {
-          message: `Your baby's ${measurementName} (${measurement}${unit}) is perfectly aligned with WHO standards for ${genderText} at ${ageText}. This indicates optimal growth conditions.`,
+          message: t("growthCategory.statusMessages.perfect"),
           actions: [
             "Continue current feeding and care routine",
             "Maintain regular pediatric check-ups",
@@ -485,10 +489,10 @@ export default function GrowthChart({ defaultMonths = 24 }) {
           whoLink: `https://www.who.int/tools/child-growth-standards/standards/${isHeight ? 'length-height' : 'weight'}-for-age`
         }
       };
-      
+
       return guidance[status.status] || guidance['perfect'];
     };
-    
+
     return {
       height: getSpecificGuidance(heightStatus, validation.actualHeight, heightDiff, 'height'),
       weight: getSpecificGuidance(weightStatus, validation.actualWeight, weightDiff, 'weight')
@@ -500,7 +504,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
     if (active && payload && payload.length) {
       const data = chartData[label];
       if (data) {
-        const validation = data.hasActualData ? 
+        const validation = data.hasActualData ?
           validateGrowth(data.actualHeight, data.actualWeight, data.whoHeight, data.whoWeight, label, babyGender) : null;
 
         return (
@@ -577,9 +581,9 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       <div className="bg-white p-6 rounded-lg shadow-sm max-w-5xl mx-auto">
         <div className="text-center py-8">
           <Info className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">WHO Growth Standards Chart</h3>
+          <h3 className="text-lg font-semibold text-gray-700 mb-2"> {t('growthCategory.noData.title')}</h3>
           <p className="text-gray-600 mb-4">
-            Please fill in your baby's date of birth and gender above to see the WHO growth comparison.
+            {t('growthCategory.noData.description')}
           </p>
           <div className="text-sm text-gray-500">
             This chart will compare your baby's actual growth measurements with WHO standards.
@@ -591,22 +595,23 @@ export default function GrowthChart({ defaultMonths = 24 }) {
 
   const actualDataPoints = chartData.filter(d => d.hasActualData);
   const latestActual = actualDataPoints.length > 0 ? actualDataPoints[actualDataPoints.length - 1] : null;
-  
+
   // Get comprehensive guidance for the latest measurement
-  const latestValidation = latestActual ? 
+  const latestValidation = latestActual ?
     validateGrowth(latestActual.actualHeight, latestActual.actualWeight, latestActual.whoHeight, latestActual.whoWeight, latestActual.month, babyGender) : null;
-  const comprehensiveGuidance = latestValidation ? 
+  const comprehensiveGuidance = latestValidation ?
     getComprehensiveGuidance(latestValidation, latestActual.month, babyGender) : null;
+
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">
-            WHO Growth Standards Comparison
+            {t("growthCategory.title")}
           </h2>
           <p className="text-sm text-gray-600 mt-1">
-            Based on WHO Child Growth Standards 2006 (50th percentile)
+            {t("growthCategory.subtitle")}
           </p>
           {babyDOB && babyGender && (
             <p className="text-sm text-blue-600 mt-1">
@@ -616,7 +621,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-600">Max Age (months):</label>
+            <label className="text-sm text-gray-600">{t('growthCategory.input.maxAgeLabel')}</label>
             <input
               type="number"
               min={6}
@@ -637,38 +642,58 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       {/* Latest measurement summary with enhanced status indicators */}
       {latestActual && (
         <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
-          <h3 className="text-lg font-semibold text-blue-800 mb-3">Latest Measurement Summary</h3>
+          <h3 className="text-lg font-semibold text-blue-800 mb-3">
+            {t('growthCategory.latestMeasurement')}
+          </h3>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+            {/* Age */}
             <div className="bg-white p-3 rounded border">
-              <div className="text-gray-600">Age</div>
-              <div className="text-lg font-semibold text-blue-600">{latestActual.month} months</div>
+              <div className="text-gray-600">{t('growthCategory.summary.ageLabel')}</div>
+              <div className="text-lg font-semibold text-blue-600">
+                {latestActual.month} {t('growthCategory.months')}
+              </div>
             </div>
+
+            {/* Height Status */}
             <div className="bg-white p-3 rounded border">
-              <div className="text-gray-600">Height Status</div>
+              <div className="text-gray-600">{t('growthCategory.summary.heightStatus')}</div>
               <div className={`text-lg font-semibold ${latestValidation.heightStatus.color}`}>
                 {latestActual.actualHeight} cm
               </div>
-              <div className="text-xs text-gray-500">WHO: {latestActual.whoHeight} cm</div>
+              <div className="text-xs text-gray-500">
+                {t('growthCategory.whoReference')}: {latestActual.whoHeight} cm
+              </div>
               <div className={`text-xs ${latestValidation.heightStatus.color}`}>
                 {latestValidation.heightStatus.percentile}
               </div>
             </div>
+
+            {/* Weight Status */}
             <div className="bg-white p-3 rounded border">
-              <div className="text-gray-600">Weight Status</div>
+              <div className="text-gray-600">{t('growthCategory.summary.weightStatus')}</div>
               <div className={`text-lg font-semibold ${latestValidation.weightStatus.color}`}>
                 {latestActual.actualWeight} kg
               </div>
-              <div className="text-xs text-gray-500">WHO: {latestActual.whoWeight} kg</div>
+              <div className="text-xs text-gray-500">
+                {t('growthCategory.whoReference')}: {latestActual.whoWeight} kg
+              </div>
               <div className={`text-xs ${latestValidation.weightStatus.color}`}>
                 {latestValidation.weightStatus.percentile}
               </div>
             </div>
+
+            {/* Total Entries */}
             <div className="bg-white p-3 rounded border">
-              <div className="text-gray-600">Total Entries</div>
+              <div className="text-gray-600">{t('growthCategory.summary.totalEntries')}</div>
               <div className="text-lg font-semibold text-green-600">{actualDataPoints.length}</div>
-              {latestValidation.heightStatus.severity === 'urgent' || latestValidation.weightStatus.severity === 'urgent' && (
-                <div className="text-xs text-red-600 font-medium">⚠️ Attention Needed</div>
-              )}
+
+              {(latestValidation.heightStatus.severity === 'urgent' ||
+                latestValidation.weightStatus.severity === 'urgent') && (
+                  <div className="text-xs text-red-600 font-medium">
+                    {t('growthCategory.attentionNeeded')}
+                  </div>
+                )}
             </div>
           </div>
         </div>
@@ -679,11 +704,10 @@ export default function GrowthChart({ defaultMonths = 24 }) {
         <div className="mb-6">
           <button
             onClick={() => setShowDetailedGuidance(!showDetailedGuidance)}
-            className={`w-full flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition-all ${
-              latestValidation.heightStatus.severity === 'urgent' || latestValidation.weightStatus.severity === 'urgent' 
-                ? 'bg-gradient-to-r from-red-50 to-orange-50 border-red-200' 
-                : 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200'
-            }`}
+            className={`w-full flex items-center justify-between p-4 border rounded-lg hover:shadow-md transition-all ${latestValidation.heightStatus.severity === 'urgent' || latestValidation.weightStatus.severity === 'urgent'
+              ? 'bg-gradient-to-r from-red-50 to-orange-50 border-red-200'
+              : 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200'
+              }`}
           >
             <div className="flex items-center gap-2">
               {(latestValidation.heightStatus.severity === 'urgent' || latestValidation.weightStatus.severity === 'urgent') && (
@@ -691,36 +715,34 @@ export default function GrowthChart({ defaultMonths = 24 }) {
               )}
               <Info className="w-5 h-5 text-purple-600" />
               <h3 className="text-lg font-semibold text-purple-800">
-                Comprehensive Growth Analysis & Professional Guidance
+                {t("growthCategory.guidanceTitle")}
               </h3>
             </div>
             {showDetailedGuidance ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
-          
+
           {showDetailedGuidance && (
             <div className="mt-4 space-y-4">
               {/* Height Guidance with WHO Link */}
-              <div className={`p-4 bg-white border rounded-lg ${
-                comprehensiveGuidance.height.priority === 'emergency' || comprehensiveGuidance.height.priority === 'immediate' 
-                  ? 'border-red-300 bg-red-50' 
-                  : 'border-gray-200'
-              }`}>
+              <div className={`p-4 bg-white border rounded-lg ${comprehensiveGuidance.height.priority === 'emergency' || comprehensiveGuidance.height.priority === 'immediate'
+                ? 'border-red-300 bg-red-50'
+                : 'border-gray-200'
+                }`}>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">{comprehensiveGuidance.height.icon}</span>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
                       Height Analysis
                       {comprehensiveGuidance.height.priority === 'emergency' && (
-                        <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold">URGENT</span>
+                        <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold">{t("growthCategory.urgent")}</span>
                       )}
                     </h4>
                     <p className="text-gray-700 mb-3">{comprehensiveGuidance.height.message}</p>
-                    <div className={`p-3 rounded border-l-4 ${
-                      comprehensiveGuidance.height.priority === 'emergency' || comprehensiveGuidance.height.priority === 'immediate'
-                        ? 'bg-red-50 border-red-400' 
-                        : 'bg-blue-50 border-blue-400'
-                    }`}>
-                      <h5 className="font-semibold text-sm mb-2">Recommended Actions:</h5>
+                    <div className={`p-3 rounded border-l-4 ${comprehensiveGuidance.height.priority === 'emergency' || comprehensiveGuidance.height.priority === 'immediate'
+                      ? 'bg-red-50 border-red-400'
+                      : 'bg-blue-50 border-blue-400'
+                      }`}>
+                      <h5 className="font-semibold text-sm mb-2">{t("growthCategory.recommendedActions")}</h5>
                       <ul className="text-sm space-y-1">
                         {comprehensiveGuidance.height.actions.map((action, idx) => (
                           <li key={idx} className="flex items-start gap-2">
@@ -731,14 +753,16 @@ export default function GrowthChart({ defaultMonths = 24 }) {
                       </ul>
                     </div>
                     <div className="mt-3 flex items-center gap-2">
-                      <a 
+                      <a
                         href={comprehensiveGuidance.height.whoLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 underline"
                       >
                         <ExternalLink className="w-3 h-3" />
-                        Official WHO Height Standards for {babyGender === 'male' ? 'Boys' : 'Girls'}
+                        Official WHO Height Standards for {babyGender === "male"
+                          ? t("growthCategory.heightAnalysisTitleMale")
+                          : t("growthCategory.heightAnalysisTitleFemale")}
                       </a>
                     </div>
                   </div>
@@ -746,27 +770,25 @@ export default function GrowthChart({ defaultMonths = 24 }) {
               </div>
 
               {/* Weight Guidance with WHO Link */}
-              <div className={`p-4 bg-white border rounded-lg ${
-                comprehensiveGuidance.weight.priority === 'emergency' || comprehensiveGuidance.weight.priority === 'immediate' 
-                  ? 'border-red-300 bg-red-50' 
-                  : 'border-gray-200'
-              }`}>
+              <div className={`p-4 bg-white border rounded-lg ${comprehensiveGuidance.weight.priority === 'emergency' || comprehensiveGuidance.weight.priority === 'immediate'
+                ? 'border-red-300 bg-red-50'
+                : 'border-gray-200'
+                }`}>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">{comprehensiveGuidance.weight.icon}</span>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                      Weight Analysis
+                      {t("growthCategory.weightAnalysis")}
                       {comprehensiveGuidance.weight.priority === 'emergency' && (
-                        <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold">URGENT</span>
+                        <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-bold">{t("growthCategory.urgent")}</span>
                       )}
                     </h4>
                     <p className="text-gray-700 mb-3">{comprehensiveGuidance.weight.message}</p>
-                    <div className={`p-3 rounded border-l-4 ${
-                      comprehensiveGuidance.weight.priority === 'emergency' || comprehensiveGuidance.weight.priority === 'immediate'
-                        ? 'bg-red-50 border-red-400' 
-                        : 'bg-green-50 border-green-400'
-                    }`}>
-                      <h5 className="font-semibold text-sm mb-2">Recommended Actions:</h5>
+                    <div className={`p-3 rounded border-l-4 ${comprehensiveGuidance.weight.priority === 'emergency' || comprehensiveGuidance.weight.priority === 'immediate'
+                      ? 'bg-red-50 border-red-400'
+                      : 'bg-green-50 border-green-400'
+                      }`}>
+                      <h5 className="font-semibold text-sm mb-2"> {t("growthCategory.recommendedActions")}</h5>
                       <ul className="text-sm space-y-1">
                         {comprehensiveGuidance.weight.actions.map((action, idx) => (
                           <li key={idx} className="flex items-start gap-2">
@@ -777,14 +799,16 @@ export default function GrowthChart({ defaultMonths = 24 }) {
                       </ul>
                     </div>
                     <div className="mt-3 flex items-center gap-2">
-                      <a 
+                      <a
                         href={comprehensiveGuidance.weight.whoLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 underline"
                       >
                         <ExternalLink className="w-3 h-3" />
-                        Official WHO Weight Standards for {babyGender === 'male' ? 'Boys' : 'Girls'}
+                        {t("growthCategory.officialWhoWeightStandards", {
+                          gender: babyGender === 'male' ? t('growthCategory.boys') : t('growthCategory.girls')
+                        })}
                       </a>
                     </div>
                   </div>
@@ -793,12 +817,12 @@ export default function GrowthChart({ defaultMonths = 24 }) {
 
               {/* Enhanced Statistical Summary */}
               <div className="p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-semibold text-gray-800 mb-3">Detailed Statistical Comparison</h4>
+                <h4 className="font-semibold text-gray-800 mb-3">{t("growthCategory.detailedComparisonTitle")}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="bg-white p-3 rounded border">
-                    <p className="text-gray-600 mb-1">Height Deviation from WHO Median:</p>
+                    <p className="text-gray-600 mb-1"> {t("growthCategory.heightDeviationLabel")}</p>
                     <p className={`font-medium ${latestValidation.heightStatus.color}`}>
-                      {latestValidation.heightDiff > 0 ? '+' : ''}{latestValidation.heightDiff.toFixed(1)} cm 
+                      {latestValidation.heightDiff > 0 ? '+' : ''}{latestValidation.heightDiff.toFixed(1)} cm
                       ({latestValidation.heightPercent.toFixed(1)}%)
                     </p>
                     <p className={`text-xs ${latestValidation.heightStatus.color}`}>
@@ -806,9 +830,9 @@ export default function GrowthChart({ defaultMonths = 24 }) {
                     </p>
                   </div>
                   <div className="bg-white p-3 rounded border">
-                    <p className="text-gray-600 mb-1">Weight Deviation from WHO Median:</p>
+                    <p className="text-gray-600 mb-1"> {t("growthCategory.weightDeviationLabel")}</p>
                     <p className={`font-medium ${latestValidation.weightStatus.color}`}>
-                      {latestValidation.weightDiff > 0 ? '+' : ''}{latestValidation.weightDiff.toFixed(1)} kg 
+                      {latestValidation.weightDiff > 0 ? '+' : ''}{latestValidation.weightDiff.toFixed(1)} kg
                       ({latestValidation.weightPercent.toFixed(1)}%)
                     </p>
                     <p className={`text-xs ${latestValidation.weightStatus.color}`}>
@@ -817,8 +841,9 @@ export default function GrowthChart({ defaultMonths = 24 }) {
                   </div>
                 </div>
                 <div className="mt-3 p-3 bg-blue-50 rounded text-xs text-blue-800">
-                  <p><strong>Understanding Percentiles:</strong> The 50th percentile represents the median (average). 
-                  25th-75th percentile is considered normal range. Below 5th or above 95th percentile may require medical attention.</p>
+                  <p> <strong>{t("growthCategory.percentileInfo.title")}</strong>{" "}
+                    {t("growthCategory.percentileInfo.description")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -831,30 +856,30 @@ export default function GrowthChart({ defaultMonths = 24 }) {
         <ResponsiveContainer width="100%" height={500}>
           <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
             <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-            <XAxis 
-              dataKey="month" 
+            <XAxis
+              dataKey="month"
               label={{ value: 'Age (months)', position: 'insideBottom', offset: -20 }}
               height={60}
               type="number"
               domain={[0, months]}
             />
-            <YAxis 
+            <YAxis
               yAxisId="height"
-              orientation="left" 
+              orientation="left"
               label={{ value: 'Height (cm)', angle: -90, position: 'insideLeft' }}
             />
-            <YAxis 
+            <YAxis
               yAxisId="weight"
-              orientation="right" 
+              orientation="right"
               label={{ value: 'Weight (kg)', angle: 90, position: 'insideRight' }}
             />
             <Tooltip content={customTooltip} />
-            <Legend 
-              wrapperStyle={{ 
+            <Legend
+              wrapperStyle={{
                 paddingTop: '20px'
               }}
             />
-            
+
             {/* WHO Standard Lines */}
             <Line
               yAxisId="height"
@@ -876,7 +901,7 @@ export default function GrowthChart({ defaultMonths = 24 }) {
               dot={false}
               strokeDasharray="5 5"
             />
-            
+
             {/* Actual Growth Lines - ONLY REAL DATA */}
             <Line
               yAxisId="height"
@@ -906,12 +931,13 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       {actualDataPoints.length === 0 && (
         <div className="text-center py-8 bg-gray-50 rounded-lg">
           <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-600 mb-2">No Growth Data Yet</h3>
+          <h3 className="text-lg font-medium text-gray-600 mb-2"> {t("growthCategory.noData.title")}
+          </h3>
           <p className="text-gray-500">
-            Add some growth measurements above to see your baby's progress compared to WHO standards.
+            {t("growthCategory.noData.description")}
           </p>
           <p className="text-sm text-gray-400 mt-2">
-            Only real measurements will be displayed - no dummy data.
+            {t("growthCategory.noData.note")}
           </p>
         </div>
       )}
@@ -920,37 +946,35 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       <div className="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
         <h3 className="text-sm font-semibold text-yellow-800 mb-2">About WHO Growth Standards</h3>
         <p className="text-xs text-yellow-700 mb-3">
-          The WHO Child Growth Standards describe how children should grow under optimal conditions. 
-          These charts show the 50th percentile (median) values based on data from healthy, breastfed children 
-          from diverse populations worldwide. Normal growth typically falls within the 3rd to 97th percentiles.
+          {t('growthCategory.whoDescription')}
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
-          <a 
+          <a
             href="https://www.who.int/tools/child-growth-standards"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-yellow-700 hover:text-yellow-900 underline"
           >
             <ExternalLink className="w-3 h-3" />
-            WHO Growth Standards Overview
+            {t('growthCategory.links.overview')}
           </a>
-          <a 
+          <a
             href={`https://www.who.int/tools/child-growth-standards/standards/length-height-for-age`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-yellow-700 hover:text-yellow-900 underline"
           >
             <ExternalLink className="w-3 h-3" />
-            Height Standards by Age
+            {t('growthCategory.links.height')}
           </a>
-          <a 
+          <a
             href={`https://www.who.int/tools/child-growth-standards/standards/weight-for-age`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-yellow-700 hover:text-yellow-900 underline"
           >
             <ExternalLink className="w-3 h-3" />
-            Weight Standards by Age
+            {t('growthCategory.links.weight')}
           </a>
         </div>
       </div>
@@ -958,12 +982,10 @@ export default function GrowthChart({ defaultMonths = 24 }) {
       {/* Footer Note */}
       <div className="mt-6 pt-4 border-t text-xs text-gray-500 text-center">
         <p className="mb-2">
-          This chart uses official WHO Child Growth Standards 2006 and is for educational purposes only. 
-          It should not replace professional medical advice or diagnosis.
+          {t('growthCategory.disclaimer.educational')}
         </p>
         <p>
-          Always consult with your pediatrician for personalized guidance on your baby's growth and development.
-          In case of concerning measurements, seek professional medical evaluation promptly.
+          {t('growthCategory.disclaimer.medical')}
         </p>
       </div>
     </div>

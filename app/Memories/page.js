@@ -26,9 +26,11 @@ import Input from "../components/ui/Input";
 import Badge from "../components/ui/Badge";
 import { useAuth } from "../context/AuthContext";
 import LoginPrompt from "../components/LoginPrompt";
+import { useTranslation } from "react-i18next";
 
 
 export default function MemoriesCommunityBlog() {
+  const { t } = useTranslation("common");
   const { token, isAuth } = useAuth();
   const [memories, setMemories] = useState([]);
   const [isAddingMemory, setIsAddingMemory] = useState(false);
@@ -51,11 +53,9 @@ export default function MemoriesCommunityBlog() {
 
 
   useEffect(() => {
-    document.title = "Memories, Community & Blogs | NeoNest";
-    if (isAuth && token) {
+    document.title = t("memories.PageTitle");
     fetchMemories();
-    }
-  }, [isAuth, token]);
+  }, [isAuth, token, t]);
 
   const fetchMemories = async () => {
     try {
@@ -189,7 +189,7 @@ export default function MemoriesCommunityBlog() {
 
   // Show login prompt if user is not authenticated
   if (!isAuth) {
-    return <LoginPrompt sectionName="memories and community" />;
+    return <LoginPrompt sectionName={t("memories.loginPromptSectionMemories")} />;
   }
 
   return (
@@ -197,10 +197,10 @@ export default function MemoriesCommunityBlog() {
       {/* Page Header */}
       <div className="text-center mb-10">
         <h1 className="text-4xl font-semibold text-gray-900 leading-tight">
-          Memories, Community & Blogs
+          {t("memories.CommunityBlogs")}
         </h1>
         <p className="text-xl text-gray-600 mt-3 max-w-2xl mx-auto">
-          Share your precious stories, save your personal memories, and connect with a supportive community.
+          {t("memories.Description")}
         </p>
         <Button
           onClick={() => {
@@ -210,7 +210,7 @@ export default function MemoriesCommunityBlog() {
           className="mt-6 px-8 py-3 text-lg bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 shadow-lg transition-all duration-300 transform hover:scale-105"
         >
           <Plus className="w-5 h-5 mr-2" />
-          Add New Memory
+          {t("memories.addNewMemory")}
         </Button>
       </div>
 
@@ -220,7 +220,7 @@ export default function MemoriesCommunityBlog() {
           <CardHeader className="mb-6 p-0 flex flex-row justify-between items-center">
             <CardTitle className="flex items-center gap-3 text-2xl font-bold text-pink-700">
               {editingMemory ? <Edit className="w-7 h-7" /> : <Camera className="w-7 h-7" />}
-              {editingMemory ? "Edit Your Memory" : "Share a New Memory"}
+              {editingMemory ? t("memories.editYourMemory") : t("memories.shareNewMemory")}
             </CardTitle>
             <Button variant="ghost" size="icon" onClick={resetForm} className="text-gray-500 hover:text-gray-700">
               <X className="w-6 h-6" />
@@ -232,7 +232,7 @@ export default function MemoriesCommunityBlog() {
                 <label htmlFor="title" className="block text-sm font-semibold mb-2 text-gray-700">Title</label>
                 <Input
                   id="title"
-                  placeholder="e.g., Baby's First Steps"
+                  placeholder={t("memories.titlePlaceholder")}
                   value={editingMemory?.title || newMemory.title}
                   onChange={(e) =>
                     editingMemory
@@ -243,7 +243,7 @@ export default function MemoriesCommunityBlog() {
                 />
               </div>
               <div>
-                <label htmlFor="type" className="block text-sm font-semibold mb-2 text-gray-700">Type</label>
+                <label htmlFor="type" className="block text-sm font-semibold mb-2 text-gray-700">{t("memories.type")}</label>
                 <select
                   id="type"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-pink-400 focus:border-pink-400 transition-all appearance-none bg-white pr-8"
@@ -254,18 +254,18 @@ export default function MemoriesCommunityBlog() {
                       : setNewMemory({ ...newMemory, type: e.target.value })
                   }
                 >
-                  <option value="photo">Photo</option>
-                  <option value="video">Video</option>
+                  <option value="photo">{t("memories.photo")}</option>
+                  <option value="video">{t("memories.video")}</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-semibold mb-2 text-gray-700">Description</label>
+              <label htmlFor="description" className="block text-sm font-semibold mb-2 text-gray-700">{t("memories.description")}</label>
               <textarea
                 id="description"
                 className="w-full p-3 border border-gray-300 rounded-lg h-32 resize-y focus:ring-pink-400 focus:border-pink-400 transition-all"
-                placeholder="What's the story behind this precious moment?"
+                placeholder={t("memories.descriptionPlaceholder")}
                 value={editingMemory?.description || newMemory.description}
                 onChange={(e) =>
                   editingMemory
@@ -276,7 +276,7 @@ export default function MemoriesCommunityBlog() {
             </div>
 
             <div>
-              <label htmlFor="file-upload" className="block text-sm font-semibold mb-2 text-gray-700">Upload Media</label>
+              <label htmlFor="file-upload" className="block text-sm font-semibold mb-2 text-gray-700">{t("memories.uploadMedia")}</label>
               <div className="flex items-center gap-4">
                 <input
                   type="file"
@@ -290,11 +290,11 @@ export default function MemoriesCommunityBlog() {
                   className="flex items-center gap-2 px-5 py-2.5 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 text-gray-700 transition-colors"
                 >
                   <Upload className="w-5 h-5" />
-                  Choose File
+                  {t("memories.chooseFile")}
                 </label>
                 {(previewFile || editingMemory?.file) && (
                   <span className="text-sm text-green-600 flex items-center gap-1">
-                    File selected <CheckCircle className="w-4 h-4" />
+                    {t("memories.fileSelected")}<CheckCircle className="w-4 h-4" />
                   </span>
                 )}
               </div>
@@ -315,10 +315,10 @@ export default function MemoriesCommunityBlog() {
             </div>
 
             <div>
-              <label htmlFor="tags" className="block text-sm font-semibold mb-2 text-gray-700">Tags (comma separated)</label>
+              <label htmlFor="tags" className="block text-sm font-semibold mb-2 text-gray-700">{t("memories.tagsLabel")}</label>
               <Input
                 id="tags"
-                placeholder="e.g., #firsts, #babylove, #funny"
+                placeholder={t("memories.tagsPlaceholder")}
                 value={
                   editingMemory
                     ? Array.isArray(editingMemory.tags)
@@ -350,7 +350,9 @@ export default function MemoriesCommunityBlog() {
                 />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                 <span className="ml-3 text-sm font-medium text-gray-700">
-                  {editingMemory?.isPublic || newMemory.isPublic ? "Public (Share with community)" : "Private (Keep to myself)"}
+                  {editingMemory?.isPublic || newMemory.isPublic
+                    ? t("memories.isPublicLabelPublic")
+                    : t("memories.isPublicLabelPrivate")}
                 </span>
               </label>
             </div>
@@ -362,14 +364,20 @@ export default function MemoriesCommunityBlog() {
                 className="flex-1 px-6 py-3 text-lg bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 shadow-md transition-all duration-300"
               >
                 <Save className="w-5 h-5 mr-2" />
-                {isLoading ? (editingMemory ? "Updating..." : "Adding...") : (editingMemory ? "Update Memory" : "Add Memory")}
+                {isLoading
+                  ? editingMemory
+                    ? t("memories.buttonUpdating")
+                    : t("memories.buttonAdding")
+                  : editingMemory
+                    ? t("memories.buttonUpdateMemory")
+                    : t("memories.buttonAddMemory")}
               </Button>
               <Button
                 variant="outline"
                 onClick={resetForm}
                 className="flex-1 px-6 py-3 text-lg text-gray-700 border-gray-300 hover:bg-gray-100 transition-colors"
               >
-                Cancel
+                {t("memories.cancel")}
               </Button>
             </div>
           </CardContent>
@@ -382,9 +390,9 @@ export default function MemoriesCommunityBlog() {
         <CardHeader className="mb-6 p-0">
           <CardTitle className="flex items-center gap-3 text-3xl font-bold text-blue-700">
             <Share2 className="w-8 h-8" />
-            Community Blog
+            {t("memories.communityBlogTitle")}
           </CardTitle>
-          <p className="text-gray-600 mt-2">Discover and connect with shared memories from our community.</p>
+          <p className="text-gray-600 mt-2">{t("memories.communityBlogDescription")}</p>
         </CardHeader>
         <CardContent className="p-0">
           {publicMemories.length > 0 ? (
@@ -474,11 +482,11 @@ export default function MemoriesCommunityBlog() {
                     <div className="flex gap-2 mt-4">
                       <Button size="sm" variant="outline" onClick={(e) => { e.stopPropagation(); setEditingMemory(memory); setIsAddingMemory(true); }} className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50">
                         <Edit className="w-4 h-4 mr-1" />
-                        Edit
+                        {t("memories.editButton")}
                       </Button>
                       <Button size="sm" variant="outline" onClick={(e) => { e.stopPropagation(); deleteMemory(memory._id); }} className="text-red-600 border-red-200 hover:bg-red-50">
                         <Trash2 className="w-4 h-4 mr-1" />
-                        Delete
+                        {t("memories.deleteButton")}
                       </Button>
                     </div>
                   </div>
@@ -489,8 +497,8 @@ export default function MemoriesCommunityBlog() {
           ) : (
             <div className="text-center py-10 bg-gray-50 rounded-lg border border-gray-100">
               <Share2 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">No public memories yet</h3>
-              <p className="text-gray-500 mb-6">Be the first to share a memory with the community!</p>
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">{t("memories.noPublicMemories")}</h3>
+              <p className="text-gray-500 mb-6">{t("memories.noPublicMemoriesDescription")}</p>
             </div>
           )}
         </CardContent>
@@ -502,9 +510,9 @@ export default function MemoriesCommunityBlog() {
         <CardHeader className="mb-6 p-0">
           <CardTitle className="flex items-center gap-3 text-3xl font-bold text-purple-700">
             <Camera className="w-8 h-8" />
-            Your Private Memory Vault
+            {t("memories.privateVaultTitle")}
           </CardTitle>
-          <p className="text-gray-600 mt-2">Your personal collection of cherished moments, kept just for you.</p>
+          <p className="text-gray-600 mt-2">{t("memories.privateVaultDescription")}</p>
         </CardHeader>
         <CardContent className="p-0">
           {privateMemories.length > 0 ? (
@@ -604,7 +612,7 @@ export default function MemoriesCommunityBlog() {
                         className="flex-1 text-blue-600 border-blue-200 hover:bg-blue-50"
                       >
                         <Edit className="w-4 h-4 mr-1" />
-                        Edit
+                        {t("memories.editButton")}
                       </Button>
                       <Button
                         size="sm"
@@ -616,7 +624,7 @@ export default function MemoriesCommunityBlog() {
                         className="text-red-600 border-red-200 hover:bg-red-50"
                       >
                         <Trash2 className="w-4 h-4 mr-1" />
-                        Delete
+                        {t("memories.deleteButton")}
                       </Button>
                     </div>
                   </div>
@@ -627,8 +635,8 @@ export default function MemoriesCommunityBlog() {
           ) : (
             <div className="text-center py-10 bg-gray-50 rounded-lg border border-gray-100">
               <Camera className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">Your memory vault is empty</h3>
-              <p className="text-gray-500 mb-6">Start capturing your personal precious moments.</p>
+              <h3 className="text-xl font-semibold text-gray-600 mb-2"> {t("memories.noPrivateMemories")}</h3>
+              <p className="text-gray-500 mb-6"> {t("memories.noPrivateMemoriesDescription")}</p>
             </div>
           )}
         </CardContent>
@@ -671,7 +679,7 @@ export default function MemoriesCommunityBlog() {
                 ))}
               </div>
               <div className="flex items-center justify-between text-sm text-gray-500 border-t pt-4 mt-4 border-gray-100">
-                <span>Created on: {new Date(selectedMemory.date).toLocaleDateString('en-GB')}</span>
+                <span>{t("memories.createdOn")} {new Date(selectedMemory.date).toLocaleDateString('en-GB')}</span>
                 <div className="flex items-center gap-5">
                   <button
                     onClick={(e) => {

@@ -10,81 +10,48 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../components/ui/Carousel";
+import { useTranslation } from "react-i18next";
 
-const interactionStages = [
-  {
-    title: "0–3 Months",
-    color: "pink",
-    icon: Baby,
-    tips: [
-      "⮞ Make eye contact and smile often",
-      "⮞ Talk softly and describe what you're doing",
-      "⮞ Sing lullabies and gentle songs",
-      "⮞ Practice supervised tummy time daily",
-      "⮞ Give gentle baby massages",
-      "⮞ Use high-contrast toys and patterns",
-      "⮞ Hold baby close during feeding times",
-      "⮞ Respond to their coos and sounds",
-      "⮞ Show different facial expressions",
-      "⮞ Create a calm, soothing environment",
-    ],
-  },
-  {
-    title: "4–6 Months",
-    color: "purple",
-    icon: Heart,
-    tips: [
-      "⮞ Play peekaboo games",
-      "⮞ Use mirrors for interactive play",
-      "⮞ Introduce age-appropriate rattles",
-      "⮞ Read simple picture books together",
-      "⮞ Encourage rolling and reaching",
-      "⮞ Let them grasp safe toys",
-      "⮞ Practice sitting with support",
-      "⮞ Make different sounds and voices",
-      "⮞ Show cause and effect toys",
-      "⮞ Name objects and body parts",
-    ],
-  },
-  {
-    title: "7–9 Months",
-    color: "blue",
-    icon: Music,
-    tips: [
-      "⮞ Play interactive songs with actions",
-      "⮞ Let them explore safe objects",
-      "⮞ Support crawling attempts",
-      "⮞ Play with different textures",
-      "⮞ Practice object permanence games",
-      "⮞ Encourage self-feeding practice",
-      "⮞ Create safe exploration spaces",
-      "⮞ Use simple words consistently",
-      "⮞ Play gentle chase games",
-      "⮞ Introduce basic finger games",
-    ],
-  },
-  {
-    title: "10–12 Months",
-    color: "green",
-    icon: Star,
-    tips: [
-      "⮞ Name objects and actions regularly",
-      "⮞ Support standing and cruising",
-      "⮞ Play stacking and sorting games",
-      "⮞ Encourage clapping and waving",
-      "⮞ Practice walking with support",
-      "⮞ Read interactive books together",
-      "⮞ Play simple hide and seek",
-      "⮞ Encourage imitation of sounds",
-      "⮞ Use simple puzzles and shapes",
-      "⮞ Create music with simple instruments",
-    ],
-  },
-];
+const stageIcons = {
+  "0–3 Months": Baby,
+  "4–6 Months": Heart,
+  "7–9 Months": Music,
+  "10–12 Months": Star,
+};
+
+
 
 const InteractionWithBaby = () => {
+  const { t } = useTranslation("common");
   const [selectedAge, setSelectedAge] = useState("0–3 Months");
   const [api, setApi] = useState(null);
+
+  const interactionStages = [
+    {
+      title: "0–3 Months",
+      color: "pink",
+      icon: Baby,
+      tips: t("interaction.stages.0_3.tips", { returnObjects: true }),
+    },
+    {
+      title: "4–6 Months",
+      color: "purple",
+      icon: Heart,
+      tips: t("interaction.stages.4_6.tips", { returnObjects: true }),
+    },
+    {
+      title: "7–9 Months",
+      color: "blue",
+      icon: Music,
+      tips: t("interaction.stages.7_9.tips", { returnObjects: true }),
+    },
+    {
+      title: "10–12 Months",
+      color: "green",
+      icon: Star,
+      tips: t("interaction.stages.10_12.tips", { returnObjects: true }),
+    },
+  ];
 
   // Reset carousel to first slide when age changes
   useEffect(() => {
@@ -97,8 +64,8 @@ const InteractionWithBaby = () => {
     <section id="interaction-tips" className="px-4 py-6 bg-white/50 rounded-lg">
       <div className="container mx-auto">
         <div className="text-center mb-6">
-          <h2 className="text-4xl font-bold text-gray-800 mb-2">Interaction Tips by Age</h2>
-          <p className="text-lg text-gray-600">Discover meaningful ways to engage with your baby</p>
+          <h2 className="text-4xl font-bold text-gray-800 mb-2">{t("interaction.heading")}</h2>
+          <p className="text-lg text-gray-600"> {t("interaction.subheading")}</p>
         </div>
 
         {/* Age selection radio buttons */}
@@ -107,8 +74,8 @@ const InteractionWithBaby = () => {
             <label
               key={stage.title}
               className={`flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all ${selectedAge === stage.title
-                  ? "bg-gradient-to-r from-pink-600 to-blue-600 text-white shadow-lg"
-                  : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-blue-50 shadow-md"
+                ? "bg-gradient-to-r from-pink-600 to-blue-600 text-white shadow-lg"
+                : "bg-white text-gray-700 hover:bg-gradient-to-r hover:from-pink-50 hover:to-blue-50 shadow-md"
                 }`}
             >
               <input
@@ -167,7 +134,7 @@ const InteractionWithBaby = () => {
         </div>
 
         {/* Statement */}
-    
+
       </div>
     </section>
   );
