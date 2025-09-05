@@ -27,6 +27,7 @@ import Image from "next/image";
 import NewSections from "./Newsections";
 import NotificationDemo from "./NotificationDemo";
 import { Toaster, toast } from 'sonner';
+import Link from "next/link";
 
 import { useTranslation } from 'react-i18next';
 
@@ -316,10 +317,12 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Utensils className="w-6 h-6 text-pink-600" />
                   </div>
-                  <CardTitle className="group-hover:text-pink-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.feeding.title')}
-                  </CardTitle>
-                  <CardDescription className="text-gray-600 text-sm">
+                  <Link href="/Feeding">
+                    <CardTitle className="group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors text-xl font-semibold text-gray-900 dark:text-gray-100">
+                      {t('homepage.cards.feeding.title')}
+                    </CardTitle>
+                  </Link>
+                  <CardDescription className="text-gray-600 dark:text-gray-300 text-sm">
                     {t('homepage.cards.feeding.desc')}
                   </CardDescription>
                 </CardHeader>
@@ -330,9 +333,11 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Package className="w-6 h-6 text-blue-600" />
                   </div>
-                  <CardTitle className="group-hover:text-blue-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.inventory.title')}
-                  </CardTitle>
+                  <Link href="/Essentials">
+                    <CardTitle className="group-hover:text-blue-600 transition-colors text-xl font-semibold">
+                      {t('homepage.cards.inventory.title')}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="text-gray-600 text-sm">
                     {t('homepage.cards.inventory.desc')}
                   </CardDescription>
@@ -344,9 +349,11 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Camera className="w-6 h-6 text-purple-600" />
                   </div>
-                  <CardTitle className="group-hover:text-purple-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.memory.title')}
-                  </CardTitle>
+                  <Link href="/Memories">
+                    <CardTitle className="group-hover:text-purple-600 transition-colors text-xl font-semibold">
+                      {t('homepage.cards.memory.title')}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="text-gray-600 text-sm">
                     {t('homepage.cards.memory.desc')}
                   </CardDescription>
@@ -358,9 +365,11 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <Shield className="w-6 h-6 text-green-600" />
                   </div>
-                  <CardTitle className="group-hover:text-green-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.vaccine.title')}
-                  </CardTitle>
+                  <Link href="/Medical">
+                    <CardTitle className="group-hover:text-green-600 transition-colors text-xl font-semibold">
+                      {t('homepage.cards.vaccine.title')}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="text-gray-600 text-sm">
                     {t('homepage.cards.vaccine.desc')}
                   </CardDescription>
@@ -372,12 +381,14 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <PlayCircle className="w-6 h-6 text-orange-600" />
                   </div>
-                  <CardTitle className="group-hover:text-orange-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.resources.title')}
-                  </CardTitle>
-                  <CardDescription className="text-gray-600 text-sm">
-                    {t('homepage.cards.resources.desc')}
-                  </CardDescription>
+                  <Link href="/Resources">
+                    <CardTitle className="group-hover:text-orange-600 transition-colors text-xl font-semibold">
+                      {t('homepage.cards.resources.title')}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600 text-sm">
+                      {t('homepage.cards.resources.desc')}
+                    </CardDescription>
+                  </Link>
                 </CardHeader>
               </Card>
 
@@ -386,9 +397,11 @@ const Homepage = () => {
                   <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <HelpCircle className="w-6 h-6 text-teal-600" />
                   </div>
-                  <CardTitle className="group-hover:text-teal-600 transition-colors text-xl font-semibold">
-                    {t('homepage.cards.faq.title')}
-                  </CardTitle>
+                  <Link href="/Faqs">
+                    <CardTitle className="group-hover:text-teal-600 transition-colors text-xl font-semibold">
+                      {t('homepage.cards.faq.title')}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="text-gray-600 text-sm">
                     {t('homepage.cards.faq.desc')}
                   </CardDescription>

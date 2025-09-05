@@ -290,6 +290,14 @@
             "development": "అభివృద్ధి",
             "health": "ఆరోగ్యం & భద్రత"
         },
+        "formatCategories": {
+            "all": "అన్ని ఫార్మాట్లు",
+            "article": "వ్యాసం",
+            "video": "వీడియో",
+            "audio": "ఆడియో",
+            "podcast": "పోడ్కాస్ట్",
+            "journal": "జర్నల్స్"
+        },
         "buttons": {
             "readArticle": "వ్యాసం చదవండి",
             "clearFilters": "క్లియర్ ఫిల్టర్లు"

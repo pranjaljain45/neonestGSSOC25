@@ -290,6 +290,14 @@
             "development": "வளர்ச்சி",
             "health": "உடல்நலம் மற்றும் பாதுகாப்பு"
         },
+        "formatCategories": {
+            "all": "அனைத்து வடிவங்களும்",
+            "article": "கட்டுரை",
+            "video": "வீடியோ",
+            "audio": "ஆடியோ",
+            "podcast": "போட்காஸ்ட்",
+            "journal": "பத்திரிகைகள்"
+        },
         "buttons": {
             "readArticle": "கட்டுரையைப் படியுங்கள்",
             "clearFilters": "தெளிவான வடிப்பான்கள்"

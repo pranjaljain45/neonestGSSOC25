@@ -290,6 +290,14 @@
             "development": "Development",
             "health": "Health & Safety"
         },
+        "formatCategories": {
+            "all": "All Formats",
+            "article": "Article",
+            "video": "Video",
+            "audio": "Audio",
+            "podcast": "Podcast",
+            "journal": "Journals"
+        },
         "buttons": {
             "readArticle": "Read Article",
             "clearFilters": "Clear Filters"

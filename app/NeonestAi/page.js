@@ -18,16 +18,16 @@ import { useTranslation } from "react-i18next";
 
 
 const quickQuestions = [
-  { icon: Baby, textKey: "when_should_baby_crawl", color: "pink" },
-  { icon: Utensils, textKey: "how_to_introduce_solid_foods", color: "purple" },
-  { icon: Clock, textKey: "good_sleep_schedule_6_months", color: "blue" },
-  { icon: Heart, textKey: "is_babys_crying_normal", color: "green" },
+  { icon: Baby, text: "when_should_baby_crawl", color: "pink" },
+  { icon: Utensils, text: "how_to_introduce_solid_foods", color: "purple" },
+  { icon: Clock, text: "good_sleep_schedule_6_months", color: "blue" },
+  { icon: Heart, text: "is_babys_crying_normal", color: "green" },
 ];
 
 const roles = [
-  { labelKey: "pediatrician", value: "pediatrician" },
-  { labelKey: "baby", value: "baby" },
-  { labelKey: "mother", value: "mother" },
+  { label: "pediatrician", value: "pediatrician" },
+  { label: "baby", value: "baby" },
+  { label: "mother", value: "mother" },
 ];
 
 export default function NeonestAi() {
@@ -55,11 +55,11 @@ export default function NeonestAi() {
     averageResponseTime: 1.2,
     satisfactionRate: 94.5,
     topQuestions: [
-      { questionKey: "when_should_baby_crawl", count: 156 },
-      { questionKey: "how_to_introduce_solid_foods", count: 134 },
-      { questionKey: "good_sleep_schedule_6_months", count: 98 },
-      { questionKey: "is_babys_crying_normal", count: 87 },
-      { questionKey: "when_do_babies_teeth", count: 76 },
+      { question: "when_should_baby_crawl", count: 156 },
+      { question: "how_to_introduce_solid_foods", count: 134 },
+      { question: "good_sleep_schedule_6_months", count: 98 },
+      { question: "is_babys_crying_normal", count: 87 },
+      { question: "when_do_babies_teeth", count: 76 },
     ],
   });
 
@@ -82,11 +82,6 @@ export default function NeonestAi() {
     }
     return true;
   };
-
-  // useEffect(() => {
-  //   console.log("Active language:", i18n.language);
-  //   console.log("Translation output:", t("neochatbot.switched_to_role", { role: "मातृत्व" }));
-  // });
 
   useEffect(() => {
     if (historyLoaded[role]) return;
@@ -214,7 +209,7 @@ export default function NeonestAi() {
                 >
                   {roles.map((r) => (
                     <option key={r.value} value={r.value}>
-                      {t(`neochatbot.${r.labelKey}`)}
+                      {t(`neochatbot.${r.label}`)}
                     </option>
                   ))}
                 </select>
@@ -244,7 +239,7 @@ export default function NeonestAi() {
                 {quickQuestions.map((q, idx) => (
                   <Button key={idx} onClick={() => handleQuickQuestion(q.text)} variant="outline" className="text-left justify-start text-sm">
                     <q.icon className={`w-4 h-4 mr-2 text-${q.color}-500`} />
-                    {t(`neochatbot.${q.textKey}`)}
+                    {t(`neochatbot.${q.text}`)}
                   </Button>
                 ))}
               </div>
@@ -420,10 +415,10 @@ export default function NeonestAi() {
             {analytics.topQuestions?.map((q, i) => (
               <button
                 key={i}
-                onClick={() => handleQuickQuestion(q.questionKey)}
+                onClick={() => handleQuickQuestion(q.question)}
                 className="flex justify-between text-sm border-b pb-1 w-full text-left hover:bg-gray-100 px-2 py-1 rounded transition"
               >
-                <span>{t(`neochatbot.${q.questionKey}`)}</span>
+                <span>{t(`neochatbot.${q.question}`)}</span>
                 <Badge variant="secondary">{q.count}</Badge>
               </button>
             ))}

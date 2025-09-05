@@ -290,6 +290,14 @@
             "development": "ವಾಗ್ದಾನ",
             "health": "ಆರೋಗ್ಯ ಮತ್ತು ಸುರಕ್ಷತೆ"
         },
+        "formatCategories": {
+            "all": "ಎಲ್ಲಾ ಸ್ವರೂಪಗಳು",
+            "article": "ಲೇಖನ",
+            "video": "ವೀಡಿಯೊ",
+            "audio": "ಆವಿಷ್ಕಾರ",
+            "podcast": "ಪಾಡ್ಕ್ಯಾಸ್ಟ್",
+            "journal": "ಪತ್ರಗಳು"
+        },
         "buttons": {
             "readArticle": "ಲೇಖನ ಓದಿ",
             "clearFilters": "ಫಿಲ್ಟರ್‌ಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ"

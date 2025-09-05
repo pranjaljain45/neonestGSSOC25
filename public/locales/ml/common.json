@@ -290,6 +290,14 @@
             "development": "വികസനം",
             "health": "ആരോഗ്യവും സുരക്ഷയും"
         },
+        "formatCategories": {
+            "all": "എല്ലാ ഫോർമാറ്റുകളും",
+            "article": "പദാര്ത്ഥം",
+            "video": "വീഡിയോ",
+            "audio": "ഓഡിയോ",
+            "podcast": "പോഡ്കാസ്റ്റ്",
+            "journal": "ജേണലുകൾ"
+        },
         "buttons": {
             "readArticle": "ലേഖനം വായിക്കുക",
             "clearFilters": "ഫിൽട്ടറുകൾ മായ്ക്കുക"

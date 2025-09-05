@@ -290,6 +290,14 @@
             "development": "উন্নয়ন",
             "health": "স্বাস্থ্য ও সুরক্ষা"
         },
+        "formatCategories": {
+            "all": "সমস্ত ফর্ম্যাট",
+            "article": "নিবন্ধ",
+            "video": "ভিডিও",
+            "audio": "অডিও",
+            "podcast": "পডকাস্ট",
+            "journal": "জার্নাল"
+        },
         "buttons": {
             "readArticle": "নিবন্ধ পড়ুন",
             "clearFilters": "ফিল্টার সাফ করুন"

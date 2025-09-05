@@ -290,6 +290,14 @@
       "development": "વિકાસ",
       "health": "આરોગ્ય અને સલામતી"
     },
+    "formatCategories": {
+      "all": "તમામ ફોર્મેટ્સ",
+      "article": "વસ્તુ",
+      "video": "કોઇ",
+      "audio": "કોઇ",
+      "podcast": "ટોપ",
+      "journal": "નયરો"
+    },
     "buttons": {
       "readArticle": "લેખ વાંચો",
       "clearFilters": "સ્પષ્ટ ફિલ્ટર્સ"

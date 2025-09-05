@@ -290,6 +290,14 @@
             "development": "विकास",
             "health": "स्वास्थ्य और सुरक्षा"
         },
+        "formatCategories": {
+            "all": "सभी प्रारूप",
+            "article": "लेख",
+            "video": "वीडियो",
+            "audio": "ऑडियो",
+            "podcast": "पॉडकास्ट",
+            "journal": "पत्रिकाओं"
+        },
         "buttons": {
             "readArticle": "लेख पढ़ें",
             "clearFilters": "स्पष्ट फिल्टर"
